@@ -18,6 +18,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -222,6 +223,8 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                         Logger.v("AppConfig.printerDataAvailable = true;---()");
                         AppConfig.printerDataAvailable = true;
                         showAlert.setValue(5);
+                        //added successflow for SAF transaction
+                        successFlow();
                         printSAFReceipt(true);
                     }
                 }
@@ -230,6 +233,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     public void insertAdviceTransaction() {
+        Logger.v("insertAdviceTransaction()");
         if (AppManager.getInstance().isFinancialAdviceRequired()) {
             reqObj.setMti0(ConstantAppValue.FINANCIAL_ADVISE);
         } else if (AppManager.getInstance().isAuthorisationAdviceRequired())
@@ -1581,6 +1585,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     private void addSAFRequest(final int status) {
+        Logger.v("addSAFRequest : "+status);
         packet.disablePin();
         repo.fetchDataFromDatabase(transactionType, new Observer<WorkInfo>() {
             @Override
@@ -1889,8 +1894,8 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                 if (!AppConfig.isCardRemoved) {
                     cancel();
                     spi.removeBeep();
-                  //  moveNext(17);
-                    moveNextFallback(17);
+                    moveNext(17);
+                 //   moveNextFallback(17);
                 } else {
                     spi.removeBeep();
                     startTimerRemoveCard();
@@ -1931,10 +1936,15 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                 if (!AppConfig.isCardRemoved) {
                     cancel();
                     spi.removeBeep();
-                    moveNextFallback(17);
+                    if (packet.isFallBack()) {
+                        moveNextFallback(17);
+                    } else {
+                        moveNext(17);
+                    }
+
                 } else {
                     spi.removeBeep();
-                    startTimerRemoveCard();
+                    startTimerRemoveCardFallback();
                 }
 
                 Logger.v("OnTick END");
@@ -2140,6 +2150,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                     Utils.alertDialogShow(context, context.getString(R.string.transaction_not_allowed), listner);
                 } else if (status == 4) {
                     Logger.v("statusMsg --" + statusMsg + "--" + showApprovedBeepOffline);
+                    Logger.v("statusApproved --" + statusApproved);
                     statusMsg = (isScreenAvailable == 2) ? declinedFlow() : statusMsg;
                     if (!isPrinted && statusMsg.trim().length() != 0) {
                         if (showApprovedBeepOffline && isScreenAvailable != 2) {
@@ -2176,7 +2187,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                         });
                     } else {
                         AppConfig.isCardRemoved = true;
-                        new SdkSupport(context).startAllListner();
+                //        new SdkSupport(context).startAllListner();
                         startTimerRemoveCardFallback();
                     }
                 } else if (status == 99) {

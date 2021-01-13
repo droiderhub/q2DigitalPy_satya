@@ -469,6 +469,8 @@ Logger.v("makeSocketConnection_else");
     }
 
     public void showStatusDiaolge(final boolean executeRslt, final boolean noError, final boolean madeOnlineConnection) {
+        Logger.v("showStatusDiaolge "+ executeRslt + " "+ noError + " "+ madeOnlineConnection);
+        Logger.v("DE39 : "+ AppManager.getInstance().getDe39());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

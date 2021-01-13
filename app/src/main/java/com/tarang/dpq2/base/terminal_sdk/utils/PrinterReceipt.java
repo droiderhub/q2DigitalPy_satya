@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import com.cloudpos.DeviceException;
 import com.cloudpos.printer.Format;
@@ -279,7 +280,7 @@ public class PrinterReceipt {
             printBillBuffer.append("<br />" + "<div style=\"float:right;font-size:20px; font-weight:500\">" + printerModel.getTransactionTypeArabic() + "</div> \n"); //medium right
         if (printerModel.getTransactionTypeEnglish() != null)
             printBillBuffer.append("<br />" + "<div style=\"font-size:20px; font-weight:500\">" + printerModel.getTransactionTypeEnglish() + "</div>"); // medium left
-        if (printerModel.getCardExpry().trim().length() != 0)
+        if (!TextUtils.isEmpty(printerModel.getCardExpry()))
 
             printBillBuffer.append("<div style=\"display:flex;justify-content:space-between;width:100%\"> \n" +
                     " <div style=\"font-size:20px; font-weight:500\">" + printerModel.getPan() + "</div> \n" +

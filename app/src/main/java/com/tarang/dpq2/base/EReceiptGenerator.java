@@ -125,6 +125,7 @@ public class EReceiptGenerator {
 //            String simsun1 = mPrinter.getFontsPath(context, "madam.ttf", true);
             Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.mada_logo_black);
 
+
     //        BaseFont base = BaseFont.createFont("assets/fonts/arial.ttf", BaseFont.WINANSI, false);
     //        BaseFont base = BaseFont.createFont("assets/fonts/arial.ttf", "UTF-8", BaseFont.EMBEDDED);
     //        BaseFont baseArabic = BaseFont.createFont("assets/fonts/Tahoma.ttf", BaseFont.IDENTITY_H, true);
@@ -145,9 +146,9 @@ public class EReceiptGenerator {
             //Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL, new CMYKColor(0, 0, 0, 255));
             Font font_n10_b = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);//FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, new CMYKColor(0, 0, 0, 255));
             Font basicFont = FontFactory.getFont(FontFactory.COURIER, 8, Font.BOLD, new CMYKColor(0, 0, 0, 255));//FontFactory.getFont(FontFactory.COURIER, 8, Font.NORMAL, new CMYKColor(0, 0, 0, 255));
-            Font font_a10 = new Font(Font.FontFamily.TIMES_ROMAN, 10f);
-            Font font_a10_b = new Font(Font.FontFamily.TIMES_ROMAN, 10f, Font.BOLD);
-            Font headFontAR = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+            Font font_a10 = FontFactory.getFont("assets/Tahoma.ttf",BaseFont.IDENTITY_H, 10, Font.NORMAL);
+            Font font_a10_b = FontFactory.getFont("assets/courbd.ttf",BaseFont.IDENTITY_H, 10, Font.BOLD);
+            Font headFontAR = FontFactory.getFont("assets/cour.ttf",BaseFont.IDENTITY_H, 12, Font.BOLD);
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap1.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -169,11 +170,17 @@ public class EReceiptGenerator {
             address.addCell(getCellArabic(printerModel.getTerminalCityArabic() + ", " + printerModel.getTerminalStreetArabic() + "\n", PdfPCell.ALIGN_CENTER, font_a10));
             document.add(address);
 
-            String content1 = printerModel.getTerminalStreetEnglish() + ", " + printerModel.getTerminaCityEnglish() + "\n\n";
+            String content1 = printerModel.getTerminalStreetEnglish() + ", " + printerModel.getTerminaCityEnglish() + "\n" + printerModel.getRetailerTelephone() + "\n\n";
             //"Whitefield,Bangalore"+"\n"+"080-23232323"+"\n";
             Paragraph p1 = new Paragraph(content1, basicFont);
             p1.setAlignment(1);
             document.add(p1);
+
+//            String content2 = printerModel.getTerminalStreetEnglish() + ", " + printerModel.getRetailerTelephone() + "\n\n";
+//            //"Whitefield,Bangalore"+"\n"+"080-23232323"+"\n";
+//            Paragraph p2 = new Paragraph(content2, basicFont);
+//            p1.setAlignment(1);
+//            document.add(p2);
 
             String startDate = printerModel.getStartDate();
             String startTime = printerModel.getStartTime() + "\n";

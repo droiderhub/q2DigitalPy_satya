@@ -339,11 +339,11 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             Logger.v("i == SMART_CARD_EVENT_POWERON_ERROR----"+i);
             if (context instanceof PrintActivity) {
                 cardActionHAppenned = true;
-                new SdkSupport(context).closeCardReader();
+                new SdkSupport(context).closeCardReader1();
                 ((PrintActivity) context).showAlert(9);
             } else if (context instanceof TransactionActivity) {
                 cardActionHAppenned = true;
-                new SdkSupport(context).closeCardReader();
+                new SdkSupport(context).closeCardReader1();
                 MapperFlow.getInstance().moveToPrintScreenFallback(context);
             }
         } else if (i == SMART_CARD_EVENT_CONTALESS_HAVE_MORE_CARD) {
@@ -1719,8 +1719,10 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             String tagOnline = tag55.get(TAG55[14]);
             Logger.v("TAG Online--" + tagOnline);
             //  Logger.v("TAG Online--" + emvTransInfo.getCvm());
-            if (!(data55.contains("9f34") || data55.contains("9F34")))
+            if (cvm9f34.equalsIgnoreCase("000000"))
                 AppConfig.EMV.ic55Data = data55 + "9F3403" + appendCVM(cvm9f34);// Trans info
+            cvm9f34 = appendCVM(cvm9f34);
+            Logger.v("CVM9f34 cless:"+ cvm9f34);
             Logger.v("AppConfig.EMV.ic55Data --" + AppConfig.EMV.ic55Data);
         }
         Logger.v("emvTransInfo.getCardNo() --" + cardNo);
@@ -2018,10 +2020,10 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                     //emv_set_online_result(ONLINE_SUCCESS, responce, IsoRequest.getStringFromHex(responseData55), IsoRequest.getStringFromHex(responseData55).length);
                     byte[] issuerData = new byte[0];
                     issuerData = ISOUtil.hex2byte(responseData55);
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[0]));
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[1]));
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[2]));
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[3]));
+                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[0]));//8A
+                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[1]));//91
+                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[2]));//71
+                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[3]));//72
                     if (issuerData != null && issuerData.length > 0) {
                         Logger.v("setting_issuer_data");
                         emv_set_online_result(ONLINE_SUCCESS, responce, issuerData, issuerData.length);
