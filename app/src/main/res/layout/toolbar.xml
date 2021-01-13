@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        app:titleTextColor="@color/black"
+        android:minHeight="?android:attr/actionBarSize"
+        android:background="@color/toolbarTransparent"
+        app:theme="@style/tool_style" >
+
+    </androidx.appcompat.widget.Toolbar>
+    <!-- <View
+         android:layout_width="match_parent"
+         android:layout_height="2dp"
+         android:layout_below="@+id/toolbar"
+         android:background="@drawable/background_gradient_color"/>-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:foregroundGravity="left"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:id="@+id/back_tv"
+        android:text="@string/back">
+
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:id="@+id/toolbar_center_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="@string/back">
+    </TextView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/line1"/>
+
+</RelativeLayout>

@@ -1,0 +1,19 @@
+PrinterModel
+{
+retailerNameEnglish='SULAIMAN ALSAID CENTER FOR HOUSE', 
+retailerNameArabic='åÙÑÖ ÓäêåÇæ ÇäÓêá ääÇèÇæê ÇäåæÒä', 
+terminalStreetEnglish='KING KHALIED ROAD', 
+terminalStreetArabic='×Ñêâ Çäåäã ÎÇäÏ', 
+terminaCityEnglish='RIYADH', 
+terminalCityArabic='ÈÑêÏÉ', 
+retailerTelephone='800150400566', 
+startDate='11/10/2019', 
+startTime='18:15:09', 
+bId='RAJB', 
+mId='800150400566   ', 
+tId='1234567812121234', 
+mcc='7399', 
+stan='000135', 
+posSoftwareVersionNumber='1.0.0', 
+rrn='129960099667', 
+applicationLabelEnglish='', applicationLabelArabic='الشبكة الخليجية', transactionTypeEnglish='PURCHASE', transactionTypeArabic='شراء', pan='455036******7635', cardExpry='12/20', totalAmountEnglish='PURCHASE AMOUNT', totalAmountArabic='شراء', amountEnglish='SAR 25.00', amountArabic='ريال ٢٥.٠٠', transactionOutcomeEnglish='APPROVED', transactionOutcomeArabic='مقبولة', cashholderVerificationOrReasonForDeclineEnglish='CARDHOLDER PIN VERIFIED', cashholderVerificationOrReasonForDeclineArabic='تم التحقق من الرقم السري للعميل', approvalCodeStringEnglish='APPROVAL CODE', approvalCodeStringArabic='رمز الموافقة', approvalCodeEnglish='000', approvalCodeArabic='١٢٣٤٥٦', endDate='11/10/2019', endTime='18:15:09', thankYouEnglish='THANK YOU FOR USING mada', thankYouArabic=' شكرا لك على استخدام مادا ', receiptVersionEnglish='CUSTOMER COPY', receiptVersionArabic='نسخة العميل', posEntryMode='KEYED', alpharesponseCode='000', aid='null', tvr='null', tsi='null', cvr='null', applicationCryptogramInfo='null', applicationCryptogram='null', pleaseRetainYourReceiptArabic=' يرجي الاحتفاظ بالايصال ', pleaseRetainYourReceiptEnglish='PLEASE RETAIN YOUR RECEIPT'}

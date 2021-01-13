@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12sp">
+
+            <Button
+                android:id="@+id/btn_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:background="@drawable/all_cornor_button"
+                android:text="@string/reset_admin_password" />
+
+            <Button
+                android:id="@+id/btn_2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="6dp"
+                android:background="@drawable/all_cornor_button"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:text="@string/reset_merchant_passwrod" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:background="@drawable/all_cornor_button"
+                android:text="@string/cancel" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

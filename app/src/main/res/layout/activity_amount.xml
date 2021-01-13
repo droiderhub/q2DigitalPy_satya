@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:background="@drawable/background_gradient"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/ConcernedPortionofScreen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <!-- Parent FrameLayout 'FL' -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <!-- This is Layout 'LL'
+                 This is where you will place your image & the nice bg
+            -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical"
+                android:background="@drawable/all_button_border_shape">
+                <TextView
+                    android:id="@+id/textview_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="12dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:text="@string/amount"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/sar"
+                        android:textColor="@color/txt_blue" />
+                    <!-- <EditText
+                 android:id="@+id/etd_number"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 android:layout_margin="12dp"
+                 android:background="@android:color/transparent"
+                 android:focusable="true"
+                 android:gravity="center|left"
+                 android:hint="0.00"
+                 android:textSize="44dp"
+                 android:textColor="@color/white"
+                 android:inputType="numberDecimal"
+                 android:padding="12dp"
+                 android:layout_weight="1"/>-->
+
+                    <com.tarang.dpq2.base.utilities.CurrencyEditText
+                        android:id="@+id/etd_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@android:color/transparent"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:text="0.00"
+                        android:longClickable="false"
+                        android:textColor="@color/txt_blue"
+                        android:textSize="34dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/line">
+
+                </ImageView>
+
+            </LinearLayout>
+
+
+
+
+            <!-- BL = 50dp -->
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:textSize="18sp"
+                android:id="@+id/pay_button"
+                android:background="@drawable/all_cornor_button"
+                android:textColor="@color/white"
+                android:text="@string/pay"/>
+        </FrameLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,1403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+    android:orientation="vertical"
+        android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txn_type_ar_tv"
+        android:textStyle="bold"
+        android:gravity="right"
+        android:text="@string/purhase_ar"
+        android:textSize="30sp"
+        android:layout_margin="6dp"
+        >
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txn_type_tv"
+        android:textStyle="bold"
+        android:gravity="left"
+        android:text="@string/purhase"
+        android:textSize="30sp"
+        android:layout_margin="6dp"
+        >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/no_txn_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/no_transaction_ar"
+                android:textSize="30sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/no_transaction_en"
+            android:textSize="30sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+    </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txn_layout"
+        android:visibility="visible"
+        android:orientation="vertical">
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="right"
+            android:text="@string/mada_host_ar"
+            android:textSize="30sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:text="@string/mada_host_en"
+            android:textSize="30sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:text="@string/txn_type_ar"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/count_ar"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:text="@string/amount_in_sar_ar"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:text="@string/txn_type_en"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/count_en"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:text="@string/amount_in_sar_en"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_db_ar"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/total_db_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/count_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/total_db_count"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/amount_in_sar_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/total_db_amount_insar"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_cr_ar"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/total_cr_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/count_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/total_cr_count"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/amount_in_sar_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/total_cr_amount_insar"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/naqd_ar"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/naqd_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/count_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/naqd_count"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/amount_in_sar_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/naqd_insar"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cadv_ar"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/cadv_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/count_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/cadv_count"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/amount_in_sar_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/cadv_insar"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_ar"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/auth_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/count_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/auth_count"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/amount_in_sar_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/auth_insar"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/totals_ar"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_margin="6dp"
+            >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/totals_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/count_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:id="@+id/totals_count"
+                android:layout_margin="6dp"
+                android:textStyle="bold"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/amount_in_sar_en"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:id="@+id/totals_insar"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:text="@string/pos_terminal_ar"
+                android:textSize="30sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="left"
+                android:text="@string/pos_terminal_en"
+                android:textSize="30sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textStyle="bold"
+                    android:text="@string/txn_type_ar"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/count_ar"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:text="@string/amount_in_sar_ar"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textStyle="bold"
+                    android:text="@string/txn_type_en"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_db_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/total_db_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_total_db_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_total_db_amount_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_cr_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/total_cr_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_total_cr_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_total_cr_amount_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/naqd_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/naqd_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_naqd_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_naqd_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cadv_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/cadv_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_cadv_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_cadv_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auth_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/auth_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_auth_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_auth_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/totals_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/totals_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pt_totals_count"
+                    android:layout_margin="6dp"
+                    android:textStyle="bold"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:id="@+id/pt_totals_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:text="@string/pos_terminal_details_ar"
+                android:textSize="30sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="left"
+                android:text="@string/pos_terminal_details_en"
+                android:textSize="30sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textStyle="bold"
+                    android:text="@string/txn_type_ar"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/count_ar"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:text="@string/amount_in_sar_ar"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textStyle="bold"
+                    android:text="@string/txn_type_en"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poff_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/poff_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/poff_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/poff_amount_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pon_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/pon_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pon_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pon_amount_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pur_naqd_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/pur_naqd_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pur_naqd_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/pur_naqd_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reversal_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/reversal_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/reversal_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/reversal_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/refund_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/refund_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/refund_count"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/refund_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comp_ar"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_margin="6dp"
+                >
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/comp_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/count_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:id="@+id/comp_count"
+                    android:layout_margin="6dp"
+                    android:textStyle="bold"
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/amount_in_sar_en"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:id="@+id/comp_insar"
+                    android:layout_margin="6dp"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+</LinearLayout>
+</LinearLayout>
+</LinearLayout>

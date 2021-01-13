@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".view.activities.SplashActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="30dp"
+        android:layout_margin="30dp"
+        android:visibility="visible"
+        android:id="@+id/mada_logo"
+        android:src="@drawable/payswiff_assets_logo"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:id="@+id/version"
+        android:textColor="@color/red"
+        android:text="@string/payswiff"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:layout_below="@+id/version"
+        android:layout_gravity="center"
+        android:id="@+id/version_code"
+        android:textColor="@color/red"
+        android:text="@string/payswiff"/>
+
+
+</LinearLayout>

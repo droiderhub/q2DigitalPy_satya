@@ -1,0 +1,82 @@
+<resources>
+
+
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+
+    </style>
+
+    <style name="PopupDialog">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:paddingLeft">20dip</item>
+        <item name="android:paddingTop">20dip</item>
+        <item name="android:paddingRight">20dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="tool_style" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorSecondary">@android:color/black</item>
+        <item name="actionMenuTextColor">@android:color/black</item>
+
+    </style>
+
+    <style name="pin_edittext_style">
+        <item name="android:gravity">center</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:minEms">2</item>
+        <item name="android:color">@color/white</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
+    <style name="custom_progress_dialog" parent="android:Theme.DeviceDefault.Dialog">
+<!--        <item name="android:background">@color/transparent</item>-->
+        <item name="android:background">@drawable/custom_progressbar</item>
+
+    </style>
+
+    <style name="home_tab">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/margin_text</item>
+        <item name="android:layout_marginRight">@dimen/margin_text</item>
+        <item name="android:layout_marginTop">@dimen/margin_text</item>
+        <item name="android:background">@drawable/rounded_border_white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/txt_color</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="shade_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#d3d3d3</item>
+    </style>
+
+    <style name="ripple_style">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="card_view">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+</resources>

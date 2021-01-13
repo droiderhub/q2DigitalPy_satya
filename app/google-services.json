@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "911569180840",
+    "firebase_url": "https://dpq2-b91be.firebaseio.com",
+    "project_id": "dpq2-b91be",
+    "storage_bucket": "dpq2-b91be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911569180840:android:e551c963834a2e754aca9d",
+        "android_client_info": {
+          "package_name": "com.tarang.dpq2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911569180840-lg6e74iqribrhh6uvgh7on92bolehish.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXoZ30bdK7EjadSDYfaxPSR48DF2Tsaw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911569180840-lg6e74iqribrhh6uvgh7on92bolehish.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

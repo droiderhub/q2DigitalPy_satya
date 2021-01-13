@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="app_color">#57449B</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#000000</color>
+    <color name="transparent">#00ff</color>
+    <color name="black">#0C0000</color>
+    <color name="white">#ffffff</color>
+    <color name="gradientBlue">#037297</color>
+    <color name="gradientGreen">#417E2F</color>
+    <color name="background_shade">#F0F0F0</color>
+    <color name="toolbarTransparent">#00FFFFFF</color>
+    <color name="green">#27643F</color>
+    <color name="greenLight">#74B91A</color>
+    <color name="greenDark">#1C1C1C</color>
+    <color name="common_bg">#f0f0f0</color>
+    <color name="red">#F70404</color>
+
+    <color name="txt_color">#424242</color>
+    <color name="txt_blue">#209CD7</color>
+    <color name="txt_shade">#d3d3d3</color>
+    <color name="cremywhite">#F5D0D0</color>
+    <color name="gray">#AFAFAF</color>
+    <color name="txt_bg_lan">#4481ba</color>
+    <color name="new_bg_green">#8ec63f</color>
+    <color name="new_bg_blue">#019cdc</color>
+
+</resources>

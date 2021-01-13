@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp10"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:id="@+id/select_connection_layout"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_view"
+            android:padding="12sp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Primary"
+                android:id="@+id/txt_primary"
+                android:textSize="16dp"
+                android:padding="6dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:id="@+id/txt_secondary"
+                android:padding="6dp"
+                android:text="Secondary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:background="@drawable/all_cornor_button"
+                    android:text="@string/cancel"
+                    android:layout_margin="4dp"
+                    android:textColor="@color/white"
+                    android:id="@+id/connection_cancel1" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:background="@drawable/all_cornor_button"
+                    android:text="@string/edit"
+                    android:layout_margin="4dp"
+                    android:textColor="@color/white"
+                    android:id="@+id/connection_edit" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/ll_edit">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_primary"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:padding="6dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroup"
+            android:gravity="center"
+            android:weightSum="2"
+            android:padding="12sp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp10"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioWifi"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/select_wifi"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginBottom="12sp"
+                android:layout_weight="1"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:id="@+id/radioGPRS"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/select_gprs"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/all_cornor_button"
+            android:text="@string/cancel"
+            android:layout_margin="4dp"
+            android:textColor="@color/white"
+            android:id="@+id/connection_cancel" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/all_cornor_button"
+            android:text="@string/submit"
+            android:layout_margin="4dp"
+            android:textColor="@color/white"
+            android:id="@+id/connection_submit" />
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

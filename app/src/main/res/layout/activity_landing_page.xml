@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/my_root_"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="5"
+        android:id="@+id/parent_root_view"
+        tools:context=".view.activities.LandingPageActivity">
+
+        <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardMaxElevation="@dimen/elevation_border"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/top_icon_size"
+                    android:layout_margin="16dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/setting_img"
+                        android:layout_width="@dimen/top_icon_size"
+                        android:layout_height="@dimen/top_icon_size"
+                        android:layout_gravity="end"
+                        android:adjustViewBounds="true"
+                        android:padding="3dp"
+                        android:src="@drawable/setting_blue"/>
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:id="@+id/ll_data_visib"
+                    android:layout_marginLeft="@dimen/margin_landing"
+                    android:layout_marginRight="@dimen/margin_landing"
+                    android:background="@color/new_bg_blue">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/txt_header_tiid"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:padding="4dp"
+                        android:focusableInTouchMode="true"
+                        android:textSize="@dimen/txt_landingpage_txt"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+                <FrameLayout
+                    android:layout_marginTop="24dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:id="@+id/frm_amount"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/new_bg_blue"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/margin_landing"
+                        android:padding="@dimen/margin_landing">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/sar"
+                            android:paddingRight="12dp"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/landing_screen_test"
+                            android:textColor="@color/white" />
+
+                        <com.tarang.dpq2.base.utilities.CurrencyEditText
+                            android:id="@+id/etd_amnt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:background="@android:color/transparent"
+                            android:focusable="true"
+                            android:cursorVisible="false"
+                            android:inputType="number"
+                            android:hint="0.00"
+                            android:textStyle="bold"
+                            android:longClickable="false"
+                            android:textSize="@dimen/landing_screen_test"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txt_center"
+                            android:layout_centerInParent="true"/>
+                    </LinearLayout>
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/loader"
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/payswiff_assets_logo" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <androidx.cardview.widget.CardView
+                    card_view:cardCornerRadius="1dp"
+                    card_view:cardMaxElevation="@dimen/elevation_border"
+                    style="@style/card_view">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_blue1">
+
+                        <LinearLayout
+                            android:id="@+id/txt_transaction_menu"
+                            style="@style/ripple_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/transaction" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/transaction_menu"
+                                android:textColor="@color/white"
+                                android:textSize="18dp"
+                                android:textStyle="bold">
+
+                            </TextView>
+
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    card_view:cardCornerRadius="1dp"
+                    style="@style/card_view">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_green1">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:id="@+id/txt_merchant_menu"
+                            style="@style/ripple_style"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:layout_marginBottom="6dp"
+                                android:src="@drawable/merchant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="18dp"
+                                android:textColor="@color/white"
+                                android:text="@string/merchant_menu"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ideal_screen"
+        android:visibility="gone"
+        android:background="#fff">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/img_ideal"/>
+
+    </FrameLayout>
+</FrameLayout>

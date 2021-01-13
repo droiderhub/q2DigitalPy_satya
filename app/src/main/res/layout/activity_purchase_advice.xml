@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background_gradient"
+    tools:context=".view.activities.EnterRrnActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_rrn_activity"
+        android:gravity="center"
+        >
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:id="@+id/rbt_group"
+            android:layout_marginBottom="6dp">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/rbt_purchase_advice"
+                android:layout_margin="6dp"
+                android:layout_height="wrap_content"
+                android:text="@string/purhase"/>
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="6dp"
+                android:layout_height="wrap_content"
+                android:text="@string/preauth_advice"/>
+
+        </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:textColor="@color/black"
+        android:text="@string/rrn_number" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/txt_color"
+        android:id="@+id/enterRRNNumber"
+        android:inputType="number"
+        android:maxLength="12"
+        android:hint="@string/enter_rrn_number"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_rrn_activity"
+        android:padding="6dp"
+        android:id="@+id/transaction_date"
+        android:textColor="@color/black"
+        android:text="@string/date" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:hint="DD"
+            android:clickable="false"
+            android:id="@+id/etd_day"
+            android:maxLength="2"
+            android:maxEms="2"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="/"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:clickable="false"
+            android:hint="MM"
+            android:id="@+id/etd_month"
+            android:maxLength="2"
+            android:maxEms="2"
+            />
+<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    android:clickable="false"
+            android:text="/"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:focusable="false"
+            android:hint="YYYY"
+            android:id="@+id/etd_year"
+            android:maxLength="4"
+            android:maxEms="4"
+            />
+
+    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/date_tv">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:hint="DD"
+                    android:visibility="invisible"
+                    android:clickable="false"
+                    android:maxLength="2"
+                    android:maxEms="2"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_rrn_activity"
+            android:id="@+id/approval_code_layout"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:textColor="@color/black"
+                android:text="@string/aproval_code" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:id="@+id/aproval_code_et"
+                android:maxLines="1"
+                android:maxLength="6"
+                android:inputType="textNoSuggestions"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                android:singleLine="true"
+                android:hint="@string/aproval_code"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_amount">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_rrn_activity"
+        android:padding="6dp"
+        android:id="@+id/textview_amount"
+        android:textColor="@color/black"
+        android:text="@string/amount" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/sar"
+            android:gravity="center"
+            android:textColor="@color/txt_color"
+            />
+        <com.tarang.dpq2.base.utilities.CurrencyEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_centerInParent="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:id="@+id/etd_number"
+            android:text="0.00"
+            android:textSize="32dp"
+            android:textColor="@color/txt_color"
+            android:inputType="number"
+            android:paddingLeft="10dp"/>
+
+    </LinearLayout>
+        </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/proceed_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/margin_rrn_activity"
+        android:padding="10dp"
+        android:text="@string/proceed"
+        android:textStyle="bold" />
+
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

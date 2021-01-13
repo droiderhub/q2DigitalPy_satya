@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient"
+    tools:context=".view.activities.EnterRrnActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:padding="30dp"
+        android:id="@+id/textview_title"
+        android:textColor="@color/white"
+        android:text="@string/rrn_number" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/white"
+        android:id="@+id/enterNumber"
+        android:inputType="number"
+        android:maxLength="12"
+        android:hint="@string/enter_rrn_number"/>
+
+
+
+    <TextView
+        android:id="@+id/rrn_submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/submit"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="6dp"
+    android:padding="6dp"
+    tools:context=".view.activities.ValidateCardActivity">
+
+    <include layout="@layout/toolbar" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="6dp"
+        android:padding="6dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/card_number_et"
+            android:hint="@string/enter_card_number"
+            android:lines="1"
+            android:inputType="number"
+            android:maxLength="19"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/all_corner_bg_shape">
+        </EditText>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:padding="10dp"
+            android:id="@+id/validate_btn"
+            android:textColor="@color/white"
+            android:background="@drawable/all_cornor_button"
+            android:text="@string/validate">
+
+        </Button>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

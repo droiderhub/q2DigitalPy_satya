@@ -1,0 +1,108 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+
+android {
+    compileSdkVersion 29
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher = false
+    }
+    dexOptions {
+        javaMaxHeapSize "4G"
+    }
+
+    defaultConfig {
+        applicationId "com.tarang.dpq2"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.2.2"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.custom_dialog_transparent.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ['libs']
+            }
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    implementation 'org.jpos:jpos:1.9.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //room dependencies
+    // ViewModel and LiveData
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    // alternatively, just ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.1.0'
+    // alternatively, just LiveData
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.1.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.1.0'
+    // Room (use 1.1.0-alpha1 for latest alpha)
+    implementation 'androidx.room:room-runtime:2.2.0'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0'
+    // Paging
+    implementation 'androidx.paging:paging-runtime:2.1.0'
+    // Test helpers for LiveData
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    // Test helpers for Room
+    testImplementation 'androidx.room:room-testing:2.2.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    //adding gson library storing model class to shared preference
+    implementation 'com.google.code.gson:gson:2.8.5'
+    //For background Functionality worker thread
+    implementation 'androidx.work:work-runtime:2.2.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    //Q2 SDK
+//    implementation(name: 'cloudpossdk-1.5.2.47', ext: 'aar')
+//    implementation(name: 'cloudpossdk-1.5.3.001.test1', ext: 'aar')
+    implementation(name: 'cloudpossdkV1.5.3.026_Standard', ext: 'aar')
+    //QR Code
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+    implementation 'com.itextpdf:itextpdf:5.5.13'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+
+//    track2=ByteConversionUtils.fetchTagValu(new byte[100], 0, emv_get_tag_data(0x9fb8, new byte[100], new byte[100].length));
+
+
+}
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,987 @@
+--------- beginning of main
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/ConnectivityManager.CallbackHandler( 2666): CM callback handler got msg 524290
+D/ConnectivityManager.CallbackHandler( 2707): CM callback handler got msg 524290
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 0
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 1
+D/hardware_info(  265): hw_info_append_hw_type : device_name = speaker
+W/audio_hw_utils(  265): audio_extn_utils_update_stream_app_type_cfg: App type could not be selected. Falling back to default
+D/ACDB-LOADER(  265): ACDB -> send_audio_cal, acdb_id = 14, path =  0
+D/ACDB-LOADER(  265): ACDB -> send_asm_topology
+D/ACDB-LOADER(  265): ACDB -> ACDB_CMD_GET_AUDPROC_STREAM_TOPOLOGY_ID
+D/ACDB-LOADER(  265): ACDB -> send_adm_topology
+D/ACDB-LOADER(  265): ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TOPOLOGY_ID
+D/ACDB-LOADER(  265): ACDB -> send_audtable
+D/ACDB-LOADER(  265): ACDB -> ACDB_CMD_GET_AUDPROC_COMMON_TABLE
+D/ACDB-LOADER(  265): ACDB -> AUDIO_SET_AUDPROC_CAL
+D/ACDB-LOADER(  265): ACDB -> send_audvoltable
+D/ACDB-LOADER(  265): ACDB -> ACDB_CMD_GET_AUDPROC_GAIN_DEP_STEP_TABLE
+D/ACDB-LOADER(  265): ACDB -> AUDIO_SET_AUDPROC_VOL_CAL
+D/ACDB-LOADER(  265): ACDB -> send_afe_cal
+D/ACDB-LOADER(  265): ACDB -> ACDB_CMD_GET_AFE_COMMON_TABLE
+D/ACDB-LOADER(  265): ACDB -> AUDIO_SET_AFE_CAL
+D/ACDB-LOADER(  265): ACDB -> send_hw_delay : acdb_id = 14 path = 0
+D/ACDB-LOADER(  265): ACDB -> ACDB_AVSYNC_INFO: ACDB_CMD_GET_DEVICE_PROPERTY
+I/audio_hw_utils(  265): audio_extn_utils_send_app_type_cfg app_type 69936, acdb_dev_id 14, sample_rate 48000
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): adjustSystemUiVisibilityLwoldVis:34304vis:34304
+E/BarController(  757): adjustSystemUiVisibilityLwoldVis:34304vis:34304
+D/com.newland.mtypex.nseries3.b(29320): ---------wait-----------timeout:-1
+D/com.newland.mtypex.c.b.c(29320): ------------组装JINI方式的请求包:E101
+D/com.newland.mtypex.nseries3.b(29320): ---------(debug)execute command data:E101,deviceCmd:com.newland.c.a.f.d@a4bbb02
+D/IntelligentTerminalLib(29320): _jniMposLibCmd IN
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][mposLibCmd_new][ReceiveCmd][1359]
+D/IntelligentTerminalLib(29320): e1 01
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[IN] Cmd[0xe101] CmdDesc[CMD_IC_ICCDETECT]
+D/IntelligentTerminalLib(29320): locklisten
+D/IntelligentTerminalLib(29320): locklisten1
+D/NlServerThread(  757): Process29320 name= com.tarang.payswiff connecting
+E/NdkpLib (29320): Data packed cmd=CMD_NDK_IccDetect:
+E/NdkpLib (29320): 67 00 00 00 76
+V/NdkpLib (  757): @func=NDK_SysAddEvent, magEventRegistered=0, iccEventRegistered=1, rfidEventRegistered=0 magPid=0, iccPid=29320, rfidPid=0
+E/NdkpLib (  757): Data packed cmd=CMD_NDK_SysAddEvent:
+E/NdkpLib (  757): 92 00 00 00 75 08 00 00 00 76
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_SysAddEvent ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): szCmdIn:(iLenin=28)
+V/MPosCmdLib(  757): 02 00 23 1e 10 2f 95 00 00 07 d0 00 00 72 88 00 00 01 7c 00 05 67 00 00 00 76 03 d0
+V/MPosCmdLib(  757): 1299 mposLibCmd
+V/MPosCmdLib(  757): 1304 mposLibCmd ret 0
+V/NdkpLib (  757): @func=NDK_RpcTransRW pid=29320, permission=0x17c, cmdId=103
+V/NdkpLib (  757): @func=posNDK_Access_Process,cmdId=103 magEventRegistered=0, iccEventRegistered=1, rfidEventRegistered=0 magPid=0, iccPid=29320, rfidPid=0
+V/NdkpLib (  757): @func=NDK_RpcTransRW, line=1815 ret=0 
+E/NdkpLib (  757): @FILE=E:/27_�����/Pad-v3.0/build/build_N900_4G/api//jni/platform.c,line=238, (index*2+1) <= len ret=0,but expect:1
+V/NdkpLib (  757): @fun=NDK_RpcTransRW, line1867 the command(0x0067) not be found!
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=16
+E/NdkpLib (  757): CMD_NDK_IccDetect ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): Out frame:
+V/MPosCmdLib(  757): 02 00 24 1e 10 2f 96 30 30 00 16 67 00 00 00 00 00 00 00 04 00 00 00 01 00 00 00 03 e4
+V/MPosCmdLib(  757): 
+V/NdkpLib (29320): send_resp_a_cmd,line494: ret=16
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][Pack_a_frame_new][ResponseCmd][1096]
+D/IntelligentTerminalLib(29320): 30 30 01 00 00 00 00 00 00 00
+D/IntelligentTerminalLib(29320): UnRegisterCardEvent nReadCardMode=2
+D/IntelligentTerminalLib(29320): NDK_SYS_UnRegisterEvent  over0
+D/IntelligentTerminalLib(29320): unlockallcard7
+D/IntelligentTerminalLib(29320): unlocklisten
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[OUT] Cmd[0xe101] CmdDesc[CMD_IC_ICCDETECT]
+D/IntelligentTerminalLib(29320): _jniMposLibCmd OUT ret[0]
+D/com.newland.mtypex.nseries3.b(29320): ------------SynInvokeRunnable---notify-------------------
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responeCode:0,deviceCmd:com.newland.c.a.f.d@a4bbb02
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responseData:30300100000000000000,deviceCmd:com.newland.c.a.f.d@a4bbb02
+D/com.newland.mtypex.c.b.c(29320): -------响应码：3030
+D/com.newland.mtypex.c.b.c(29320): receive resp nativeCode:0
+D/com.newland.mtypex.c.b.c(29320): start unpack response,content[01 00 00 00 00 00 00 00]
+D/com.newland.mtypex.e(29320): try to set [B into com.newland.c.a.f.d$a's responseArr!
+V/responce(29320): Tag Msg --Key --SAM2Value --NO_CARD
+V/responce(29320): Tag Msg --Key --IC3Value --NO_CARD
+V/responce(29320): Tag Msg --Key --IC1Value --CARD_INSERTED
+V/responce(29320): Tag Msg --Key --SAM1Value --NO_CARD
+V/responce(29320): Tag Msg --Key --IC2Value --NO_CARD
+V/responce(29320): Tag Msg --Key --SAM3Value --NO_CARD
+V/responce(29320): Tag Msg --getConnectionStatus -12
+E/NdkpLib (  757): Data packed cmd=CMD_NDK_SysDelEvent:
+E/NdkpLib (  757): 93 00 00 00 75 08 00 00 00 76
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_SysDelEvent ret=0, executed from K21 in SUCCESS!
+W/Resources(29320): Converting to string: TypedValue{t=0x12/d=0x0 a=2 r=0x7f0800de}
+W/Resources(29320): Converting to string: TypedValue{t=0x12/d=0x0 a=2 r=0x7f08017b}
+W/Resources(29320): Converting to string: TypedValue{t=0x12/d=0x0 a=2 r=0x7f08005f}
+W/Resources(29320): Converting to string: TypedValue{t=0x12/d=0x0 a=2 r=0x7f080062}
+W/Resources(29320): Converting to string: TypedValue{t=0x12/d=0x0 a=2 r=0x7f0800fb}
+I/ViewRootImpl(29320): CPU Rendering VSync enable = true
+--------- beginning of system
+V/WindowManager(  757): not Base app: Adding window Window{32c7ad92 u0 com.tarang.payswiff/com.tarang.payswiff.view.activities.PrintActivity} at 5 of 10
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): adjustSystemUiVisibilityLwoldVis:32768vis:32768
+E/BarController(  757): adjustSystemUiVisibilityLwoldVis:32768vis:32768
+V/responce(29320): Tag Msg --STATUS 12
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+W/Atfwd_Sendcmd(31583): AtCmdFwd service not published, waiting... retryCnt : 5
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 0
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 2
+E/PhoneWindow(29320): dispatchTouchEvent--------------
+E/PhoneWindow(29320): onInterceptTouchEvent action ::: 1
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): adjustSystemUiVisibilityLwoldVis:34304vis:34304
+E/BarController(  757): adjustSystemUiVisibilityLwoldVis:34304vis:34304
+D/com.newland.mtypex.nseries3.b(29320): ---------wait-----------timeout:-1
+D/com.newland.mtypex.c.b.c(29320): ------------组装JINI方式的请求包:E101
+D/com.newland.mtypex.nseries3.b(29320): ---------(debug)execute command data:E101,deviceCmd:com.newland.c.a.f.d@84a184f
+D/IntelligentTerminalLib(29320): _jniMposLibCmd IN
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][mposLibCmd_new][ReceiveCmd][1359]
+D/IntelligentTerminalLib(29320): e1 01
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[IN] Cmd[0xe101] CmdDesc[CMD_IC_ICCDETECT]
+D/IntelligentTerminalLib(29320): locklisten
+D/IntelligentTerminalLib(29320): locklisten1
+D/NlServerThread(  757): Process29320 name= com.tarang.payswiff connecting
+E/NdkpLib (29320): Data packed cmd=CMD_NDK_IccDetect:
+E/NdkpLib (29320): 67 00 00 00 76
+V/NdkpLib (  757): @func=NDK_SysAddEvent, magEventRegistered=0, iccEventRegistered=1, rfidEventRegistered=0 magPid=0, iccPid=29320, rfidPid=0
+E/NdkpLib (  757): Data packed cmd=CMD_NDK_SysAddEvent:
+E/NdkpLib (  757): 92 00 00 00 75 08 00 00 00 76
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_SysAddEvent ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): szCmdIn:(iLenin=28)
+V/MPosCmdLib(  757): 02 00 23 1e 10 2f 97 00 00 07 d0 00 00 72 88 00 00 01 7c 00 05 67 00 00 00 76 03 d2
+V/MPosCmdLib(  757): 1299 mposLibCmd
+V/MPosCmdLib(  757): 1304 mposLibCmd ret 0
+V/NdkpLib (  757): @func=NDK_RpcTransRW pid=29320, permission=0x17c, cmdId=103
+V/NdkpLib (  757): @func=posNDK_Access_Process,cmdId=103 magEventRegistered=0, iccEventRegistered=1, rfidEventRegistered=0 magPid=0, iccPid=29320, rfidPid=0
+V/NdkpLib (  757): @func=NDK_RpcTransRW, line=1815 ret=0 
+E/NdkpLib (  757): @FILE=E:/27_�����/Pad-v3.0/build/build_N900_4G/api//jni/platform.c,line=238, (index*2+1) <= len ret=0,but expect:1
+V/NdkpLib (  757): @fun=NDK_RpcTransRW, line1867 the command(0x0067) not be found!
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=16
+E/NdkpLib (  757): CMD_NDK_IccDetect ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): Out frame:
+V/MPosCmdLib(  757): 02 00 24 1e 10 2f 98 30 30 00 16 67 00 00 00 00 00 00 00 04 00 00 00 00 00 00 00 03 eb
+V/MPosCmdLib(  757): 
+V/NdkpLib (29320): send_resp_a_cmd,line494: ret=16
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][Pack_a_frame_new][ResponseCmd][1096]
+D/IntelligentTerminalLib(29320): 30 30 00 00 00 00 00 00 00 00
+D/IntelligentTerminalLib(29320): UnRegisterCardEvent nReadCardMode=2
+D/IntelligentTerminalLib(29320): NDK_SYS_UnRegisterEvent  over0
+D/IntelligentTerminalLib(29320): unlockallcard7
+D/IntelligentTerminalLib(29320): unlocklisten
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[OUT] Cmd[0xe101] CmdDesc[CMD_IC_ICCDETECT]
+D/IntelligentTerminalLib(29320): _jniMposLibCmd OUT ret[0]
+D/com.newland.mtypex.nseries3.b(29320): ------------SynInvokeRunnable---notify-------------------
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responeCode:0,deviceCmd:com.newland.c.a.f.d@84a184f
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responseData:30300000000000000000,deviceCmd:com.newland.c.a.f.d@84a184f
+E/NdkpLib (  757): Data packed cmd=CMD_NDK_SysDelEvent:
+D/com.newland.mtypex.c.b.c(29320): -------响应码：3030
+E/NdkpLib (  757): 93 00 00 00 75 08 00 00 00 76
+D/com.newland.mtypex.c.b.c(29320): receive resp nativeCode:0
+D/com.newland.mtypex.c.b.c(29320): start unpack response,content[00 00 00 00 00 00 00 00]
+D/com.newland.mtypex.e(29320): try to set [B into com.newland.c.a.f.d$a's responseArr!
+V/responce(29320): Tag Msg --Key --SAM2Value --NO_CARD
+V/responce(29320): Tag Msg --Key --IC3Value --NO_CARD
+V/responce(29320): Tag Msg --Key --IC1Value --NO_CARD
+V/responce(29320): Tag Msg --Key --SAM1Value --NO_CARD
+V/responce(29320): Tag Msg --Key --IC2Value --NO_CARD
+V/responce(29320): Tag Msg --Key --SAM3Value --NO_CARD
+I/Timeline(29320): Timeline: Activity_launch_request id:com.tarang.payswiff time:51284208
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_SysDelEvent ret=0, executed from K21 in SUCCESS!
+E/BarController(  757): isTransientShowRequested
+W/ActivityManager(  757): Duplicate finish request for ActivityRecord{18d860be u0 com.tarang.payswiff/.view.activities.PrintActivity t20 f}
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState = null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+V/FA      (29320): Recording user engagement, ms: 91852
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+V/responce(29320): Tag Msg --runmemory_max----268435456
+V/responce(29320): Tag Msg --runmemory_free----81160
+V/responce(29320): Tag Msg --runmemory_total----28407430
+V/responce(29320): Tag Msg --OnFinish Cancel
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState = null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState = null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+D/com.newland.me.K21Driver(29320): -----------createDevice  NS3Executor
+D/com.newland.c.c.b(29320): >>>hasSecModule=true
+V/responce(29320): Tag Msg --Reversal -saf-true
+V/FA      (29320): Using local app measurement service
+V/FA      (29320): Activity paused, time: 362436162
+D/com.newland.c.c.b(29320): >>>hasSecModule=true
+V/NdkpLib (29320): NDK_EPSetDebugMode,line3116: cDebugFlag=3
+E/NdkpLib (29320): Data packed cmd=not found cmd id:
+E/NdkpLib (29320): 59 01 00 00 63 03 76
+V/MPosCmdLib(  757): szCmdIn:(iLenin=30)
+V/MPosCmdLib(  757): 02 00 25 1e 10 2f 99 00 00 07 d0 00 00 72 88 00 00 01 7c 00 07 59 01 00 00 63 03 76 03 87
+V/MPosCmdLib(  757): 1299 mposLibCmd
+V/MPosCmdLib(  757): 1304 mposLibCmd ret 0
+V/NdkpLib (  757): @func=NDK_RpcTransRW pid=29320, permission=0x17c, cmdId=345
+V/NdkpLib (  757): @func=posNDK_Access_Process,cmdId=345 magEventRegistered=0, iccEventRegistered=0, rfidEventRegistered=0 magPid=0, iccPid=0, rfidPid=0
+V/NdkpLib (  757): @func=NDK_RpcTransRW, line=1815 ret=0 
+V/NdkpLib (  757): @fun=NDK_RpcTransRW, line1867 the command(0x0159) not be found!
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): not found cmd id ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): Out frame:
+V/MPosCmdLib(  757): 02 00 20 1e 10 2f 9a 30 30 00 12 59 01 00 00 00 00 00 00 00 00 00 00 03 d2
+V/MPosCmdLib(  757): 
+V/NdkpLib (29320): send_resp_a_cmd,line494: ret=12
+E/WindowManager(  757): finishPostLayoutPolicyLw
+V/NdkpLib (29320): NDK_EPSetDebugMode,line3121: ret=12
+E/BarController(  757): applyTranslucentFlagLw
+V/NdkpLib (29320): NDK_EPSetDebugMode,line3128: ret=0
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState = null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+D/FA      (29320): Logging event (FE): user_engagement(_e), Bundle[{ga_event_origin(_o)=auto, engagement_time_msec(_et)=91852, ga_screen_class(_sc)=PrintActivity, ga_screen_id(_si)=3311723253323424531}]
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState = null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+D/com.newland.me.NLDevice(29320): ---defalutlocale.getCountry()US
+D/com.newland.me.NLDevice(29320): ---version2300;isOldN910Version=true;isOldN900Version
+V/responce(29320): Tag Msg --Device Connected
+V/responce(29320): Tag Msg --Device Connected 3
+V/responce(29320): Tag Msg --conn 1
+V/FA      (29320): Local AppMeasurementService is starting up
+D/com.newland.mtypex.nseries3.b(29320): ---------wait-----------timeout:-1
+E/BarController(  757): checkHiddenLw
+I/art     (29320): Background sticky concurrent mark sweep GC freed 110117(6MB) AllocSpace objects, 34(545KB) LOS objects, 24% free, 20MB/27MB, paused 5.809ms total 115.018ms
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState = null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+V/FA      (29320): Bound to IMeasurementService interface
+I/Timeline(29320): Timeline: Activity_idle id: android.os.BinderProxy@3b291c17 time:51284367
+D/com.newland.mtypex.c.a(29320): 00]
+D/com.newland.mtypex.c.a(29320): 0F]
+D/com.newland.mtypex.c.b.c(29320): ------------组装JINI方式的请求包:1D12000F
+D/com.newland.mtypex.nseries3.b(29320): ---------(debug)execute command data:1D12000F,deviceCmd:com.newland.c.a.j.a@3507b33f
+D/IntelligentTerminalLib(29320): _jniMposLibCmd IN
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][mposLibCmd_new][ReceiveCmd][1359]
+D/IntelligentTerminalLib(29320): 1d 12 00 0f
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[IN] Cmd[0x1d12] CmdDesc[CMD_TERMINAL_LEDSTATUS]
+E/NdkpLib (29320): Data packed cmd=CMD_NDK_LedStatus:
+E/NdkpLib (29320): 7f 00 00 00 64 aa 00 00 00 76
+V/MPosCmdLib(  757): szCmdIn:(iLenin=33)
+V/MPosCmdLib(  757): 02 00 28 1e 10 2f 9b 00 00 07 d0 00 00 72 88 00 00 01 7c 00 10 7f 00 00 00 64 aa 00 00 00 76 03 16
+V/MPosCmdLib(  757): 1299 mposLibCmd
+V/MPosCmdLib(  757): 1304 mposLibCmd ret 0
+V/NdkpLib (  757): @func=NDK_RpcTransRW pid=29320, permission=0x17c, cmdId=127
+V/NdkpLib (  757): @func=posNDK_Access_Process,cmdId=127 magEventRegistered=0, iccEventRegistered=0, rfidEventRegistered=0 magPid=0, iccPid=0, rfidPid=0
+V/NdkpLib (  757): @func=NDK_RpcTransRW, line=1815 ret=0 
+V/NdkpLib (  757): @fun=NDK_RpcTransRW, line1867 the command(0x007f) not be found!
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_LedStatus ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): Out frame:
+V/MPosCmdLib(  757): 02 00 20 1e 10 2f 9c 30 30 00 12 7f 00 00 00 00 00 00 00 00 00 00 00 03 f3
+V/MPosCmdLib(  757): 
+V/NdkpLib (29320): send_resp_a_cmd,line494: ret=12
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][Pack_a_frame_new][ResponseCmd][1096]
+D/IntelligentTerminalLib(29320): 30 30
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[OUT] Cmd[0x1d12] CmdDesc[CMD_TERMINAL_LEDSTATUS]
+D/IntelligentTerminalLib(29320): _jniMposLibCmd OUT ret[0]
+D/com.newland.mtypex.nseries3.b(29320): ------------SynInvokeRunnable---notify-------------------
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responeCode:0,deviceCmd:com.newland.c.a.j.a@3507b33f
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responseData:3030,deviceCmd:com.newland.c.a.j.a@3507b33f
+D/com.newland.mtypex.c.b.c(29320): -------响应码：3030
+D/com.newland.mtypex.c.b.c(29320): receive resp nativeCode:0
+D/com.newland.mtypex.c.b.c(29320): start unpack response,content[empty]
+V/responce(29320): Tag Msg --Light OFF --true
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+V/FA      (29320): Connection attempt already in progress
+V/FA      (29320): Activity resumed, time: 362436187
+D/FA      (29320): Logging event (FE): screen_view(_vs), Bundle[{ga_event_origin(_o)=auto, ga_previous_class(_pc)=PrintActivity, ga_previous_id(_pi)=3311723253323424531, ga_screen_class(_sc)=LandingPageActivity, ga_screen_id(_si)=-605968451712313491}]
+V/FA      (29320): Connection attempt already in progress
+V/FA      (29320): Connection attempt already in progress
+V/FA      (29320): Connected to service
+V/FA      (29320): Processing queued up service tasks: 4
+V/FA      (29320): Logging event: origin=auto,name=user_engagement(_e),params=Bundle[{ga_event_origin(_o)=auto, engagement_time_msec(_et)=91852, ga_screen_class(_sc)=PrintActivity, ga_screen_id(_si)=3311723253323424531}]
+W/ResourcesManager(29320): Asset path '/system/framework/com.android.media.remotedisplay.jar' does not exist or contains no resources.
+W/ResourcesManager(29320): Asset path '/system/framework/com.android.location.provider.jar' does not exist or contains no resources.
+W/GooglePlayServicesUtil(29320): Google Play services out of date.  Requires 12451000 but found 11975270
+W/ActivityManager(  757): Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.google.android.gms } U=0: not found
+D/FA      (29320): Unable to get advertising id: java.io.IOException: Connection failure: com.google.android.gms.measurement.internal.zzfg.zza(com.google.android.gms:play-services-measurement-impl@@17.2.0:9)
+V/FA      (29320): Saving event, name, data size: user_engagement(_e), 69
+V/FA      (29320): Event recorded: Event{appId='com.tarang.payswiff', name='user_engagement(_e)', params=Bundle[{ga_event_origin(_o)=auto, engagement_time_msec(_et)=91852, ga_screen_class(_sc)=PrintActivity, ga_screen_id(_si)=3311723253323424531}]}
+V/FA      (29320): Upload scheduled in approximately ms: 1609370
+V/FA      (29320): Scheduling upload with AlarmManager
+V/FA      (29320): Background event processing time, ms: 53
+V/FA      (29320): Logging event: origin=auto,name=screen_view(_vs),params=Bundle[{ga_event_origin(_o)=auto, ga_previous_class(_pc)=PrintActivity, ga_previous_id(_pi)=3311723253323424531, ga_screen_class(_sc)=LandingPageActivity, ga_screen_id(_si)=-605968451712313491}]
+V/FA      (29320): Saving event, name, data size: screen_view(_vs), 104
+V/FA      (29320): Event recorded: Event{appId='com.tarang.payswiff', name='screen_view(_vs)', params=Bundle[{ga_event_origin(_o)=auto, ga_previous_class(_pc)=PrintActivity, ga_previous_id(_pi)=3311723253323424531, ga_screen_class(_sc)=LandingPageActivity, ga_screen_id(_si)=-605968451712313491}]}
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+V/FA      (29320): Upload scheduled in approximately ms: 1609321
+V/FA      (29320): Scheduling upload with AlarmManager
+V/FA      (29320): Background event processing time, ms: 34
+I/Timeline(  757): Timeline: Activity_windows_visible id: ActivityRecord{2a389384 u0 com.tarang.payswiff/.view.activities.LandingPageActivity t20} time:51284646
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+D/com.newland.mtypex.nseries3.b(29320): ---------wait-----------timeout:-1
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+D/com.newland.mtypex.c.a(29320): 00]
+D/com.newland.mtypex.c.a(29320): 0F]
+D/com.newland.mtypex.c.b.c(29320): ------------组装JINI方式的请求包:1D12000F
+D/com.newland.mtypex.nseries3.b(29320): ---------(debug)execute command data:1D12000F,deviceCmd:com.newland.c.a.j.a@2ac43f1a
+D/IntelligentTerminalLib(29320): _jniMposLibCmd IN
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][mposLibCmd_new][ReceiveCmd][1359]
+D/IntelligentTerminalLib(29320): 1d 12 00 0f
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[IN] Cmd[0x1d12] CmdDesc[CMD_TERMINAL_LEDSTATUS]
+E/NdkpLib (29320): Data packed cmd=CMD_NDK_LedStatus:
+E/NdkpLib (29320): 7f 00 00 00 64 aa 00 00 00 76
+V/MPosCmdLib(  757): szCmdIn:(iLenin=33)
+V/MPosCmdLib(  757): 02 00 28 1e 10 2f 9d 00 00 07 d0 00 00 72 88 00 00 01 7c 00 10 7f 00 00 00 64 aa 00 00 00 76 03 10
+V/MPosCmdLib(  757): 1299 mposLibCmd
+V/MPosCmdLib(  757): 1304 mposLibCmd ret 0
+V/NdkpLib (  757): @func=NDK_RpcTransRW pid=29320, permission=0x17c, cmdId=127
+V/NdkpLib (  757): @func=posNDK_Access_Process,cmdId=127 magEventRegistered=0, iccEventRegistered=0, rfidEventRegistered=0 magPid=0, iccPid=0, rfidPid=0
+V/NdkpLib (  757): @func=NDK_RpcTransRW, line=1815 ret=0 
+V/NdkpLib (  757): @fun=NDK_RpcTransRW, line1867 the command(0x007f) not be found!
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_LedStatus ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): Out frame:
+E/WindowManager(  757): finishPostLayoutPolicyLw
+V/MPosCmdLib(  757): 02 00 20 1e 10 2f 9e 30 30 00 12 7f 00 00 00 00 00 00 00 00 00 00 00 03 f1
+V/MPosCmdLib(  757): 
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+V/NdkpLib (29320): send_resp_a_cmd,line494: ret=12
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][Pack_a_frame_new][ResponseCmd][1096]
+D/IntelligentTerminalLib(29320): 30 30
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[OUT] Cmd[0x1d12] CmdDesc[CMD_TERMINAL_LEDSTATUS]
+D/IntelligentTerminalLib(29320): _jniMposLibCmd OUT ret[0]
+D/com.newland.mtypex.nseries3.b(29320): ------------SynInvokeRunnable---notify-------------------
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responeCode:0,deviceCmd:com.newland.c.a.j.a@2ac43f1a
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responseData:3030,deviceCmd:com.newland.c.a.j.a@2ac43f1a
+D/com.newland.mtypex.c.b.c(29320): -------响应码：3030
+D/com.newland.mtypex.c.b.c(29320): receive resp nativeCode:0
+D/com.newland.mtypex.c.b.c(29320): start unpack response,content[empty]
+V/responce(29320): Tag Msg --Light OFF --true
+D/com.newland.mtypex.nseries3.b(29320): ---------wait-----------timeout:-1
+D/com.newland.mtypex.c.a(29320): 01]
+D/com.newland.mtypex.c.b.c(29320): ------------组装JINI方式的请求包:1A2701
+D/com.newland.mtypex.nseries3.b(29320): ---------(debug)execute command data:1A2701,deviceCmd:com.newland.c.a.k.d@ec39c28
+D/IntelligentTerminalLib(29320): _jniMposLibCmd IN
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][mposLibCmd_new][ReceiveCmd][1359]
+D/IntelligentTerminalLib(29320): 1a 27 01
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[IN] Cmd[0x1a27] CmdDesc[CMD_PINPAD_INCREASEKSN]
+V/NdkpLib (29320): call SECP_NDKIncreaseDukptKsn, pName=com.tarang.payswiff
+V/NdkpLib (29320): line919, g_pkName(19): com.tarang.payswiff
+E/NdkpLib (29320): Data packed cmd=CMD_NDK_SecIncreaseDukptKsn:
+E/NdkpLib (29320): e2 00 00 00 73 13 00 00 00 63 6f 6d 2e 74 61 72 61 6e 67 2e 70 61 79 73 77 69 66 66 63 01 76
+V/MPosCmdLib(  757): szCmdIn:(iLenin=54)
+V/MPosCmdLib(  757): 02 00 49 1e 10 2f 9f 00 00 07 d0 00 00 72 88 00 00 01 7c 00 31 e2 00 00 00 73 13 00 00 00 63 6f 6d 2e 74 61 72 61 6e 67 2e 70 61 79 73 77 69 66 66 63 01 76 03 68
+V/MPosCmdLib(  757): 1299 mposLibCmd
+V/MPosCmdLib(  757): 1304 mposLibCmd ret 0
+V/NdkpLib (  757): @func=NDK_RpcTransRW pid=29320, permission=0x17c, cmdId=226
+V/NdkpLib (  757): @func=posNDK_Access_Process,cmdId=226 magEventRegistered=0, iccEventRegistered=0, rfidEventRegistered=0 magPid=0, iccPid=0, rfidPid=0
+V/NdkpLib (  757): @func=NDK_RpcTransRW, line=1815 ret=0 
+V/NdkpLib (  757): @fun=NDK_RpcTransRW, line1850 the command(0x00e2) be found! 
+V/NdkpLib (  757): packageName(19): com.tarang.payswiff
+V/NdkpLib (  757): @func=posNDK_SECP_Process line1413, packageName(19): com.tarang.payswiff
+V/NdkpLib (  757): packageName(19): com.tarang.payswiff
+V/NdkpLib (  757): owner(0): 
+V/NdkpLib (  757): flag=0
+E/NdkpLib (  757): Data packed cmd=CMD_NDK_SecIncreaseDukptKsn:
+E/NdkpLib (  757): e2 00 00 00 63 01 6e 6e 6e 63 00 76
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_SecIncreaseDukptKsn ret=0, executed from K21 in SUCCESS!
+V/MPosCmdLib(  757): Out frame:
+V/MPosCmdLib(  757): 02 00 20 1e 10 2f a0 30 30 00 12 e2 00 00 00 00 00 00 00 00 00 00 00 03 52
+V/MPosCmdLib(  757): 
+V/NdkpLib (29320): send_resp_a_cmd,line494: ret=12
+D/IntelligentTerminalLib(29320): [V2.0.5][DEG][mpos_api_frame.c][Pack_a_frame_new][ResponseCmd][1096]
+D/IntelligentTerminalLib(29320): 30 30
+D/IntelligentTerminalLib(29320): >>>[V2.0.5]CmdAction[OUT] Cmd[0x1a27] CmdDesc[CMD_PINPAD_INCREASEKSN]
+D/IntelligentTerminalLib(29320): _jniMposLibCmd OUT ret[0]
+D/com.newland.mtypex.nseries3.b(29320): ------------SynInvokeRunnable---notify-------------------
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responeCode:0,deviceCmd:com.newland.c.a.k.d@ec39c28
+D/com.newland.mtypex.nseries3.b(29320): -------------(debug)jniMposLibCmd_responseData:3030,deviceCmd:com.newland.c.a.k.d@ec39c28
+D/com.newland.mtypex.c.b.c(29320): -------响应码：3030
+D/com.newland.mtypex.c.b.c(29320): receive resp nativeCode:0
+D/com.newland.mtypex.c.b.c(29320): start unpack response,content[empty]
+V/responce(29320): Tag Msg --increment:true
+I/art     (29320): Explicit concurrent mark sweep GC freed 40314(1937KB) AllocSpace objects, 15(3MB) LOS objects, 39% free, 15MB/25MB, paused 1.547ms total 105.515ms
+I/art     (29320): Explicit concurrent mark sweep GC freed 5214(304KB) AllocSpace objects, 9(2MB) LOS objects, 40% free, 12MB/20MB, paused 1.561ms total 78.470ms
+I/art     (29320): Explicit concurrent mark sweep GC freed 3(96B) AllocSpace objects, 0(0B) LOS objects, 40% free, 12MB/20MB, paused 1.398ms total 70.729ms
+E/BarController(  757): checkHiddenLw
+E/WindowManager(  757): finishPostLayoutPolicyLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): setBarShowingLw
+E/BarController(  757): computeStateLw
+E/BarController(  757): updateStateLw
+E/BarController(  757): applyTranslucentFlagLw
+E/BarController(  757): applyTranslucentFlagLw
+E/WindowManager(  757): mTopFullscreenOpaqueWindowState != null
+E/WindowManager(  757):  LayoutParams:1024
+E/WindowManager(  757): transientStatusBarAllowed:true hideStatusBarWM:true hideStatusBarSysui:false immersiveSticky:false statusBarHasFocus:false
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): isTransientShowRequested
+E/WindowManager(  757): transientStatusBarAllowed:true
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+E/BarController(  757): updateVisibilityLw
+E/BarController(  757): isTransientShowing
+E/BarController(  757): isTransientShowRequested
+V/responce(29320): Tag Msg --Reversal -saf-true
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+V/responce(29320): Tag Msg --Reversal -saf-true
+E/WifiStateMachine(  757): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=2.66 targetRoamBSSID=any RSSI=-70
+E/WifiStateMachine(  757): WifiStateMachine starting scan for "NET"-WPA_PSK with 2417
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SCAN TYPE=ONLY freq=2417'
+D/wpa_supplicant( 3730): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 3730): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 3730): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 3730): wlan0: Add radio work 'scan'@0xb88e32d0
+D/wpa_supplicant( 3730): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 3730): wlan0: Starting radio work 'scan'@0xb88e32d0 after 0.000063 second wait
+D/wpa_supplicant( 3730): wlan0: nl80211: scan request
+I/WifiHAL (  757): Poll result = 1
+D/wpa_supplicant( 3730): wlan0: nl80211: Scan trigger
+I/WifiHAL (  757): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  757): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+D/wpa_supplicant( 3730): wlan0: Event SCAN_STARTED (49) received
+I/WifiHAL (  757): event ignored!!
+D/wpa_supplicant( 3730): wlan0: Own scan request started a scan in 0.000134 seconds
+D/wpa_supplicant( 3730): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_757-2\x00
+I/WifiHAL (  757): Poll result = 1
+I/WifiHAL (  757): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  757): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  757): event ignored!!
+D/wpa_supplicant( 3730): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 3730): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 3730): wlan0: Scan completed in 0.092322 seconds
+D/wpa_supplicant( 3730): wlan0: BSS: Start scan result update 2289
+D/wpa_supplicant( 3730): BSS: last_scan_res_used=20/64
+D/wpa_supplicant( 3730): wlan0: Scan-only results received
+D/wpa_supplicant( 3730): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_757-2\x00
+D/wpa_supplicant( 3730): wlan0: Radio work 'scan'@0xb88e32d0 done in 0.094526 seconds
+D/wpa_supplicant( 3730): wlan0: Control interface command 'BSS RANGE=0- MASK=0x21987'
+D/wpa_supplicant( 3730): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+V/responce(29320): Tag Msg --Reversal -saf-true
+D/hardware_info(  265): hw_info_append_hw_type : device_name = speaker
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+V/responce(29320): Tag Msg --Reversal -saf-true
+V/responce(29320): Tag Msg --Reversal -saf-true
+V/FA      (29320): Inactivity, disconnecting from the service
+V/FA      (29320): onUnbind called for intent. action: com.google.android.gms.measurement.START
+V/FA      (29320): Local AppMeasurementService is shutting down
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+V/responce(29320): Tag Msg --Reversal -saf-true
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+V/responce(29320): Tag Msg --Reversal -saf-true
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+V/responce(29320): Tag Msg --Reversal -saf-true
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+V/responce(29320): Tag Msg --onFinish -saf-
+V/responce(29320): Tag Msg --Timer -2
+V/responce(29320): Tag Msg --getConnectionStatus -true
+V/responce(29320): Tag Msg --TYPE_WIFI
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+V/responce(29320): Tag Msg --checkSAF --ENQUEUED
+V/responce(29320): Tag Msg --safModelEntitieslength-----0
+V/responce(29320): Tag Msg --retailerDataModel-----RetailerDataModel{nextLoad='', reconcillationTime='', retailerNameInArabic='åÙÑÖ ÓäêåÇæ ÇäÓêá ääÇèÇæê ÇäåæÒä', retailerNumberEnglish='800150400566', retailerNameEnglish='Digital Pay', retailerLanguageIndicator='1', terminalCurrencyCode='682', terminalCountryCode='682', transactionCurrencyExponent='02', currencySymbolArabic='', currencySymbolEnglish='SAR', arabicReceipt1='', arabicReceipt2='', englishReceipt1='', englishReceipt2='', retailerAddress1Arabic='×Ñêâ Çäåäã ÎÇäÏ', retailerAddress1English='KING KHALIED ROAD', retailerAddress2Arabic='ÈÑêÏÉ', retailerAddress2English='', terminalCapability='E0F0C8', additionalTerminalCapabilities='D000F0A000', downloadPhoneNumber='', eMVTerminalType='22', automaticLoad='0', sAFRetryLimit='03', sAFDefaultMessageTransmissionNumber='02'}
+I/WM-WorkerWrapper(29320): Worker result FAILURE for Work [ id=f33a8f42-b78b-492b-92d5-e39d0221c53c, tags={ com.tarang.payswiff.worker.SAFWorker } ]
+V/responce(29320): Tag Msg --checkSAF --RUNNING
+V/responce(29320): Tag Msg --checkSAF --FAILED
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/ConnectivityManager.CallbackHandler( 2666): CM callback handler got msg 524290
+D/ConnectivityManager.CallbackHandler( 2707): CM callback handler got msg 524290
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+W/Searchables(  757): No global search activity found
+I/InputReader(  757): Reconfiguring input devices.  changes=0x00000010
+D/BackupManagerService(  757): Received broadcast Intent { act=android.intent.action.PACKAGE_CHANGED dat=package:com.tarang.payswiff flg=0x4000010 (has extras) }
+D/RegisteredServicesCache( 3050): Intent action: android.intent.action.PACKAGE_CHANGED
+D/Documents( 6755): Update found 5 roots in 10ms
+D/MultiSeManager( 3050): getInstance
+D/MultiSeManager( 3050): getInstance
+D/MultiSeManager( 3050): getMultiSeServices()
+D/GestureManagerService( 3076): echo 0 to /sys/class/gesture/gesture_ft5x06/enable
+W/GestureManagerService( 3076): failed to set node: java.io.FileNotFoundException: /sys/class/gesture/gesture_ft5x06/enable: open failed: ENOENT (No such file or directory)
+I/Finsky  ( 2707): [1] com.google.android.finsky.packagemanager.impl.PackageMonitorReceiverImpl.a(12): PackageMonitor received: android.intent.action.PACKAGE_CHANGED
+I/Launcher( 3157): Deferring update until onResume
+I/Finsky  ( 2707): [1] com.google.android.finsky.p2p.e.b(20): Frosting ID looked up on UI thread. Caller should move to a background thread.
+I/Finsky  ( 2707): [1] com.google.android.finsky.cz.d.onTrimMemory(4): Memory trim requested to level 80
+I/Finsky  ( 2707): [1] com.google.android.finsky.p2p.f.run(3): Wrote row to frosting DB: 509
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+I/Finsky  ( 2707): [343] com.google.android.finsky.bo.ad.run(6): Stats for Executor: BlockingExecutor com.google.android.finsky.bo.ae@1749ea83[Running, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 6]
+I/Finsky  ( 2707): [343] com.google.android.finsky.bo.ad.run(6): Stats for Executor: LightweightExecutor com.google.android.finsky.bo.ae@143ef400[Running, pool size = 3, active threads = 0, queued tasks = 0, completed tasks = 46]
+I/Finsky  ( 2707): [343] com.google.android.finsky.bo.ad.run(6): Stats for Executor: bgExecutor com.google.android.finsky.bo.ae@5261439[Running, pool size = 4, active threads = 0, queued tasks = 0, completed tasks = 27]
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+E/WifiStateMachine(  757): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=1.03 targetRoamBSSID=any RSSI=-71
+E/WifiStateMachine(  757): WifiStateMachine starting scan for "NET"-WPA_PSK with 2417
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SCAN TYPE=ONLY freq=2417'
+D/wpa_supplicant( 3730): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 3730): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 3730): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 3730): wlan0: Add radio work 'scan'@0xb88e32d0
+D/wpa_supplicant( 3730): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 3730): wlan0: Starting radio work 'scan'@0xb88e32d0 after 0.000062 second wait
+D/wpa_supplicant( 3730): wlan0: nl80211: scan request
+D/wpa_supplicant( 3730): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 3730): wlan0: Event SCAN_STARTED (49) received
+I/WifiHAL (  757): Poll result = 1
+D/wpa_supplicant( 3730): wlan0: Own scan request started a scan in 0.000144 seconds
+I/WifiHAL (  757): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  757): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  757): event ignored!!
+D/wpa_supplicant( 3730): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_757-2\x00
+I/WifiHAL (  757): Poll result = 1
+I/WifiHAL (  757): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  757): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  757): event ignored!!
+D/wpa_supplicant( 3730): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 3730): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 3730): wlan0: Scan completed in 0.068739 seconds
+D/wpa_supplicant( 3730): wlan0: BSS: Start scan result update 2290
+D/wpa_supplicant( 3730): wlan0: BSS: Add new id 2665 BSSID 32:07:4d:8a:55:f4 SSID 'AndroidAP55f4'
+D/wpa_supplicant( 3730): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_757-2\x00
+D/wpa_supplicant( 3730): BSS: last_scan_res_used=21/64
+D/wpa_supplicant( 3730): wlan0: Scan-only results received
+D/wpa_supplicant( 3730): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_757-2\x00
+D/wpa_supplicant( 3730): wlan0: Radio work 'scan'@0xb88e32d0 done in 0.071123 seconds
+D/wpa_supplicant( 3730): wlan0: Control interface command 'BSS RANGE=0- MASK=0x21987'
+D/wpa_supplicant( 3730): wlan0: Control interface command 'STATUS-NO_EVENTS'
+I/Atfwd_Sendcmd(31583): AtCmdFwd service not ready - Exhausted retry attempts - :6
+I/Atfwd_Daemon(31583): result : -1 	 ,Init step :2 	 ,qmiErrorCode: 0
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/ConnectivityManager.CallbackHandler( 2666): CM callback handler got msg 524290
+D/ConnectivityManager.CallbackHandler( 2707): CM callback handler got msg 524290
+V/NdkpLib (  757): >>>>>NDK_SysGoSuspend_Extern<<<<<
+E/NdkpLib (  757): Data packed cmd=CMD_NDK_SysGoSuspend_Extern:
+E/NdkpLib (  757): 90 00 00 00 76
+V/NdkpLib (  757): send_resp_a_cmd,line494: ret=12
+E/NdkpLib (  757): CMD_NDK_SysGoSuspend_Extern ret=0, executed from K21 in SUCCESS!
+V/ipcLib  (  757): intoSysGoSuspend_Extern! 0 
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/ConnectivityManager.CallbackHandler( 2666): CM callback handler got msg 524290
+D/ConnectivityManager.CallbackHandler( 2707): CM callback handler got msg 524290
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+W/Atfwd_Sendcmd(31583): AtCmdFwd service not published, waiting... retryCnt : 1
+D/StatusBar.NetworkController( 2666): refreshViews: Data not connected!! Set no data type icon / Roaming
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/ConnectivityManager.CallbackHandler( 2666): CM callback handler got msg 524290
+D/ConnectivityManager.CallbackHandler( 2707): CM callback handler got msg 524290
+I/ServiceManager(31583): Waiting for service AtCmdFwd...
+D/wpa_supplicant( 3730): wlan0: Control interface command 'SIGNAL_POLL'
+D/ConnectivityManager.CallbackHandler( 2666): CM callback handler got msg 524290
+D/ConnectivityManager.CallbackHandler( 2707): CM callback handler got msg 524290

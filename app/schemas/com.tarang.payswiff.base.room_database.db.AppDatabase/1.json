@@ -1,0 +1,1046 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "2ee702ccae208e80ab64c1bc73db32a6",
+    "entities": [
+      {
+        "tableName": "TransactionModelEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mti0` TEXT, `cardIndicator` TEXT, `kernalID` TEXT, `primaryAccNo2` TEXT, `processingCode3` TEXT, `amtTransaction4` TEXT, `transmissionDateTime7` TEXT, `systemTraceAuditnumber11` TEXT, `timeLocalTransaction12` TEXT, `dateExpiration14` TEXT, `posEntrymode22` TEXT, `cardSequenceNumber23` TEXT, `functioncode24` TEXT, `posConditionCode25` TEXT, `posPinCaptureCode26` TEXT, `amtTransFee28` TEXT, `amtTranProcessingFee30` TEXT, `accuringInsituteIdCode32` TEXT, `track2Data35` TEXT, `retriRefNo37` TEXT, `authIdResCode38` TEXT, `responseCode39` TEXT, `responseData44` TEXT, `cardAcceptorTemId41` TEXT, `cardAcceptorIdCode42` TEXT, `additionalDataNational47` TEXT, `additionalDataPrivate48` TEXT, `currCodeTransaction49` TEXT, `currCodeStatleMent50` TEXT, `pinData52` TEXT, `secRelatedContInfo53` TEXT, `addlAmt54` TEXT, `iccCardSystemRelatedData55` TEXT, `iccCardSystemRelatedData55_final` TEXT, `msgReasonCode56` TEXT, `echoData59` TEXT, `reservedData62` TEXT, `reservedData62Responce` TEXT, `messageAuthenticationCodeField64` BLOB, `dataRecord72` TEXT, `reservedData124` TEXT, `macExt128` BLOB, `nameTransactionTag` TEXT, `statusTransaction` INTEGER NOT NULL, `safEntity` INTEGER NOT NULL, `startTimeTransaction` TEXT, `endTimeTransaction` TEXT, `startTimeConnection` TEXT, `endTimeConnection` TEXT, `modeTransaction` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mti0",
+            "columnName": "mti0",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardIndicator",
+            "columnName": "cardIndicator",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "kernalID",
+            "columnName": "kernalID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "primaryAccNo2",
+            "columnName": "primaryAccNo2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "processingCode3",
+            "columnName": "processingCode3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amtTransaction4",
+            "columnName": "amtTransaction4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "transmissionDateTime7",
+            "columnName": "transmissionDateTime7",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "systemTraceAuditnumber11",
+            "columnName": "systemTraceAuditnumber11",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timeLocalTransaction12",
+            "columnName": "timeLocalTransaction12",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dateExpiration14",
+            "columnName": "dateExpiration14",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posEntrymode22",
+            "columnName": "posEntrymode22",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardSequenceNumber23",
+            "columnName": "cardSequenceNumber23",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "functioncode24",
+            "columnName": "functioncode24",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posConditionCode25",
+            "columnName": "posConditionCode25",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posPinCaptureCode26",
+            "columnName": "posPinCaptureCode26",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amtTransFee28",
+            "columnName": "amtTransFee28",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amtTranProcessingFee30",
+            "columnName": "amtTranProcessingFee30",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accuringInsituteIdCode32",
+            "columnName": "accuringInsituteIdCode32",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "track2Data35",
+            "columnName": "track2Data35",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "retriRefNo37",
+            "columnName": "retriRefNo37",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "authIdResCode38",
+            "columnName": "authIdResCode38",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "responseCode39",
+            "columnName": "responseCode39",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "responseData44",
+            "columnName": "responseData44",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardAcceptorTemId41",
+            "columnName": "cardAcceptorTemId41",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardAcceptorIdCode42",
+            "columnName": "cardAcceptorIdCode42",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "additionalDataNational47",
+            "columnName": "additionalDataNational47",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "additionalDataPrivate48",
+            "columnName": "additionalDataPrivate48",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currCodeTransaction49",
+            "columnName": "currCodeTransaction49",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currCodeStatleMent50",
+            "columnName": "currCodeStatleMent50",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pinData52",
+            "columnName": "pinData52",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "secRelatedContInfo53",
+            "columnName": "secRelatedContInfo53",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "addlAmt54",
+            "columnName": "addlAmt54",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "iccCardSystemRelatedData55",
+            "columnName": "iccCardSystemRelatedData55",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "iccCardSystemRelatedData55_final",
+            "columnName": "iccCardSystemRelatedData55_final",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "msgReasonCode56",
+            "columnName": "msgReasonCode56",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "echoData59",
+            "columnName": "echoData59",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reservedData62",
+            "columnName": "reservedData62",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reservedData62Responce",
+            "columnName": "reservedData62Responce",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "messageAuthenticationCodeField64",
+            "columnName": "messageAuthenticationCodeField64",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataRecord72",
+            "columnName": "dataRecord72",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reservedData124",
+            "columnName": "reservedData124",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "macExt128",
+            "columnName": "macExt128",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nameTransactionTag",
+            "columnName": "nameTransactionTag",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statusTransaction",
+            "columnName": "statusTransaction",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "saf",
+            "columnName": "safEntity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startTimeTransaction",
+            "columnName": "startTimeTransaction",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTimeTransaction",
+            "columnName": "endTimeTransaction",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startTimeConnection",
+            "columnName": "startTimeConnection",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTimeConnection",
+            "columnName": "endTimeConnection",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "modeTransaction",
+            "columnName": "modeTransaction",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "TMSMessageTextModelEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `messageCode` TEXT, `displayCode` TEXT, `arabicMessageText` TEXT, `englishMessageText` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "messageCode",
+            "columnName": "messageCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "displayCode",
+            "columnName": "displayCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "arabicMessageText",
+            "columnName": "arabicMessageText",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "englishMessageText",
+            "columnName": "englishMessageText",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SAFModelEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mti0` TEXT, `cardIndicator` TEXT, `kernalID` TEXT, `primaryAccNo2` TEXT, `processingCode3` TEXT, `amtTransaction4` TEXT, `transmissionDateTime7` TEXT, `systemTraceAuditnumber11` TEXT, `timeLocalTransaction12` TEXT, `dateExpiration14` TEXT, `posEntrymode22` TEXT, `cardSequenceNumber23` TEXT, `functioncode24` TEXT, `posConditionCode25` TEXT, `posPinCaptureCode26` TEXT, `amtTransFee28` TEXT, `amtTranProcessingFee30` TEXT, `accuringInsituteIdCode32` TEXT, `track2Data35` TEXT, `retriRefNo37` TEXT, `authIdResCode38` TEXT, `responseCode39` TEXT, `cardAcceptorTemId41` TEXT, `cardAcceptorIdCode42` TEXT, `additionalDataNational47` TEXT, `additionalDataPrivate48` TEXT, `currCodeTransaction49` TEXT, `currCodeStatleMent50` TEXT, `pinData52` TEXT, `secRelatedContInfo53` TEXT, `addlAmt54` TEXT, `iccCardSystemRelatedData55` TEXT, `iccCardSystemRelatedData55_final` TEXT, `msgReasonCode56` TEXT, `echoData59` TEXT, `reservedData62` TEXT, `reservedData62Responce` TEXT, `messageAuthenticationCodeField64` BLOB, `dataRecord72` TEXT, `reservedData124` TEXT, `macExt128` BLOB, `nameTransactionTag` TEXT, `safEntity` INTEGER NOT NULL, `statusTransaction` INTEGER NOT NULL, `responseData44` TEXT, `startTimeTransaction` TEXT, `endTimeTransaction` TEXT, `startTimeConnection` TEXT, `endTimeConnection` TEXT, `modeTransaction` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mti0",
+            "columnName": "mti0",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardIndicator",
+            "columnName": "cardIndicator",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "kernalID",
+            "columnName": "kernalID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "primaryAccNo2",
+            "columnName": "primaryAccNo2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "processingCode3",
+            "columnName": "processingCode3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amtTransaction4",
+            "columnName": "amtTransaction4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "transmissionDateTime7",
+            "columnName": "transmissionDateTime7",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "systemTraceAuditnumber11",
+            "columnName": "systemTraceAuditnumber11",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timeLocalTransaction12",
+            "columnName": "timeLocalTransaction12",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dateExpiration14",
+            "columnName": "dateExpiration14",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posEntrymode22",
+            "columnName": "posEntrymode22",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardSequenceNumber23",
+            "columnName": "cardSequenceNumber23",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "functioncode24",
+            "columnName": "functioncode24",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posConditionCode25",
+            "columnName": "posConditionCode25",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posPinCaptureCode26",
+            "columnName": "posPinCaptureCode26",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amtTransFee28",
+            "columnName": "amtTransFee28",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amtTranProcessingFee30",
+            "columnName": "amtTranProcessingFee30",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accuringInsituteIdCode32",
+            "columnName": "accuringInsituteIdCode32",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "track2Data35",
+            "columnName": "track2Data35",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "retriRefNo37",
+            "columnName": "retriRefNo37",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "authIdResCode38",
+            "columnName": "authIdResCode38",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "responseCode39",
+            "columnName": "responseCode39",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardAcceptorTemId41",
+            "columnName": "cardAcceptorTemId41",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardAcceptorIdCode42",
+            "columnName": "cardAcceptorIdCode42",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "additionalDataNational47",
+            "columnName": "additionalDataNational47",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "additionalDataPrivate48",
+            "columnName": "additionalDataPrivate48",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currCodeTransaction49",
+            "columnName": "currCodeTransaction49",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currCodeStatleMent50",
+            "columnName": "currCodeStatleMent50",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pinData52",
+            "columnName": "pinData52",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "secRelatedContInfo53",
+            "columnName": "secRelatedContInfo53",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "addlAmt54",
+            "columnName": "addlAmt54",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "iccCardSystemRelatedData55",
+            "columnName": "iccCardSystemRelatedData55",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "iccCardSystemRelatedData55_final",
+            "columnName": "iccCardSystemRelatedData55_final",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "msgReasonCode56",
+            "columnName": "msgReasonCode56",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "echoData59",
+            "columnName": "echoData59",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reservedData62",
+            "columnName": "reservedData62",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reservedData62Responce",
+            "columnName": "reservedData62Responce",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "messageAuthenticationCodeField64",
+            "columnName": "messageAuthenticationCodeField64",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataRecord72",
+            "columnName": "dataRecord72",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reservedData124",
+            "columnName": "reservedData124",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "macExt128",
+            "columnName": "macExt128",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nameTransactionTag",
+            "columnName": "nameTransactionTag",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "saf",
+            "columnName": "safEntity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statusTransaction",
+            "columnName": "statusTransaction",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "responseData44",
+            "columnName": "responseData44",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startTimeTransaction",
+            "columnName": "startTimeTransaction",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTimeTransaction",
+            "columnName": "endTimeTransaction",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startTimeConnection",
+            "columnName": "startTimeConnection",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTimeConnection",
+            "columnName": "endTimeConnection",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "modeTransaction",
+            "columnName": "modeTransaction",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "TMSPublicKeyModelEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `RID` TEXT, `keyIndex` TEXT, `hashId` TEXT, `digitalSignatureId` TEXT, `publicKey` TEXT, `exponent` TEXT, `checkSum` TEXT, `caPublicKeyLength` TEXT, `caPublicKeyExpiryDate` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "RID",
+            "columnName": "RID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "keyIndex",
+            "columnName": "keyIndex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hashId",
+            "columnName": "hashId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "digitalSignatureId",
+            "columnName": "digitalSignatureId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "publicKey",
+            "columnName": "publicKey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "exponent",
+            "columnName": "exponent",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "checkSum",
+            "columnName": "checkSum",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "caPublicKeyLength",
+            "columnName": "caPublicKeyLength",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "caPublicKeyExpiryDate",
+            "columnName": "caPublicKeyExpiryDate",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "TMSCardSchemeEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `cardIndicator` TEXT, `cardNameArabic` TEXT, `cardNameEnglish` TEXT, `cardSchemeID` TEXT, `merchantCategoryCode` TEXT, `merchantID` TEXT, `terminalID` TEXT, `emvEnabled` INTEGER NOT NULL, `serviceCodeEnabled` INTEGER NOT NULL, `offlineRefundEnabled` INTEGER NOT NULL, `transactionAllowed` TEXT, `cardHolderAuth` TEXT, `supervisorFunctions` TEXT, `manualEntryEnabled` TEXT, `floorLimitEnabled` INTEGER NOT NULL, `terminalFloorLimit` TEXT, `terminalFloorLimitFallback` TEXT, `maximumCashback` TEXT, `maxTransactionAmtIndicator` TEXT, `maxTransactionAmt` TEXT, `luhnCheckEnabled` INTEGER NOT NULL, `expiryDataPosition` TEXT, `delayCallSetup` TEXT, `binRanges` TEXT, `cardPrefexSequence` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cardIndicator",
+            "columnName": "cardIndicator",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardNameArabic",
+            "columnName": "cardNameArabic",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardNameEnglish",
+            "columnName": "cardNameEnglish",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardSchemeID",
+            "columnName": "cardSchemeID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "merchantCategoryCode",
+            "columnName": "merchantCategoryCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "merchantID",
+            "columnName": "merchantID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "terminalID",
+            "columnName": "terminalID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "emvEnabled",
+            "columnName": "emvEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serviceCodeEnabled",
+            "columnName": "serviceCodeEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "offlineRefundEnabled",
+            "columnName": "offlineRefundEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "transactionAllowed",
+            "columnName": "transactionAllowed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardHolderAuth",
+            "columnName": "cardHolderAuth",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "supervisorFunctions",
+            "columnName": "supervisorFunctions",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "manualEntryEnabled",
+            "columnName": "manualEntryEnabled",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "floorLimitEnabled",
+            "columnName": "floorLimitEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "terminalFloorLimit",
+            "columnName": "terminalFloorLimit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "terminalFloorLimitFallback",
+            "columnName": "terminalFloorLimitFallback",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maximumCashback",
+            "columnName": "maximumCashback",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxTransactionAmtIndicator",
+            "columnName": "maxTransactionAmtIndicator",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxTransactionAmt",
+            "columnName": "maxTransactionAmt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "luhnCheckEnabled",
+            "columnName": "luhnCheckEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "expiryDataPosition",
+            "columnName": "expiryDataPosition",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "delayCallSetup",
+            "columnName": "delayCallSetup",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "binRanges",
+            "columnName": "binRanges",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardPrefexSequence",
+            "columnName": "cardPrefexSequence",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "TMSAIDdataModelEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `aid` TEXT, `aidLable` TEXT, `aidTerminalVersionNumber` TEXT, `exactOnlySelection` INTEGER NOT NULL, `skipEMVProcess` INTEGER NOT NULL, `defaultTDOL` TEXT, `defaultDDOL` TEXT, `emvAdditionalTag` TEXT, `denialActionCode` TEXT, `onlineActionCode` TEXT, `defaultActionCode` TEXT, `trsholdValue` TEXT, `targetPercentage` TEXT, `maxTargetPercentage` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "aid",
+            "columnName": "aid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "aidLable",
+            "columnName": "aidLable",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "aidTerminalVersionNumber",
+            "columnName": "aidTerminalVersionNumber",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "exactOnlySelection",
+            "columnName": "exactOnlySelection",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "skipEMVProcess",
+            "columnName": "skipEMVProcess",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defaultTDOL",
+            "columnName": "defaultTDOL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "defaultDDOL",
+            "columnName": "defaultDDOL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "emvAdditionalTag",
+            "columnName": "emvAdditionalTag",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "denialActionCode",
+            "columnName": "denialActionCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "onlineActionCode",
+            "columnName": "onlineActionCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "defaultActionCode",
+            "columnName": "defaultActionCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "trsholdValue",
+            "columnName": "trsholdValue",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "targetPercentage",
+            "columnName": "targetPercentage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxTargetPercentage",
+            "columnName": "maxTargetPercentage",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2ee702ccae208e80ab64c1bc73db32a6')"
+    ]
+  }
+}
