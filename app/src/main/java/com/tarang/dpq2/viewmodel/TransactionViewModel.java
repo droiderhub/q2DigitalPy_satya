@@ -224,7 +224,8 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                         AppConfig.printerDataAvailable = true;
                         showAlert.setValue(5);
                         //added successflow for SAF transaction
-                        successFlow();
+                        statusMsg = "";
+                        showApprovedMessage();
                         printSAFReceipt(true);
                     }
                 }
@@ -500,6 +501,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     private void showApprovedMessage() {
+        Logger.v("Status msg : "+ statusMsg);
         if (statusMsg.trim().length() != 0) {
             Logger.v("Already data set");
             return;

@@ -1443,6 +1443,7 @@ public class CreatePacket implements ConstantAppValue {
         reqObj.setMessageReasonCode25(ConstantAppValue.ICC_PROCESSED);
         if (isSuccess == 0) {
             reqObj.setResponseCode39(ConstantAppValue.SAF_APPROVED);
+            AppManager.getInstance().setDe39(ConstantAppValue.SAF_APPROVED);
             reqObj.setAuthIdResCode38(ByteConversionUtils.generateTraceNumber(6));
         } else if (isSuccess == 1) {
             reqObj.setResponseCode39(ConstantAppValue.SAF_REJECTED);
