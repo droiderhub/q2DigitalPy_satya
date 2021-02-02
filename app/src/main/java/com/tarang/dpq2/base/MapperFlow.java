@@ -625,6 +625,7 @@ public class MapperFlow implements ConstantApp {
             SocketConnectionWorker.TRANSACTION_START_TIME = "";
             AppManager.getInstance().setResponseMTI(null);
             AppManager.getInstance().setMenuItem(MenuModel.getInstance().getTransactionMenu(context).get(0));
+
             Toast toast = Toast.makeText(context, context.getString(R.string.please_enter_amount), Toast.LENGTH_SHORT);
             if (!amount.equalsIgnoreCase("") && amount.replaceAll(",", "").trim().length() != 0 && amount.replaceAll("\\.", "").trim().length() != 0) {
                 Double amountValue = Double.valueOf(amount.replaceAll(",", ""));

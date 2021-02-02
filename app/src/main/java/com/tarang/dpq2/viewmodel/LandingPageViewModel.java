@@ -39,6 +39,8 @@ import com.tarang.dpq2.worker.SAFWorker;
 
 import java.util.List;
 
+import static com.cloudpos.jniinterface.EMVJNIInterface.emv_set_kernel_attr;
+
 public class LandingPageViewModel extends BaseViewModel {
 
     private LandingPageRepository repo;
@@ -100,6 +102,7 @@ public class LandingPageViewModel extends BaseViewModel {
     }
 
     public void startTimerRemoveCard() {
+        Logger.v("startTimerRemoveCard()");
         initSound();
         timer = new CountDownTimer(3000, 1000) {
 
@@ -341,9 +344,11 @@ public class LandingPageViewModel extends BaseViewModel {
         repo.loadKeys(new Observer<WorkInfo>() {
             @Override
             public void onChanged(WorkInfo workInfo) {
-                Logger.v("STATE --" + workInfo.getState());
-                if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                    support.initReaderLandingPage();
+                if (workInfo != null) {
+                    Logger.v("STATE --" + workInfo.getState());
+                    if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                        support.initReaderLandingPage();
+                    }
                 }
             }
         });
@@ -368,9 +373,11 @@ public class LandingPageViewModel extends BaseViewModel {
         repo.loadTms(new Observer<WorkInfo>() {
             @Override
             public void onChanged(WorkInfo workInfo) {
-                Logger.v("STATE --" + workInfo.getState());
-                if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                    loadKeys();
+                if (workInfo != null) {
+                    Logger.v("STATE --" + workInfo.getState());
+                    if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                        loadKeys();
+                    }
                 }
             }
         });
@@ -458,9 +465,6 @@ public class LandingPageViewModel extends BaseViewModel {
 
 
     public void initReaderLandingPage() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 Logger.v("initReaderLandingPage()_landingpageviewmodel");
                 if (AppManager.getInstance().getInitializationStatus(context)) {
 //            if (AppInit.loadKernal) {
@@ -473,9 +477,6 @@ public class LandingPageViewModel extends BaseViewModel {
 //                loadKeys();
 //            }
                 }
-            }
-        }).start();
-
     }
 
     public void closeCardReader() {

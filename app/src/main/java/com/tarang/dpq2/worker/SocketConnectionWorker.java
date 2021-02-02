@@ -229,6 +229,10 @@ public class SocketConnectionWorker extends Worker {
 
             byte[] finalEchoResponse = (CreatePacket.createISORequest());
 
+            if (finalEchoResponse == null) {
+                return Result.failure(data.build());
+            }
+
             // 1. get Input and Output streams
             bos = new BufferedOutputStream(requestSocket.getOutputStream());
             bis = new BufferedInputStream(requestSocket.getInputStream());

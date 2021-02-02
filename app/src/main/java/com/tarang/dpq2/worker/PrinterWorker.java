@@ -135,8 +135,11 @@ public class PrinterWorker extends Worker {
                     modelList.add(new KeyValueModel("Service Code",String.valueOf(dataList.get(i).isServiceCodeEnabled())));
                     modelList.add(new KeyValueModel(context.getString(R.string.terminal_floor_limit), dataList.get(i).getTerminalFloorLimit()));
                     modelList.add(new KeyValueModel("Floor Limit Enabled",String.valueOf(dataList.get(i).isFloorLimitEnabled())));
+                    modelList.add(new KeyValueModel("Forced Offline", "" + (dataList.get(i).isOfflineRefundEnabled())));
                     modelList.add(new KeyValueModel("Max Cashback Allowed",dataList.get(i).getMaximumCashback()));
                     modelList.add(new KeyValueModel("Max Amount Allowed",dataList.get(i).getMaxTransactionAmt()));
+                    modelList.add(new KeyValueModel("MOD Check", "" + dataList.get(i).isLuhnCheckEnabled()));
+                    modelList.add(new KeyValueModel("Delay Call setup", "" + dataList.get(i).getDelayCallSetup()));
 
                     modelList.add(new KeyValueModel("TRANSACTION PERMISSION"));
                     modelList.add(new KeyValueModel("-----------"));

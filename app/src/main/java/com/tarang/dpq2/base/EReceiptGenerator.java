@@ -170,9 +170,9 @@ public class EReceiptGenerator {
             address.addCell(getCellArabic(printerModel.getTerminalCityArabic() + ", " + printerModel.getTerminalStreetArabic() + "\n", PdfPCell.ALIGN_CENTER, font_a10));
             document.add(address);
 
-            String content1 = printerModel.getTerminalStreetEnglish() + ", " + printerModel.getTerminaCityEnglish() + "\n" + printerModel.getRetailerTelephone() + "\n\n";
+            String content1 = printerModel.getTerminalStreetEnglish() + ", " + printerModel.getTerminaCityEnglish() + "\n TEL +" + printerModel.getRetailerTelephone() + "\n\n";
             //"Whitefield,Bangalore"+"\n"+"080-23232323"+"\n";
-            Paragraph p1 = new Paragraph(content1, basicFont);
+            Paragraph p1 = new Paragraph(content1, font_n9);
             p1.setAlignment(1);
             document.add(p1);
 

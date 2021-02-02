@@ -1052,6 +1052,7 @@ public class AppManager {
                 editor.putString("getEndTimeConnection", cEndTime);
                 editor.putString("getStartTimeTransaction", startTime);
                 editor.putString("getEndTimeTransaction", endTime);
+                editor.putString("getLastRRN", transaction.getRetriRefNo37());
                 editor.apply();
             }
         }

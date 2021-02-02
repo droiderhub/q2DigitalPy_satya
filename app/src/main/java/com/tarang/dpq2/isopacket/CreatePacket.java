@@ -120,23 +120,27 @@ public class CreatePacket implements ConstantAppValue {
 
     // Create byte array from ISO Model class
     public static byte[] createISORequest() {
-        Logger.v("Send Packet --" + reqObj.toString());
-        String RES_TPDU_HEADER = "600" + AppManager.getInstance().getString(ConstantApp.SPRM_NII_ID) + "0000";
-        byte[] isoFinalBuffer = IsoRequest.createISORequest(reqObj);
-        if (AppInit.HITTING_LIVE_SERVER) {
-            byte[] tpduHeader = ISOUtil.hex2byte(RES_TPDU_HEADER);
-            byte[] isoBufferEchoResponsetpduHeader = ISOUtil.concat(tpduHeader, isoFinalBuffer);
-            byte[] echoResponseLength = ByteConversionUtils.intToByteArray(isoBufferEchoResponsetpduHeader.length); //+TPDU_HEADER_LENGTH);
-            byte[] finalData = ISOUtil.concat(echoResponseLength, isoBufferEchoResponsetpduHeader);
-            String hexa = ByteConversionUtils.byteArrayToHexString(finalData, finalData.length, false);
-            Logger.v("hexa -1-" + hexa);
-            return finalData;
+        if (reqObj != null) {
+            Logger.v("Send Packet --" + reqObj.toString());
+            String RES_TPDU_HEADER = "600" + AppManager.getInstance().getString(ConstantApp.SPRM_NII_ID) + "0000";
+            byte[] isoFinalBuffer = IsoRequest.createISORequest(reqObj);
+            if (AppInit.HITTING_LIVE_SERVER) {
+                byte[] tpduHeader = ISOUtil.hex2byte(RES_TPDU_HEADER);
+                byte[] isoBufferEchoResponsetpduHeader = ISOUtil.concat(tpduHeader, isoFinalBuffer);
+                byte[] echoResponseLength = ByteConversionUtils.intToByteArray(isoBufferEchoResponsetpduHeader.length); //+TPDU_HEADER_LENGTH);
+                byte[] finalData = ISOUtil.concat(echoResponseLength, isoBufferEchoResponsetpduHeader);
+                String hexa = ByteConversionUtils.byteArrayToHexString(finalData, finalData.length, false);
+                Logger.v("hexa -1-" + hexa);
+                return finalData;
+            } else {
+                byte[] echoResponseLength = ByteConversionUtils.intToByteArray(isoFinalBuffer.length); //+TPDU_HEADER_LENGTH);
+                byte[] finalData = ISOUtil.concat(echoResponseLength, isoFinalBuffer);
+                String hexa = ByteConversionUtils.byteArrayToHexString(finalData, finalData.length, false);
+                Logger.v("hexa -1-" + hexa);
+                return finalData;
+            }
         } else {
-            byte[] echoResponseLength = ByteConversionUtils.intToByteArray(isoFinalBuffer.length); //+TPDU_HEADER_LENGTH);
-            byte[] finalData = ISOUtil.concat(echoResponseLength, isoFinalBuffer);
-            String hexa = ByteConversionUtils.byteArrayToHexString(finalData, finalData.length, false);
-            Logger.v("hexa -1-" + hexa);
-            return finalData;
+            return null;
         }
     }
 

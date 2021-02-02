@@ -4,6 +4,7 @@ import android.os.CountDownTimer;
 
 import com.tarang.dpq2.base.AppManager;
 import com.tarang.dpq2.base.Logger;
+import com.tarang.dpq2.base.terminal_sdk.AppConfig;
 import com.tarang.dpq2.base.terminal_sdk.event.SimpleTransferListener;
 import com.tarang.dpq2.model.DeviceSpecificModel;
 import com.tarang.dpq2.worker.SocketConnectionWorker;
@@ -23,7 +24,12 @@ public class CountDownResponseTimer {
                 //   mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
                 //here you can have your logic to set text to edittext
                 Logger.v("Reversal --" + SimpleTransferListener.disableReversal);
-
+                if(SimpleTransferListener.isScreenAvailable == 2){
+                    if(AppConfig.EMV.consumeType == 1 || AppConfig.EMV.consumeType == 2){
+                        SimpleTransferListener.isEMVCompleted = true;
+                    }
+                    cancelTimerForce(567);
+                }
             }
 
             public void onFinish() {

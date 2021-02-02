@@ -163,31 +163,22 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     public void initSoundPlay(final boolean playTwise) {
-        spi.initLoad(context);
-        spi.initListner(context, new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                Logger.v("Sound listner 000_TTTT");
-                if (!playTwise) {
-                    spi.initListner(context, new SoundPool.OnLoadCompleteListener() {
-                        @Override
-                        public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                            Logger.v("Sound listner 000_TTTF");
+        Logger.v("Sound listner 000 - " + isPlayedStatus + "--" + isPrinted);
+        if (!isPlayedStatus) {
+            isPlayedStatus = true;
+//            spi.initLoad(context);
+            spi.initLoad(context, new SoundPool.OnLoadCompleteListener() {
+                @Override
+                public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                    if (!isPrinted) {
+                        if (!playTwise)
                             spi.play();
-                        }
-                    });
-                } else {
-                    spi.initListner(context, new SoundPool.OnLoadCompleteListener() {
-                        @Override
-                        public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                            Logger.v("Sound listner 000");
+                        else
                             spi.playTwice();
-                        }
-                    });
+                    }
                 }
-
-            }
-        });
+            });
+        }
     }
 
     public void insertOrUpdateTransaction() {
@@ -501,7 +492,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     private void showApprovedMessage() {
-        Logger.v("Status msg : "+ statusMsg);
+        Logger.v("Status msg : " + statusMsg);
         if (statusMsg.trim().length() != 0) {
             Logger.v("Already data set");
             return;
@@ -712,16 +703,19 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                     @Override
                     public void onChanged(final WorkInfo workInfo) {
                         Logger.v("printReceipt -State-2-" + workInfo.getState());
-                        if (checkSuccessStatus(workInfo)) {
-                            doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
-                                @Override
-                                public void onFinish() {
-                                    Logger.v("OnFinsh Receipt");
-                                    isPrinted = true;
-                                    if (checkPaper(workInfo, 2) != 0)
-                                        transsactionReversal(false);
-                                }
-                            });
+                        if (workInfo != null) {
+                            Logger.v("printReceipt -State-2-" + workInfo.getState());
+                            if (checkSuccessStatus(workInfo)) {
+                                doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
+                                    @Override
+                                    public void onFinish() {
+                                        Logger.v("OnFinsh Receipt");
+                                        isPrinted = true;
+                                        if (checkPaper(workInfo, 2) != 0)
+                                            transsactionReversal(false);
+                                    }
+                                });
+                            }
                         }
                     }
                 });
@@ -768,6 +762,9 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
         } else {
             Logger.v("moveNext_moveToLandingPage");
             MapperFlow.getInstance().moveToLandingPage(context, true, 13);
+            new SdkSupport(context).closeCardReader();
+            SimpleTransferListener.getInstance(context).stopEMVFlow();
+            SimpleTransferListener.getInstance(context).stopEMVProcessThread();
         }
 //        } catch (DeviceRTException e) {
 //            MapperFlow.getInstance().moveToLandingPage(context, true, 14);
@@ -780,27 +777,29 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
         repo.printSAFReceipt(new Observer<WorkInfo>() {
             @Override
             public void onChanged(WorkInfo workInfo) {
-                Logger.v("printReceipt -State-3-" + workInfo.getState());
-                if (checkSuccessStatus(workInfo) && (checkPaper(workInfo, (customerCopy) ? 3 : 4)) != 0) {
-                    doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
-                        @Override
-                        public void onFinish() {
-                            Logger.v("OnFinsh Receipt");
-                            isSAFPrint = true;
-                            if ((reqObj.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_DECLINED)
-                                    || reqObj.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_APPROVED_UNABLE)
-                                    || reqObj.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_DECLINED))
-                                    && SimpleTransferListener.doReversal && SimpleTransferListener.madeOnlineConnection_new) {
-                                ((BaseActivity) context).resetTimer();
-                                transsactionReversal(false);
-                            } else if (customerCopy)
-                                showAlert.postValue(11);
-                                //showAlert.setValue(11);
+                if (workInfo != null) {
+                    Logger.v("printReceipt -State-3-" + workInfo.getState());
+                    if (checkSuccessStatus(workInfo) && (checkPaper(workInfo, (customerCopy) ? 3 : 4)) != 0) {
+                        doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
+                            @Override
+                            public void onFinish() {
+                                Logger.v("OnFinsh Receipt");
+                                isSAFPrint = true;
+                                if ((reqObj.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_DECLINED)
+                                        || reqObj.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_APPROVED_UNABLE)
+                                        || reqObj.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_DECLINED))
+                                        && SimpleTransferListener.doReversal && SimpleTransferListener.madeOnlineConnection_new) {
+                                    ((BaseActivity) context).resetTimer();
+                                    transsactionReversal(false);
+                                } else if (customerCopy)
+                                    showAlert.postValue(11);
+                                    //showAlert.setValue(11);
 
-                            else
-                                moveNext(1);
-                        }
-                    });
+                                else
+                                    moveNext(1);
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -851,7 +850,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                             final boolean manualReversal = AppManager.getInstance().isReversalManual();
                             if (manualReversal) {
                                 Utils.dismissDialoge();
-                                showAlert.setValue(15);
+                                showAlert.setValue(2);
                             } else
                                 reversalFlow();
                         } else if (current_count == -2) {
@@ -1519,7 +1518,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                     moveNext(2);
                 } else if (position == SimpleTransferListener.DO_WAVE_AGAIN) {
                     Logger.v("DO_WAVE_AGAIN---");
-                    spi.initListner(context, new SoundPool.OnLoadCompleteListener() {
+                    spi.initLoad(context, new SoundPool.OnLoadCompleteListener() {
                         @Override
                         public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                             Logger.v("Sound listner 000");
@@ -1536,7 +1535,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                     checkContactLessPresent();
                 } else if (position == SimpleTransferListener.DO_BEEP_ONCE) {
                     Logger.v("DO_BEEP_ONCE---" + position + "==" + SimpleTransferListener.DO_BEEP_ONCE);
-                    spi.initListner(context, new SoundPool.OnLoadCompleteListener() {
+                    spi.initLoad(context, new SoundPool.OnLoadCompleteListener() {
                         @Override
                         public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                             Logger.v("Sound listner 000");
@@ -1575,7 +1574,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     };
 
     public void waveAgain() {
-        spi.initListner(context, new SoundPool.OnLoadCompleteListener() {
+        spi.initLoad(context, new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 Logger.v("Sound listner 000");
@@ -1587,7 +1586,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     private void addSAFRequest(final int status) {
-        Logger.v("addSAFRequest : "+status);
+        Logger.v("addSAFRequest : " + status);
         packet.disablePin();
         repo.fetchDataFromDatabase(transactionType, new Observer<WorkInfo>() {
             @Override
@@ -1697,13 +1696,12 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
         if (AppConfig.EMV.consumeType == 2) {
 //            Utils.alertDialogShow(context,"Please see Phone");
         } else {
-            Utils.alertDialogShowBottom(context, (context.getString(R.string.swipe_card_2)));
+         //   Utils.alertDialogShowBottom(context, (context.getString(R.string.swipe_card_2)));
         }
-        packet.setFallBack(true);
         support = new SdkSupport(context);
         support.closeCardReader();
         support.initFallbackReader();
-    //    support.closeCardReader();
+        //    support.closeCardReader();
     }
 
     private boolean checkAdvice() {
@@ -1721,18 +1719,20 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
             repo.printReceipt(new Observer<WorkInfo>() {
                 @Override
                 public void onChanged(final WorkInfo workInfo) {
-                    Logger.v("printReceipt -State-1-" + workInfo.getState());
-                    if (checkSuccessStatus(workInfo)) {
-                        doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
-                            @Override
-                            public void onFinish() {
-                                Logger.v("OnFinsh Receipt");
-                                isPrinted = true;
-                                if (checkPaper(workInfo, 5) != 0) {
-                                    makeAdviceRequest();
+                    if (workInfo != null) {
+                        Logger.v("printReceipt -State-1-" + workInfo.getState());
+                        if (checkSuccessStatus(workInfo)) {
+                            doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
+                                @Override
+                                public void onFinish() {
+                                    Logger.v("OnFinsh Receipt");
+                                    isPrinted = true;
+                                    if (checkPaper(workInfo, 5) != 0) {
+                                        makeAdviceRequest();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             });
@@ -1840,6 +1840,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     public static void notifyUnableToGoOnline() {
+        Logger.v("notifyUnableToGoOnline()");
         Message pinFinishMsg = new Message();
         pinFinishMsg.what = AppConfig.EMV.SOCKET_UNABEL_ONLINE;
         pinFinishMsg.obj = new byte[]{};
@@ -1897,7 +1898,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                     cancel();
                     spi.removeBeep();
                     moveNext(17);
-                 //   moveNextFallback(17);
+                    //   moveNextFallback(17);
                 } else {
                     spi.removeBeep();
                     startTimerRemoveCard();
@@ -2167,18 +2168,24 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                 } else if (status == 5) {
                     Utils.alertDialogShow(context, context.getString(R.string.saf_approved), listner);
                 } else if (status == 6) {
+                    isScreenAvailable = 1;
                     Utils.alertDialogOneShowBottom(context, context.getString(R.string.reversal_initialed));
                 } else if (status == 7) {
                     Utils.alertDialogShow(context, context.getString(R.string.reversal_time_out), listner);
                 } else if (status == 9) {
                     forceClose = true;
-                    if (AppConfig.EMV.consumeType == 2) {
-                        String messgae = (AppConfig.EMV.consumeType == 2) ? context.getString(R.string.fallback__insert_swipe_card) : context.getString(R.string.fallback_swipe_card);
+                    packet.setFallBack(true);
+                    startTimerRemoveCardFallback();
+                    //    if (AppConfig.EMV.consumeType == 2) {
+                       /* String messgae = (AppConfig.EMV.consumeType == 2) ? context.getString(R.string.fallback__insert_swipe_card) : context.getString(R.string.fallback_swipe_card);
                         Utils.alertDialogShow(context, messgae, new View.OnClickListener() {
                             @Override
                             public void onClick(View dialog) {
-                                setFallBackView();
                                 Utils.dismissDialoge();
+                                packet.setFallBack(true);
+                                startTimerRemoveCardFallback();
+                              //  setFallBackView();
+
                             }
                         }, new View.OnClickListener() {
                             @Override
@@ -2186,43 +2193,43 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                                 Utils.dismissDialoge();
                                 moveNext(3);
                             }
-                        });
-                    } else {
-                        AppConfig.isCardRemoved = true;
-                //        new SdkSupport(context).startAllListner();
-                        startTimerRemoveCardFallback();
-                    }
+                        });*/
+//                    } else {
+//                        AppConfig.isCardRemoved = true;
+//                //        new SdkSupport(context).startAllListner();
+//                        startTimerRemoveCardFallback();
+//                    }
                 } else if (status == 99) {
                     forceClose = true;
                     Utils.alertDialogShow(context, context.getString(R.string.fallback_not_allowed), listner);
                 } else if (status == 10) {
                     Utils.alertDialogShow(context, context.getString(R.string.invalid_card), listner);
                 } else if (status == 11) {
-                    processEreceipt(MPortalTransactionModel.SEND_QR, "");
-//                    String de39 = PrinterWorker.printDe30.trim();
-//                    if (de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
-//                            || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED) || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED_UNABLE)
-//                            || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007) || de39.equalsIgnoreCase(ConstantApp.REVERSAL_RESPONSE_400)) {
-//                        startCustomerPrintTimer();
-//                        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_customer_copy),
-//                                new View.OnClickListener() {
-//                                    public void onClick(View dialog) {
-//                                        Utils.dismissDialoge();
-//                                        printCustomerCopy();
-//                                    }
-//                                }, new View.OnClickListener() {
-//                                    public void onClick(View dialog) {
-//                                        Logger.v("Customer - 2");
-//                                        AppConfig.customerCopyPrinted = true;
-//                                        cancelCustomerCopy();
-//                                        Utils.dismissDialoge();
-//                                        moveNext(4);
-//                                    }
-//                                });
-//                    } else {
-//                        AppConfig.customerCopyPrinted = true;
-//                        moveNext(44);
-//                    }
+                    //                processEreceipt(MPortalTransactionModel.SEND_QR, "");
+                    String de39 = PrinterWorker.printDe30.trim();
+                    if (de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
+                            || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED) || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED_UNABLE)
+                            || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007) || de39.equalsIgnoreCase(ConstantApp.REVERSAL_RESPONSE_400)) {
+                        startCustomerPrintTimer();
+                        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_customer_copy),
+                                new View.OnClickListener() {
+                                    public void onClick(View dialog) {
+                                        Utils.dismissDialoge();
+                                        printCustomerCopy();
+                                    }
+                                }, new View.OnClickListener() {
+                                    public void onClick(View dialog) {
+                                        Logger.v("Customer - 2");
+                                        AppConfig.customerCopyPrinted = true;
+                                        cancelCustomerCopy();
+                                        Utils.dismissDialoge();
+                                        moveNext(4);
+                                    }
+                                });
+                    } else {
+                        AppConfig.customerCopyPrinted = true;
+                        moveNext(44);
+                    }
                 } else if (status == 12) {
                     cardRemoveTimer.setValue(true);
                     Utils.alertDialogShow(context, context.getString(R.string.remove_card));
@@ -2261,6 +2268,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
 
     private Thread thread;
     boolean forceCancel = false;
+
     private void processEreceipt(final String flow, String data) {
         if (printerModel == null || (!AppManager.getInstance().isMerchantPoratalEnable())) {
             if (printerModel != null) {
@@ -2268,7 +2276,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
             } else {
                 Logger.v("else");
                 AppConfig.customerCopyPrinted = true;
-                moveNext(44);
+                moveNext(441);
             }
             return;
         }
@@ -2283,7 +2291,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
 
             @Override
             public void onFinish() {
-                if(forceCancel)
+                if (forceCancel)
                     return;
                 try {
                     thread.stop();
@@ -2384,7 +2392,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                                             else
                                                 database.getTransactionDao().updateSAFMerchantPortal(oldRequest.getSystemTraceAuditnumber11(), true, "");
                                         }
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
                                         Logger.v("Exception 33");
                                     }
                                     handler.post(new Runnable() {
@@ -2404,19 +2412,19 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                                                     } else {
                                                         Logger.v("else");
                                                         AppConfig.customerCopyPrinted = true;
-                                                        moveNext(44);
+                                                        moveNext(442);
                                                     }
 
                                                 } catch (Exception e) {
                                                     Logger.v("Exception eee");
                                                     AppConfig.customerCopyPrinted = true;
-                                                    moveNext(44);
+                                                    moveNext(443);
                                                 }
                                             } else {
                                                 boolean sms = flow.equalsIgnoreCase(MPortalTransactionModel.SEND_SMS);
                                                 Toast.makeText(context, sms ? "SMS Sent Successfully" : "Email Send Successfully", Toast.LENGTH_SHORT).show();
                                                 AppConfig.customerCopyPrinted = true;
-                                                moveNext(44);
+                                                moveNext(444);
                                             }
                                         }
                                     });
@@ -2444,19 +2452,19 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                                         } else {
                                             Logger.v("else");
                                             AppConfig.customerCopyPrinted = true;
-                                            moveNext(44);
+                                            moveNext(445);
                                         }
 
                                     } catch (Exception e) {
                                         Logger.v("Exception eee");
                                         AppConfig.customerCopyPrinted = true;
-                                        moveNext(44);
+                                        moveNext(446);
                                     }
                                 } else {
                                     boolean sms = flow.equalsIgnoreCase(MPortalTransactionModel.SEND_SMS);
                                     Toast.makeText(context, sms ? "SMS Sent" : "Email Send", Toast.LENGTH_SHORT).show();
                                     AppConfig.customerCopyPrinted = true;
-                                    moveNext(44);
+                                    moveNext(447);
                                 }
                             }
                         });
@@ -2560,7 +2568,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                     });
         } else {
             AppConfig.customerCopyPrinted = true;
-            moveNext(44);
+            moveNext(448);
         }
     }
 

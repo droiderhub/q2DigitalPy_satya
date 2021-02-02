@@ -13,6 +13,7 @@ public class LoadAID {
     public static AIDTable loadAIDS(TMSAIDdataModelEntity aidData) {
         Logger.v("load_aidtable_loadAIDS");
         DeviceSpecificModel deviceSpecificModel1 = AppManager.getInstance().getDeviceSpecificModel();
+        Logger.v("deviceSpecificModel1 --"+deviceSpecificModel1.toString());
         RetailerDataModel retailerDataModel = AppManager.getInstance().getRetailerDataModel();
         Logger.v("retailerDataModel --"+retailerDataModel.toString());
         AIDTable aidTable = new AIDTable();
@@ -65,8 +66,15 @@ public class LoadAID {
 //            aidTable.setContactlessFloorLimit(parseStringtoInt(deviceSpecificModel1.getTerminalContactlessFloorLimit1().trim()));
 ////            config.setNciccTransLimit(ISOUtils.hex2byte(String.format("%012d", Integer.parseInt(deviceSpecificModel1.getTerminalContactlessTransactionLimit1()))));
 //        } else if (aidData.getAid().equalsIgnoreCase(ConstantApp.A0000002281010) || aidData.getAid().equalsIgnoreCase(ConstantApp.A0000002282010)) {
-            aidTable.setCvmLimit(parseStringtoInt(deviceSpecificModel1.getTerminalCVMRequiredLimitMada().trim()));
+        Logger.v("CVM limit :"+ deviceSpecificModel1.getTerminalCVMRequiredLimitMada().trim());
+        int cvmLimit = parseStringtoInt(deviceSpecificModel1.getTerminalCVMRequiredLimitMada().trim());
+        Logger.v("CVM limit :"+ cvmLimit);
+        int cvmLim = cvmLimit + 100;
+        Logger.v("CVM limit :"+ cvmLim);
+            aidTable.setCvmLimit(cvmLim);
             aidTable.setContactlessFloorLimit(parseStringtoInt(deviceSpecificModel1.getTerminalContactlessFloorLimitMada().trim()));
+//            aidTable.setContactlessLimit(parseStringtoInt(deviceSpecificModel1.getTerminalContactlessTransactionLimitMada()));
+
 //            config.setNciccTransLimit(ISOUtils.hex2byte(String.format("%12d", Integer.parseInt(deviceSpecificModel1.getTerminalContactlessTransactionLimitMada()))));
 //        }
 
@@ -81,6 +89,7 @@ public class LoadAID {
             aidTable.setMscvmCapNoCVMRequired((byte)0x20);
             aidTable.setContactlessKernelID((byte) 3); // mastercard contactless
             aidTable.setAppVersionNumber("0002");
+
         }
         Logger.v("aidTable KTD -"+aidTable.getContactlessKernelID());
         Logger.v("aidTable KTD -"+aidTable.getAid());

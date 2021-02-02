@@ -113,7 +113,7 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
     protected void onPause() {
         super.onPause();
         if (support != null){
-
+        //    support.closeCardReader();
         }
        // support.closeCardReader();
     }

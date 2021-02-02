@@ -286,9 +286,13 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog != null) {
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
-            Logger.v("Alert Shown");
+            try {
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+                Logger.v("Alert Shown");
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
         }
     }
     public static void alertDialogShowBottom(final Context context, String message) {
@@ -322,9 +326,13 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog != null) {
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
-            Logger.v("Alert Shown");
+            try {
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+                Logger.v("Alert Shown");
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
         }
     }
     public static void alertDialogShow(final Context context, String message, String msg2) {
@@ -357,9 +365,13 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog != null) {
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
-            Logger.v("Alert Shown");
+            try {
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+                Logger.v("Alert Shown");
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
         }
     }
     public static void alertDialogShowStatus(final Context context, String message,String message1, boolean stat) {
@@ -393,9 +405,13 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog_new != null) {
-            if (!((Activity) context).isFinishing())
-                alertDialog_new.show();
-            Logger.v("Alert Shown");
+            try {
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+                Logger.v("Alert Shown");
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
         }
     }
 
@@ -491,6 +507,8 @@ public class Utils {
             }
         } catch (Exception e) {
             Logger.v("PDF Exception -" + e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         dismissDialoge();
         if (((BaseActivity) context).isFinishing())
@@ -506,6 +524,12 @@ public class Utils {
         Button btnn_email = alertDialog.findViewById(R.id.btnn_email);
         ImageView cancel = alertDialog.findViewById(R.id.btnn_cancel);
         ImageView pdfView = alertDialog.findViewById(R.id.pdfView);
+        LinearLayout smsAndMailLayout = alertDialog.findViewById(R.id.below_ll);
+        if (AppManager.getInstance().isMerchantPoratalEnable()) {
+            smsAndMailLayout.setVisibility(View.VISIBLE);
+        } else {
+            smsAndMailLayout.setVisibility(View.GONE);
+        }
         alertDialog.setCancelable(false);
         ok.setOnClickListener(oklistener);
         cancel.setOnClickListener(cancellistener);
@@ -592,13 +616,18 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        if (alertDialog != null) {
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
-            else
-                Logger.v("Show Dialoge else");
-        } else
-            Logger.v("Dialoge null");
+        try {
+            if (alertDialog != null) {
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+                else
+                    Logger.v("Show Dialoge else");
+            } else
+                Logger.v("Dialoge null");
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
     }
 
     public static void alertDialogShow(final Context context, String message, View.OnClickListener listener) {
@@ -632,9 +661,13 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        if (alertDialog != null) {
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
+        try {
+            if (alertDialog != null) {
+                if (!((BaseActivity) context).isFinishing())
+                    shoeDialoge();
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -692,9 +725,14 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        if (alertDialog != null)
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
+        try {
+            if (alertDialog != null)
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
     }
 
     public static void alertDialogShow(final Context context, String message, View.OnClickListener oklistener, View.OnClickListener cancellistener) {
@@ -736,9 +774,14 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        if (alertDialog != null)
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
+        try {
+            if (alertDialog != null)
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
     }
 
     public static void alertYesDialogShow(final Context context, String message, View.OnClickListener yeslistener, View.OnClickListener nolistener) {
@@ -774,9 +817,13 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        if (alertDialog != null)
-            if (!((Activity) context).isFinishing())
-                shoeDialoge();
+        try {
+            if (alertDialog != null)
+                if (!((Activity) context).isFinishing())
+                    shoeDialoge();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public static Dialog alertYesDialogShow1(final Context context, String message, View.OnClickListener yeslistener, View.OnClickListener nolistener) {
@@ -960,6 +1007,8 @@ public class Utils {
             }
         } catch (IllegalArgumentException e) {
             Logger.v("Illegal Exception");
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
     public static void hideDialoge1() {
@@ -976,6 +1025,8 @@ public class Utils {
             }
         } catch (IllegalArgumentException e) {
             Logger.v("Illegal Exception");
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -1860,6 +1911,8 @@ public class Utils {
         } catch (IllegalArgumentException e) {
             Logger.v("Illegal Exception");
             alertDialog = null;
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -1921,6 +1974,8 @@ public class Utils {
             }
         } catch (DeviceException e) {
             e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         return status;
 
@@ -1961,6 +2016,8 @@ public class Utils {
             }
         } catch (DeviceException e) {
             e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         return status;
 //        Printer printer = SDKDevice.getInstance(context).getPrinter();
@@ -2072,6 +2129,8 @@ public class Utils {
         }
         catch (Exception e) {
             e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
     public static String bcdToASCString(byte[] bytes, int offset, int len) {

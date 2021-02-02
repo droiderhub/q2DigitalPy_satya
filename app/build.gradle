@@ -95,7 +95,7 @@ dependencies {
     //Q2 SDK
 //    implementation(name: 'cloudpossdk-1.5.2.47', ext: 'aar')
 //    implementation(name: 'cloudpossdk-1.5.3.001.test1', ext: 'aar')
-    implementation(name: 'cloudpossdkV1.5.3.026_Standard', ext: 'aar')
+    implementation(name: 'cloudpossdkV1.5.3.034_Standard', ext: 'aar')
     //QR Code
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
     implementation 'com.itextpdf:itextpdf:5.5.13'

@@ -67,6 +67,7 @@ public class SdkSupport implements Constant {
 
     public void initReader() {
         Logger.v("initReader()");
+        closeCardReader();
         intEMV();
         isLandingPage = false;
         isFallback = false;
@@ -110,6 +111,7 @@ public class SdkSupport implements Constant {
     public void initReaderLandingPage() {
         Logger.v("conn 2");
         Logger.v("initReaderLandingPage()");
+     //   closeCardReader();
         isLandingPage = true;
         isFallback = false;
         if (checkCondition()) {
@@ -143,6 +145,8 @@ public class SdkSupport implements Constant {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         if (!closeLister) {
             if (isFallback) {
@@ -245,9 +249,13 @@ public class SdkSupport implements Constant {
                 startMSReader("DeviceException");
             } catch (DeviceException deviceException) {
                 deviceException.printStackTrace();
+            } catch (Throwable t) {
+                t.printStackTrace();
             }
             //startMSReader();
             e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -287,7 +295,7 @@ public class SdkSupport implements Constant {
 
                                     String[] track2array = track2Data.split("=");
                                     String expiryDate = track2array[1].substring(0,4);
-                                    String serviceCode = track2array[1].substring(5,8);
+                                    String serviceCode = track2array[1].substring(4,6);
                                     SwipeResult swipeResult = new SwipeResult();
                                     swipeResult.setPan(track2array[0]);
                                     swipeResult.setExpiry(expiryDate);
@@ -347,6 +355,8 @@ public class SdkSupport implements Constant {
             e.printStackTrace();
             Logger.v("msr_reading_catch----"+e.getMessage());
 //            sendFailedLog(mContext.getString(R.string.operation_failed));
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -361,6 +371,8 @@ public class SdkSupport implements Constant {
         } catch (DeviceException e) {
             Logger.v("msrDeviceopenfail----"+e.getMessage());
             e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         resetFlag();
     }
@@ -414,8 +426,12 @@ public class SdkSupport implements Constant {
                 cancelMSREader(999);
             } catch (DeviceException e) {
                 e.printStackTrace();
+            } catch (Throwable t) {
+                t.printStackTrace();
             }
             deviceException.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 

@@ -178,38 +178,45 @@ public class MenuViewModel extends BaseViewModel {
         repo.printReceipt(status, new Observer<WorkInfo>() {
             @Override
             public void onChanged(final WorkInfo workInfo) {
-                Logger.v("printReceipt -State-" + workInfo.getState());
-                if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                    doPrintRecipt(devicePrinter, context, new PrintComplete() {
-                        @Override
-                        public void onFinish() {
-                            Logger.v("OnFInish -"+status);
-                            isPrinting = false;
-                            if (checkPaper(workInfo, status)) {
-                                if (status == 1) {
-                                    int id = AppManager.getInstance().getSnapshotID();
-                                    Logger.v("UID--" + id);
-                                    int uid = workInfo.getOutputData().getInt(PrinterWorker.UID_LAST_TRANSACTION, id);
-                                    Logger.v("UId--" + uid);
-                                    AppManager.getInstance().setSnapshotID(uid);
-                                    showAlert.setValue(9);
-                                } else if (status == 2)
-                                    showAlert.setValue(8);
-                                else if (status == 0) {
-                                    Logger.v("status == 0");
-                                    showAlert.setValue(77);
-                                } else if (status == 3) {
-                                    reconContinueFlow();
-                                } else if (status == 4) {
-                                    showAlert.setValue(10);
-                                }
-                            } else
-                                Logger.v("Check Paper else");
-                        }
-                    });
-                } else if (workInfo.getState() == WorkInfo.State.FAILED) {
-                    isPrinting = false;
-                    showAlert.setValue(5);
+                if (workInfo != null) {
+                    Logger.v("printReceipt -State-" + workInfo.getState());
+                    if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                        doPrintRecipt(devicePrinter, context, new PrintComplete() {
+                            @Override
+                            public void onFinish() {
+                                Logger.v("OnFInish -" + status);
+                                isPrinting = false;
+                                if (checkPaper(workInfo, status)) {
+                                    if (status == 1) {
+                                        int id = AppManager.getInstance().getSnapshotID();
+                                        Logger.v("UID--" + id);
+                                        int uid = workInfo.getOutputData().getInt(PrinterWorker.UID_LAST_TRANSACTION, id);
+                                        Logger.v("UId--" + uid);
+                                        AppManager.getInstance().setSnapshotID(uid);
+                                        showAlert.setValue(9);
+                                    } else if (status == 2)
+                                        showAlert.setValue(8);
+                                    else if (status == 0) {
+                                        Logger.v("status == 0");
+                                        ((BaseActivity) context).runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                showAlert.setValue(77);
+                                            }
+                                        });
+                                    } else if (status == 3) {
+                                        reconContinueFlow();
+                                    } else if (status == 4) {
+                                        showAlert.setValue(10);
+                                    }
+                                } else
+                                    Logger.v("Check Paper else");
+                            }
+                        });
+                    } else if (workInfo.getState() == WorkInfo.State.FAILED) {
+                        isPrinting = false;
+                        showAlert.setValue(5);
+                    }
                 }
             }
         });
@@ -797,17 +804,19 @@ public class MenuViewModel extends BaseViewModel {
                 repo.printReceipt(new Observer<WorkInfo>() {
                     @Override
                     public void onChanged(final WorkInfo workInfo) {
-                        Logger.v("workInfo.getState() -" + workInfo.getState());
-                        if (workInfo.getState() == WorkInfo.State.SUCCEEDED)
-                            doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
-                                @Override
-                                public void onFinish() {
-                                    Logger.v("OnFinsh Receipt");
-                                    if (checkPaper(workInfo, duplicate)) {
-                                        showAlert.postValue(10);
+                        if (workInfo != null) {
+                            Logger.v("workInfo.getState() -" + workInfo.getState());
+                            if (workInfo.getState() == WorkInfo.State.SUCCEEDED)
+                                doPrintTransactionReceipt(devicePrinter, context, new PrintComplete() {
+                                    @Override
+                                    public void onFinish() {
+                                        Logger.v("OnFinsh Receipt");
+                                        if (checkPaper(workInfo, duplicate)) {
+                                            showAlert.postValue(10);
+                                        }
                                     }
-                                }
-                            });
+                                });
+                        }
                     }
                 });
             }

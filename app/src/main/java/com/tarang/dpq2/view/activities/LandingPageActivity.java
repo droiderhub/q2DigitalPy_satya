@@ -272,6 +272,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         viewModel.landingPageSAF();
         reconsilation.start();
         viewModel.initReaderLandingPage();
+        AppConfig.EMV.consumeType = -1;
 //        countDownTimer.start();
     }
 
@@ -479,6 +480,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
 
 
     public void removeCard() {
+        Logger.v("removeCard()");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

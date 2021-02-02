@@ -21,6 +21,7 @@ public class SoundPoolImpl {
     private SoundPool soundPool;
     private SoundPool soundPool2;
     private SoundPool soundPool1;
+    public boolean isPlayedTwice = false;
 
 
     public static SoundPoolImpl getInstance() {
@@ -30,45 +31,57 @@ public class SoundPoolImpl {
         return INSTANCE;
     }
 
-    public void initLoad(Context context) {
+    public void initLoadClick(Context context) {
         soundPool = new SoundPool(3, AudioManager.STREAM_SYSTEM, 5);
         soundPool.load(context.getApplicationContext(),
                 R.raw.click1, 1);
+    }
+    public void initLoad(Context context) {
         soundPool1 = new SoundPool(3, AudioManager.STREAM_SYSTEM, 5);
         soundPool1.load(context.getApplicationContext(),
-                R.raw.beep01, 1);
+                R.raw.beepmp3, 1);
+//        soundPool1.setOnLoadCompleteListener(onLoadCompleteListener);
+    }
+
+    public void initLoad(Context context, SoundPool.OnLoadCompleteListener onLoadCompleteListener) {
+        soundPool1 = new SoundPool(3, AudioManager.STREAM_SYSTEM, 5);
+        soundPool1.load(context.getApplicationContext(),
+                R.raw.beepmp3, 1);
+        soundPool1.setOnLoadCompleteListener(onLoadCompleteListener);
     }
 
     public void initListner(Context context, SoundPool.OnLoadCompleteListener onLoadCompleteListener) {
-        soundPool = new SoundPool(3, AudioManager.STREAM_SYSTEM, 100);
-        soundPool.load(context.getApplicationContext(),
-                R.raw.beep01, 1);
-        soundPool.setOnLoadCompleteListener(onLoadCompleteListener);
-
-
-        soundPool1 = new SoundPool(3, AudioManager.STREAM_SYSTEM, 100);
-        soundPool1.load(context.getApplicationContext(),
-                R.raw.beep01, 1);
-        soundPool1.setOnLoadCompleteListener(onLoadCompleteListener);
-
         soundPool2 = new SoundPool(3, AudioManager.STREAM_MUSIC, 5);
         soundPool2.load(context.getApplicationContext(),
-                R.raw.beep01, 1);
+                R.raw.beepmp3, 1);
         soundPool2.setOnLoadCompleteListener(onLoadCompleteListener);
     }
 
     public void play() {
-        Logger.v("play_once");
+        Logger.v("Play 1");
+        soundPool1.play(1, 1, 1, 0, 0, 1);
+    }
+    public void play2() {
+        Logger.v("Play 2");
+        soundPool1.play(2, 1, 1, 0, 0, 1);
+    }
+    public void play1() {
         soundPool.play(1, 1, 1, 0, 0, 1);
     }
 
     public void playTwice() {
-        Logger.v("Play_twice");
-        soundPool.play(1, 1, 1, 0, 2, 1);
+        Logger.v("Play twice");
+        play();
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        play();
     }
 
     public void release() {
-        Logger.v("Beep_Release");
+        Logger.v("Beep Release");
         if (soundPool != null)
             soundPool.release();
         if (soundPool1 != null)

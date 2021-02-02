@@ -66,7 +66,7 @@ public class PrintActivity extends BaseActivity {
     private TextView txt_expiry_date;
     private TextView txt_account_no;
     private TextView card_name_show;
-    public static boolean disableBackBtn ;
+    public static boolean disableBackBtn;
     boolean isChipEnabled, isMagneticEnabled, isRFEnabled;
 
     @Override
@@ -74,13 +74,13 @@ public class PrintActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_print);
-        Logger.v("app_version---"+ BuildConfig.VERSION_NAME);
-        Logger.v("mada_version---"+ AppInit.VERSION_6_0_5);
+        Logger.v("app_version---" + BuildConfig.VERSION_NAME);
+        Logger.v("mada_version---" + AppInit.VERSION_6_0_5);
         disableBackBtn = false;
         initData();
         SimpleTransferListener.isScreenAvailable = 1;
         SAFWorker.isSAFRepeat = false;
-        Logger.v("Menu : "+getCurrentMenu().getMenu_name());
+        Logger.v("Menu : " + getCurrentMenu().getMenu_name());
         setTitle(getCurrentMenu().getMenu_name());
         Logger.v("PrintActivity");
         viewModel = ViewModelProviders.of(this).get(TransactionViewModel.class);
@@ -307,7 +307,7 @@ public class PrintActivity extends BaseActivity {
             }
             if (isPinCancelled) {
                 viewModel.moveNext(120);
-            }else {
+            } else {
                 viewModel.msFlow();
             }
         } catch (DeviceException e) {
@@ -366,7 +366,7 @@ public class PrintActivity extends BaseActivity {
 
     //making socket connection in view model
     private void makeSocketConnection(Integer i) {
-        Logger.v("makeSocketConnection-----"+i);
+        Logger.v("makeSocketConnection-----" + i);
         //disableBackBtn = true;
         //creating isopacket , sdtoring refence od AppConfig
 //        if (viewModel.disableCreatePacket)
@@ -378,7 +378,7 @@ public class PrintActivity extends BaseActivity {
         } else {
             if (reqObj != null && (reqObj.getNameTransactionTag().equalsIgnoreCase(ConstantApp.FINANCIAL_ADVISE) || reqObj.getNameTransactionTag().equalsIgnoreCase(ConstantApp.AUTHORIZATION_ADVICE)))
                 AppConfig.EMV.enableDatabaseUpdate = false;
-Logger.v("makeSocketConnection_else");
+            Logger.v("makeSocketConnection_else");
             //creating socket connection();
             viewModel.makeSocketRequest();
         }
@@ -439,7 +439,7 @@ Logger.v("makeSocketConnection_else");
         if (!viewModel.transactionType.equalsIgnoreCase(ConstantApp.PURCHASE_NAQD)) {
             isMagneticEnabled = true;
         }
-        Logger.v("transaction_type----"+viewModel.transactionType);
+        Logger.v("transaction_type----" + viewModel.transactionType);
         if (viewModel.transactionType.equalsIgnoreCase(ConstantApp.PURCHASE)
                 || viewModel.transactionType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_EXTENSION)
                 || viewModel.transactionType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_VOID)
@@ -469,8 +469,8 @@ Logger.v("makeSocketConnection_else");
     }
 
     public void showStatusDiaolge(final boolean executeRslt, final boolean noError, final boolean madeOnlineConnection) {
-        Logger.v("showStatusDiaolge "+ executeRslt + " "+ noError + " "+ madeOnlineConnection);
-        Logger.v("DE39 : "+ AppManager.getInstance().getDe39());
+        Logger.v("showStatusDiaolge " + executeRslt + " " + noError + " " + madeOnlineConnection);
+        Logger.v("DE39 : " + AppManager.getInstance().getDe39());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -478,7 +478,7 @@ Logger.v("makeSocketConnection_else");
                 if (AppManager.getInstance().isDebugEnabled()) {
                     if (AppConfig.EMV.consumeType == 2)
                         new LightsDisplay(PrintActivity.this).showGreenLights();
-                   // viewModel.showAlert(100);
+                    // viewModel.showAlert(100);
                     viewModel.setApprovedMsg(100);
                 } else if (((!madeOnlineConnection && (executeRslt)) ||
                         (madeOnlineConnection && (executeRslt) && (AppManager.getInstance().getDe39() != null &&
@@ -512,7 +512,7 @@ Logger.v("makeSocketConnection_else");
                 /*if (i == 15) {
                     viewModel.waveAgain();
                 } else*/
-                    viewModel.showAlert(i);
+                viewModel.showAlert(i);
             }
         });
     }
@@ -576,13 +576,16 @@ Logger.v("makeSocketConnection_else");
         Logger.v("Back_button_printactivity");
         if (!disableBackBtn) {
             if (doubleBackToExitPressedOnce) {
-//                if (viewModel.forceClose) {
-                MapperFlow.getInstance().moveToLandingPage(this, true, 9);
-//                } else {
-//                    SimpleTransferListener.isScreenAvailable = 2;
-//                    Utils.alertDialogOneShow(context, getString(R.string.cancel_wait));
-//                    return;
-//                }
+                if (viewModel.forceClose) {
+                    MapperFlow.getInstance().moveToLandingPage(this, true, 9);
+                    new SdkSupport(context).closeCardReader();
+                } else {
+                    SimpleTransferListener.getInstance(context).stopEMVFlow();
+                    SimpleTransferListener.getInstance(context).stopEMVProcessThread();
+                    SimpleTransferListener.isScreenAvailable = 2;
+                    Utils.alertDialogOneShow(context, getString(R.string.cancel_wait));
+                    return;
+                }
             }
 
             this.doubleBackToExitPressedOnce = true;
@@ -599,7 +602,7 @@ Logger.v("makeSocketConnection_else");
                 if (card != null && card.trim().length() != 0) {
                     AppConfig.EMV.card_name = card;
                     card_name_show.setText(card);
-                }else {
+                } else {
                     card_name_show.setText(Utils.getCardName(indicator));
                     AppConfig.EMV.card_name = Utils.getCardName(indicator);
                 }

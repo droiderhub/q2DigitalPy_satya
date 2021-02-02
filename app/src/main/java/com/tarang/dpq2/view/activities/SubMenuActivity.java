@@ -98,11 +98,15 @@ public class SubMenuActivity extends BaseActivity implements SubMenuRecyclerAdap
                         @Override
                         public void onFinish() {
                             if (checkPaper(workInfo, i)) {
-
-                                Utils.alertDialogShow(SubMenuActivity.this, getString(R.string.complete), new Utils.DialogeClick() {
+                                runOnUiThread(new Runnable() {
                                     @Override
-                                    public void onClick() {
-                                        Utils.dismissDialoge();
+                                    public void run() {
+                                        Utils.alertDialogShow(SubMenuActivity.this, getString(R.string.complete), new Utils.DialogeClick() {
+                                            @Override
+                                            public void onClick() {
+                                                Utils.dismissDialoge();
+                                            }
+                                        });
                                     }
                                 });
 
