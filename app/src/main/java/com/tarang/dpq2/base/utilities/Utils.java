@@ -277,6 +277,7 @@ public class Utils {
         TextView text = (TextView) alertDialog.findViewById(R.id.text_dialog);
         text.setText(message);
         alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
 
         Window window = alertDialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
@@ -286,13 +287,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog != null) {
-            try {
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-                Logger.v("Alert Shown");
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
+            Logger.v("Alert Shown");
         }
     }
     public static void alertDialogShowBottom(final Context context, String message) {
@@ -326,13 +323,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog != null) {
-            try {
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-                Logger.v("Alert Shown");
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
+            Logger.v("Alert Shown");
         }
     }
     public static void alertDialogShow(final Context context, String message, String msg2) {
@@ -365,13 +358,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog != null) {
-            try {
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-                Logger.v("Alert Shown");
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
+            Logger.v("Alert Shown");
         }
     }
     public static void alertDialogShowStatus(final Context context, String message,String message1, boolean stat) {
@@ -405,13 +394,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         if (alertDialog_new != null) {
-            try {
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-                Logger.v("Alert Shown");
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
+            if (!((Activity) context).isFinishing())
+                alertDialog_new.show();
+            Logger.v("Alert Shown");
         }
     }
 
@@ -616,18 +601,13 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        try {
-            if (alertDialog != null) {
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-                else
-                    Logger.v("Show Dialoge else");
-            } else
-                Logger.v("Dialoge null");
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-
+        if (alertDialog != null) {
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
+            else
+                Logger.v("Show Dialoge else");
+        } else
+            Logger.v("Dialoge null");
     }
 
     public static void alertDialogShow(final Context context, String message, View.OnClickListener listener) {
@@ -661,13 +641,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        try {
-            if (alertDialog != null) {
-                if (!((BaseActivity) context).isFinishing())
-                    shoeDialoge();
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
+        if (alertDialog != null) {
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
         }
     }
 
@@ -725,14 +701,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        try {
-            if (alertDialog != null)
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-
+        if (alertDialog != null)
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
     }
 
     public static void alertDialogShow(final Context context, String message, View.OnClickListener oklistener, View.OnClickListener cancellistener) {
@@ -774,14 +745,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        try {
-            if (alertDialog != null)
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-
+        if (alertDialog != null)
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
     }
 
     public static void alertYesDialogShow(final Context context, String message, View.OnClickListener yeslistener, View.OnClickListener nolistener) {
@@ -817,13 +783,9 @@ public class Utils {
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        try {
-            if (alertDialog != null)
-                if (!((Activity) context).isFinishing())
-                    shoeDialoge();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+        if (alertDialog != null)
+            if (!((Activity) context).isFinishing())
+                shoeDialoge();
     }
 
     public static Dialog alertYesDialogShow1(final Context context, String message, View.OnClickListener yeslistener, View.OnClickListener nolistener) {
@@ -1011,6 +973,7 @@ public class Utils {
             t.printStackTrace();
         }
     }
+
     public static void hideDialoge1() {
         try {
             if (alertDialog != null) {

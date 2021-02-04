@@ -25,6 +25,7 @@ import com.tarang.dpq2.model.RetailerDataModel;
 import com.tarang.dpq2.model.TerminalConnectionGPRSModel;
 import com.tarang.dpq2.model.TerminalConnectionWifiModel;
 import com.tarang.dpq2.model.VendorDetailsModel;
+import com.wizarpos.emvsample.constant.Constant;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -179,6 +180,8 @@ public class AppManager {
     private String getDefaultStringValue(String key) {
         if (key.equalsIgnoreCase(ConstantApp.SET_GPS_LOCATION))
             return "N000000W0000000";
+        else if (key.equalsIgnoreCase(ConstantApp.SPRM_PHONE_NUMBER))
+            return "1234567890";
         else if (key.equalsIgnoreCase("KSN_DATA"))
             return "0";
         else if (key.equalsIgnoreCase(MERCHANT_PASSWORD))

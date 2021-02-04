@@ -77,6 +77,10 @@ public class SdkSupport implements Constant {
         }
     }
 
+    public void falseIsLandingPage() {
+        isLandingPage = false;
+    }
+
     private boolean checkCondition() {
         return true;
     }
@@ -518,7 +522,7 @@ public class SdkSupport implements Constant {
         Logger.v("notifyMSRNotAllowed()");
         if (context instanceof LandingPageActivity) {
             AppConfig.EMV.consumeType = 0;
-            ((LandingPageActivity) context).removeCard();
+        //    ((LandingPageActivity) context).removeCard();
             cancelMSREader(3);
             startMSReaderAgain();
         }

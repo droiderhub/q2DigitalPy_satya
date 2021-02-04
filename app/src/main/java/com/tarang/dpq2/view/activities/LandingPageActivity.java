@@ -513,7 +513,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         Logger.v("onEditorAction -" + i);
         if (i == EditorInfo.IME_ACTION_DONE) {
             clickEnter = true;
-                connDevice(true);
+            //    connDevice(true);
                 moveToPurchase();
         }
         return false;

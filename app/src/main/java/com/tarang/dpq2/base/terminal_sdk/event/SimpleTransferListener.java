@@ -1237,6 +1237,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 }
             } catch (Exception e) {
                 Logger.v("Exception e");
+                e.printStackTrace();
             }
         }
 
@@ -1522,6 +1523,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 }
             } catch (Exception e) {
                 Logger.v("Exception e");
+                e.printStackTrace();
             }
         }
 

@@ -832,6 +832,8 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
         Logger.v("Reversal Initiated");
         showAlert.postValue(1);
         reversalSAF = true;
+        support = new SdkSupport(context);
+        support.falseIsLandingPage();
         repo.checkAllSAF(repeat, new Observer<WorkInfo>() {
             @Override
             public void onChanged(@Nullable WorkInfo workInfo) {
@@ -2205,31 +2207,32 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                 } else if (status == 10) {
                     Utils.alertDialogShow(context, context.getString(R.string.invalid_card), listner);
                 } else if (status == 11) {
-                    //                processEreceipt(MPortalTransactionModel.SEND_QR, "");
-                    String de39 = PrinterWorker.printDe30.trim();
-                    if (de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
-                            || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED) || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED_UNABLE)
-                            || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007) || de39.equalsIgnoreCase(ConstantApp.REVERSAL_RESPONSE_400)) {
-                        startCustomerPrintTimer();
-                        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_customer_copy),
-                                new View.OnClickListener() {
-                                    public void onClick(View dialog) {
-                                        Utils.dismissDialoge();
-                                        printCustomerCopy();
-                                    }
-                                }, new View.OnClickListener() {
-                                    public void onClick(View dialog) {
-                                        Logger.v("Customer - 2");
-                                        AppConfig.customerCopyPrinted = true;
-                                        cancelCustomerCopy();
-                                        Utils.dismissDialoge();
-                                        moveNext(4);
-                                    }
-                                });
-                    } else {
-                        AppConfig.customerCopyPrinted = true;
-                        moveNext(44);
-                    }
+                    Utils.alertDialogShow(context, context.getString(R.string.please_wait));
+                      processEreceipt(MPortalTransactionModel.SEND_QR, "");
+//                    String de39 = PrinterWorker.printDe30.trim();
+//                    if (de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
+//                            || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED) || de39.equalsIgnoreCase(ConstantAppValue.SAF_APPROVED_UNABLE)
+//                            || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007) || de39.equalsIgnoreCase(ConstantApp.REVERSAL_RESPONSE_400)) {
+//                        startCustomerPrintTimer();
+//                        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_customer_copy),
+//                                new View.OnClickListener() {
+//                                    public void onClick(View dialog) {
+//                                        Utils.dismissDialoge();
+//                                        printCustomerCopy();
+//                                    }
+//                                }, new View.OnClickListener() {
+//                                    public void onClick(View dialog) {
+//                                        Logger.v("Customer - 2");
+//                                        AppConfig.customerCopyPrinted = true;
+//                                        cancelCustomerCopy();
+//                                        Utils.dismissDialoge();
+//                                        moveNext(4);
+//                                    }
+//                                });
+//                    } else {
+//                        AppConfig.customerCopyPrinted = true;
+//                        moveNext(44);
+//                    }
                 } else if (status == 12) {
                     cardRemoveTimer.setValue(true);
                     Utils.alertDialogShow(context, context.getString(R.string.remove_card));
