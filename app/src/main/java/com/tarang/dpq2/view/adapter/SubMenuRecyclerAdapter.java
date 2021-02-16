@@ -84,12 +84,13 @@ public class SubMenuRecyclerAdapter extends RecyclerView.Adapter<SubMenuRecycler
                 }else if (list.get(position).isPrint()) {
                     Logger.v("Print Flow");
                     if(!Utils.checkPrinterPaper(context)) {
-                        if (list.get(position).getMenu_tag().equalsIgnoreCase(ConstantApp.LAST_EMV))
-                            print.doPrint(8);
-                        else if (list.get(position).getMenu_tag().equalsIgnoreCase(ConstantApp.PRINT_SYS_INFO))
-                            print.doPrint(9);
-                        else
-                            print.doPrint(position);
+//                        if (list.get(position).getMenu_tag().equalsIgnoreCase(ConstantApp.LAST_EMV))
+////                            print.doPrint(8);
+////                        else if (list.get(position).getMenu_tag().equalsIgnoreCase(ConstantApp.PRINT_SYS_INFO))
+////                            print.doPrint(9);
+////                        else
+////                            print.doPrint(position);
+                        print.doPrint(list.get(position).getMenu_tag());
                     }
                 } else if (list.get(position).isDisplayData()) {
                     Logger.v("Display Flow");
@@ -126,7 +127,7 @@ public class SubMenuRecyclerAdapter extends RecyclerView.Adapter<SubMenuRecycler
     }
 
     public interface Printer {
-        public void doPrint(int i);
+        public void doPrint(String i);
         public void normalFlow(MenuModel.MenuItem i);
     }
 }

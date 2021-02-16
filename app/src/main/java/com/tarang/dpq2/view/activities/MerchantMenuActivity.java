@@ -2,6 +2,8 @@ package com.tarang.dpq2.view.activities;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,14 +22,27 @@ import com.tarang.dpq2.R;
 import com.tarang.dpq2.base.AppManager;
 import com.tarang.dpq2.base.Logger;
 import com.tarang.dpq2.base.baseactivities.BaseActivity;
+import com.tarang.dpq2.base.jpos_class.ByteConversionUtils;
 import com.tarang.dpq2.base.jpos_class.ConstantApp;
+import com.tarang.dpq2.base.room_database.db.AppDatabase;
+import com.tarang.dpq2.base.room_database.db.entity.TransactionModelEntity;
 import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.model.ReconcileSetupModel;
 import com.tarang.dpq2.viewmodel.MenuViewModel;
 import com.tarang.dpq2.worker.PrinterWorker;
+import com.tarang.dpq2.worker.SSLSocketFactoryExtended;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.Calendar;
 
+import javax.net.ssl.SSLSocket;
 
 
 public class MerchantMenuActivity extends BaseActivity implements ConstantApp, View.OnClickListener {
@@ -38,6 +53,9 @@ public class MerchantMenuActivity extends BaseActivity implements ConstantApp, V
     ToggleButton reconciliation_enable;
     EditText sim_number_et;
     Button submit_simNumber;
+    private boolean retryRequest = false;
+    private int attempt;
+    String currentStan = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +73,6 @@ public class MerchantMenuActivity extends BaseActivity implements ConstantApp, V
                 if(aBoolean != null && aBoolean){
                     viewModel.makeSocketConnection();
                 }
-
             }
         });
 
@@ -175,6 +192,186 @@ public class MerchantMenuActivity extends BaseActivity implements ConstantApp, V
             case SELECT_LANGUAGE:
                 setTitle(getCurrentMenu().getMenu_name());
                 break;
+            case MPORTAL_BATCH_UPLOAD:
+                setTitle(getCurrentMenu().getMenu_name());
+                uploadBatchData();
+                break;
+        }
+    }
+
+    private void uploadBatchData() {
+        attempt = 0;
+        sendMessage();
+    }
+
+    Thread thread;
+
+    private void sendMessage() {
+        cancelTimer();
+        Logger.v("Merchant portal--"+attempt);
+        if(4 < attempt){
+            Utils.alertDialogShow(context, "Host not available, try again later \n المضيف غير متوفر. حاول مرة أخرى في وقت لاحق", true);
+            return;
+        }
+        if (!AppManager.getInstance().isMerchantPoratalEnable()) {
+            Utils.alertDialogShow(context, context.getString(R.string.empty_batch), true);
+            return;
+        }
+        final Handler handler = new Handler();
+        final CountDownTimer mPortalTimer = new CountDownTimer(15000, 1000) {
+
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                try {
+                    thread.stop();
+                } catch (Exception e) {
+
+                }
+                if (!retryRequest) {
+                    sendMessage();
+                }
+            }
+        };
+        final String IP = AppManager.getInstance().getMerchantIP();
+        final int port = Integer.parseInt(AppManager.getInstance().getMerchantPort());
+        final InputStream inputStream = context.getResources().openRawResource(R.raw.newcerten);
+        final String version = AppManager.getInstance().getString(ConstantApp.HSTNG_TLS);
+        final AppDatabase database = AppDatabase.getInstance(context.getApplicationContext());
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                SSLSocket requestSocket;
+                try {
+                    //Replace below IP with the IP of that device in which server socket open.
+                    //If you change port then change the port number in the server side code also.
+                    boolean safTable = false;
+                    TransactionModelEntity oldRequest = database.getTransactionDao().getMPortalRequest("", false);
+                    if (oldRequest == null) {
+                        Logger.v("Fetched from SAF");
+                        safTable = true;
+                        oldRequest = database.getSAFDao().getMPortalRequest("", false);
+                    }
+                    if (oldRequest != null) {
+                        Logger.v("OLD transaction not null"+oldRequest.getSystemTraceAuditnumber11());
+                        if(oldRequest.getSystemTraceAuditnumber11().equalsIgnoreCase(currentStan)){
+                            attempt = attempt +1;
+                        }else {
+                            attempt = 1;
+                            currentStan = oldRequest.getSystemTraceAuditnumber11();
+                        }
+                        SSLSocketFactoryExtended sslsocketfactory = new SSLSocketFactoryExtended(inputStream, version, false);
+                        Logger.v("Socket 1");
+                        requestSocket = (SSLSocket) sslsocketfactory.createSocket(IP, port);
+                        retryRequest = false;
+                        BufferedInputStream bis = new BufferedInputStream(requestSocket.getInputStream());
+                        BufferedOutputStream bos = new BufferedOutputStream(requestSocket.getOutputStream());
+                        Logger.v(oldRequest.getRequest_mportal());
+                        bos.write(ByteConversionUtils.HexStringToByteArray(oldRequest.getRequest_mportal()));
+                        bos.flush();
+                        // 4: Receive the response data
+                        byte[] buffer1 = new byte[1024];
+                        int nBytes1 = -1;
+                        Logger.v("Socket connected Merchant-" + requestSocket.isConnected());
+                        Logger.v("TRY block Receive");
+                        while ((nBytes1 = bis.read(buffer1)) >= 0) {
+                            final String output1 = ByteConversionUtils.byteArrayToHexString(buffer1, buffer1.length, false);
+                            String result1 = ByteConversionUtils.convertHexToString(output1);
+                            Logger.v("Result -" + result1);
+                            try {
+                                String[] tags = result1.split("<GS>");
+                                Logger.v(tags);
+                                if (tags[1].equalsIgnoreCase("200")) {
+                                    Logger.v("UPDATE RECONNS");
+                                    if (safTable)
+                                        database.getSAFDao().updateSAFMerchantPortal(oldRequest.getSystemTraceAuditnumber11(), true, "");
+                                    else
+                                        database.getTransactionDao().updateSAFMerchantPortal(oldRequest.getSystemTraceAuditnumber11(), true, "");
+                                }
+                            } catch (Exception e) {
+                                Logger.v("Exceptionee -" + e.getMessage());
+                            }
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPortalTimer.cancel();
+                                    mPortalTimer.onFinish();
+                                }
+                            });
+                            return;
+                        }
+                        closeRequest(requestSocket);
+                        Logger.v("Socket close");
+                    } else {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                retryRequest = true;
+                                Utils.alertDialogShow(context, context.getString(R.string.complete), true);
+                                mPortalTimer.cancel();
+                                mPortalTimer.onFinish();
+                            }
+                        });
+                    }
+                } catch (
+                        IOException e) {
+                    e.printStackTrace();
+                    Logger.v("Exception");
+                    exceptionFlow(handler,mPortalTimer);
+                } catch (
+                        CertificateException e) {
+                    Logger.v("Exception 1");
+                    e.printStackTrace();
+                    exceptionFlow(handler,mPortalTimer);
+                } catch (
+                        NoSuchAlgorithmException e) {
+                    Logger.v("Exception 2");
+                    e.printStackTrace();
+                    exceptionFlow(handler,mPortalTimer);
+                } catch (
+                        KeyStoreException e) {
+                    Logger.v("Exception 3");
+                    e.printStackTrace();
+                    exceptionFlow(handler,mPortalTimer);
+                } catch (KeyManagementException e) {
+                    Logger.v("Exception 4");
+                    e.printStackTrace();
+                    exceptionFlow(handler,mPortalTimer);
+                } catch (NullPointerException e) {
+                    Logger.v("Exception 44");
+                    e.printStackTrace();
+                    exceptionFlow(handler,mPortalTimer);
+                }
+            }
+        };
+        mPortalTimer.start();
+        Utils.alertDialogShow(context, context.getString(R.string.processing));
+        thread = new Thread(run);
+        thread.start();
+    }
+
+    private void exceptionFlow(Handler handler, final CountDownTimer mPortalTimer) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                mPortalTimer.cancel();
+                mPortalTimer.onFinish();
+            }
+        });
+    }
+
+    private void closeRequest(SSLSocket requestSocket) {
+        try {
+            if (requestSocket.isClosed()) {
+                requestSocket.close();
+            }
+        } catch (Exception e) {
+            Logger.v("Exceptin ssl");
         }
     }
 

@@ -3,6 +3,7 @@ package com.tarang.dpq2.base.terminal_sdk.utils;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Handler;
 
 import com.tarang.dpq2.R;
 import com.tarang.dpq2.base.Logger;
@@ -72,12 +73,14 @@ public class SoundPoolImpl {
     public void playTwice() {
         Logger.v("Play twice");
         play();
-        try {
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        play();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Write whatever to want to do after delay specified (1 sec)
+                play();
+            }
+        }, 600);
     }
 
     public void release() {

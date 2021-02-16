@@ -13,6 +13,7 @@ import com.tarang.dpq2.base.AppManager;
 import com.tarang.dpq2.base.GpsTracker;
 import com.tarang.dpq2.base.Logger;
 import com.tarang.dpq2.base.jpos_class.ByteConversionUtils;
+import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.model.ReservedData62Model;
 import com.tarang.dpq2.model.TerminalConnectionGPRSModel;
 import com.tarang.dpq2.model.TerminalConnectionWifiModel;
@@ -394,18 +395,20 @@ public class SupportPacket {
 
     public static String getNetworkType(Context context) {
         String networkTypeString = "";
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        activeNetwork.getExtraInfo();
-        if (isConnected) {
-            int networkType = activeNetwork.getType();
-            if (networkType == ConnectivityManager.TYPE_WIFI) {
-                networkTypeString = "06";
-            } else if (networkType == ConnectivityManager.TYPE_MOBILE) {
-                networkTypeString = "02";
-            } else {
-                networkTypeString = "02";
+        if (Utils.isInternetAvailable(context)) {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            activeNetwork.getExtraInfo();
+            if (isConnected) {
+                int networkType = activeNetwork.getType();
+                if (networkType == ConnectivityManager.TYPE_WIFI) {
+                    networkTypeString = "06";
+                } else if (networkType == ConnectivityManager.TYPE_MOBILE) {
+                    networkTypeString = "02";
+                } else {
+                    networkTypeString = "02";
+                }
             }
         }
         return networkTypeString;

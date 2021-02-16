@@ -22,6 +22,11 @@ public class AppInit extends Application implements Constant {
     public static int CONTACT_CHIP = 1;
     public static int CONTACTLESS_RF = 2;
 
+    public static String[] apnName = {"MOBILY","STC","SKY_BAND"};
+    public static String[] apnList = {"POS-M2M","POS.M2M","IBS"};
+    public static String[] mcc = {"420","420","420"};
+    public static String[] mnc = {"03","01","05"};
+
     private byte tranType = TRAN_GOODS;
     private byte paramType = -1;   // 参数设置类型
     private byte processState = 0;  // 处理阶段

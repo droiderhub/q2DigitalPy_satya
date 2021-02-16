@@ -87,6 +87,7 @@ import javax.net.ssl.SSLSocket;
 
 import static com.cloudpos.jniinterface.EMVJNIInterface.close_reader;
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_anti_shake_finish;
+import static com.cloudpos.jniinterface.EMVJNIInterface.query_contact_card_presence;
 import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.reqObj;
 import static com.tarang.dpq2.base.terminal_sdk.event.SimpleTransferListener.isScreenAvailable;
 import static com.tarang.dpq2.base.terminal_sdk.event.SimpleTransferListener.pinBlock;
@@ -761,10 +762,10 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
             MapperFlow.getInstance().moveToReconsilation(context);
         } else {
             Logger.v("moveNext_moveToLandingPage");
-            MapperFlow.getInstance().moveToLandingPage(context, true, 13);
             new SdkSupport(context).closeCardReader();
             SimpleTransferListener.getInstance(context).stopEMVFlow();
             SimpleTransferListener.getInstance(context).stopEMVProcessThread();
+            MapperFlow.getInstance().moveToLandingPage(context, true, 13);
         }
 //        } catch (DeviceRTException e) {
 //            MapperFlow.getInstance().moveToLandingPage(context, true, 14);
@@ -1884,7 +1885,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
 //                    try {
                 Logger.v("OnTick");
 //                        Map<ICCardSlot, ICCardSlotState> map = iCCardModule.checkSlotsState();
-                if (AppConfig.EMV.consumeType == 2) {
+                if (AppConfig.EMV.consumeType == 2 || transactionType.equalsIgnoreCase(ConstantApp.PURCHASE_REVERSAL)) {
                     AppConfig.isCardRemoved = false;
 //                            AppConfig.isCardRemoved = rfCardModule.isRfcardExist();
                 } else {
@@ -1896,7 +1897,10 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
 //                                }
 //                            }
                 }
-                if (!AppConfig.isCardRemoved) {
+        //        if (!AppConfig.isCardRemoved) {
+                Logger.v("Card presence " + query_contact_card_presence());
+
+                if (query_contact_card_presence() == 0 || !AppConfig.isCardRemoved) {
                     cancel();
                     spi.removeBeep();
                     moveNext(17);
@@ -1934,11 +1938,11 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
 
                 if (AppConfig.EMV.consumeType == 2) {
                     AppConfig.isCardRemoved = false;
-                } else {
-
                 }
 
-                if (!AppConfig.isCardRemoved) {
+                Logger.v("Card presence " + query_contact_card_presence());
+
+                if (query_contact_card_presence() == 0 || !AppConfig.isCardRemoved) {
                     cancel();
                     spi.removeBeep();
                     if (packet.isFallBack()) {
@@ -1978,7 +1982,9 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                         } else {
 
                         }
-                        if (!AppConfig.isCardRemoved) {
+                        Logger.v("Card presence " + query_contact_card_presence());
+
+                        if (query_contact_card_presence() == 0 || !AppConfig.isCardRemoved) {
                             cancel();
                             moveNextPhone(17);
                         } else {
@@ -2208,6 +2214,8 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
                     Utils.alertDialogShow(context, context.getString(R.string.invalid_card), listner);
                 } else if (status == 11) {
                     Utils.alertDialogShow(context, context.getString(R.string.please_wait));
+                    TransactionViewModel.printerModel.setReceiptVersionEnglish("*CUSTOMER COPY*");
+                    TransactionViewModel.printerModel.setReceiptVersionArabic("*نسخة العميل*");
                       processEreceipt(MPortalTransactionModel.SEND_QR, "");
 //                    String de39 = PrinterWorker.printDe30.trim();
 //                    if (de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
@@ -2576,6 +2584,7 @@ public class TransactionViewModel extends BaseViewModel implements ConstantAppVa
     }
 
     private void showAlertDialoge(final boolean isSMS) {
+        Logger.v("IsSms : "+ isSMS);
         final Dialog alertDialog = new Dialog(context);
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (alertDialog.getWindow() != null)

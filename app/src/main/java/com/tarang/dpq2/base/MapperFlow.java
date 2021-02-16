@@ -13,6 +13,7 @@ import com.tarang.dpq2.base.terminal_sdk.device.SDKDevice;
 import com.tarang.dpq2.base.terminal_sdk.event.SimpleTransferListener;
 import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.model.MenuModel;
+import com.tarang.dpq2.view.activities.ApnSettingActivity;
 import com.tarang.dpq2.view.activities.ChangeLanguageActivity;
 import com.tarang.dpq2.view.activities.DisplaySubMenuData;
 import com.tarang.dpq2.view.activities.EnterAmountActivity;
@@ -57,6 +58,13 @@ public class MapperFlow implements ConstantApp {
         ((SplashActivity) context).finish();
     }
 
+    public void moveToLandingActivity(Context context) {
+        Logger.v("LandingPage --" + 1);
+        Intent i = new Intent(context, LandingPageActivity.class);
+        context.startActivity(i);
+        ((BaseActivity) context).finish();
+    }
+
 
     public void moveToLandingPage(Context context, boolean clearBackStack, int ii) {
         Utils.setNullDialoge();
@@ -94,6 +102,16 @@ public class MapperFlow implements ConstantApp {
         i.putExtra(MenuList, new MenuModel.MenuItemHolder(MenuModel.getInstance().getMenu(Menu_Merchant, contex), true));
         i.putExtra(TITLE, contex.getString(R.string.merchant_menu));
         contex.startActivity(i);
+    }
+
+
+    public void moveToHost1(Context context) {
+        MenuModel.MenuItem tag = MenuModel.getInstance().getHostSetting(context);
+        Intent i = new Intent(context, SubMenuActivity.class);
+        i.putExtra(MenuList, new MenuModel.MenuItemHolder(tag.getSubmenu(), tag.getMenu_tag().equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION)));
+        i.putExtra(TITLE, tag.getMenu_name());
+        context.startActivity(i);
+        ((BaseActivity) context).finish();
     }
 
     public void moveToPasswrod(Context context, boolean admin) {
@@ -147,75 +165,106 @@ public class MapperFlow implements ConstantApp {
         context.startActivity(i);
     }
 
+    public void moveToApnSettings(Context context, String title) {
+        Logger.v("moveToApnSettings");
+        Intent i = new Intent(context, ApnSettingActivity.class);
+        i.putExtra(TITLE, title);
+        context.startActivity(i);
+        ((BaseActivity) context).finish();
+    }
+
     public void moveToMenuClick(final Context context, MenuModel.MenuItem tag) {
         Intent intent = null;
         boolean isFinsh = false;
         switch (tag.getMenu_tag()) {
             case ConstantApp.PURCHASE:
-                intent = new Intent(context, EnterAmountActivity.class);
-                isFinsh = true;
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    intent = new Intent(context, EnterAmountActivity.class);
+                    isFinsh = true;
+                    break;
+                }
             case ConstantApp.PURCHASE_NAQD:
-                intent = new Intent(context, EnterAmountActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                isFinsh = true;
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    intent = new Intent(context, EnterAmountActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    isFinsh = true;
+                    break;
+                }
             case ConstantApp.PURCHASE_REVERSAL:
-                isFinsh = true;
-                AppManager.getInstance().setReversalManual(true);
-                intent = new Intent(context, PrintActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                intent.putExtra(TAG_REVERSAL, true);
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    AppManager.getInstance().setReversalManual(true);
+                    intent = new Intent(context, PrintActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    intent.putExtra(TAG_REVERSAL, true);
+                    break;
+                }
             case ConstantApp.REFUND:
-                isFinsh = true;
-                intent = new Intent(context, PasswordActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    intent = new Intent(context, PasswordActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    break;
+                }
             case ConstantApp.CASH_ADVANCE:
-                isFinsh = true;
-                intent = new Intent(context, EnterAmountActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    intent = new Intent(context, EnterAmountActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    break;
+                }
             case ConstantApp.PRE_AUTHORISATION:
-                isFinsh = true;
-                intent = new Intent(context, EnterAmountActivity.class);
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    intent = new Intent(context, EnterAmountActivity.class);
+                    break;
+                }
             case ConstantApp.PRE_AUTHORISATION_VOID:
-                //sub menu
-                isFinsh = true;
-                intent = new Intent(context, EnterRrnDateAmountActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    //sub menu
+                    isFinsh = true;
+                    intent = new Intent(context, EnterRrnDateAmountActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    break;
+                }
             case ConstantApp.PRE_AUTHORISATION_EXTENSION:
-                isFinsh = true;
-                intent = new Intent(context, EnterRrnDateAmountActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    intent = new Intent(context, EnterRrnDateAmountActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    break;
+                }
             case ConstantApp.PURCHASE_ADVICE:
                 // Sub menu
                 break;
             case ConstantApp.PURCHASE_ADVICE_MANUAL:
-                isFinsh = true;
-                intent = new Intent(context, ManualCardActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    intent = new Intent(context, ManualCardActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    break;
+                }
             case ConstantApp.PURCHASE_ADVICE_FULL:
-                isFinsh = true;
-                intent = new Intent(context, EnterRrnDateAmountActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    intent = new Intent(context, EnterRrnDateAmountActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    break;
+                }
             case ConstantApp.PURCHASE_ADVICE_PARTIAL:
-                isFinsh = true;
-                intent = new Intent(context, EnterRrnDateAmountActivity.class);
-                intent.putExtra(TAG, tag.getMenu_tag());
-                break;
-
+                if (Utils.isInternetAvailable(context)) {
+                    isFinsh = true;
+                    intent = new Intent(context, EnterRrnDateAmountActivity.class);
+                    intent.putExtra(TAG, tag.getMenu_tag());
+                    break;
+                }
             // Admin Menu
             case ConstantApp.REGISTRATION:
-                if (Utils.isInternetAvailable(context))
-                    intent = new Intent(context, AdminMenuActivity.class);
-                break;
+                if (Utils.isInternetAvailable(context)) {
+                    if (Utils.isInternetAvailable(context))
+                        intent = new Intent(context, AdminMenuActivity.class);
+                    break;
+                }
             case ConstantApp.SET_PARAMATERS:
                 //Sub menu
                 break;
@@ -316,6 +365,10 @@ public class MapperFlow implements ConstantApp {
                 intent = new Intent(context, ChangeLanguageActivity.class);
 
                 break;
+            case ConstantApp.MPORTAL_BATCH_UPLOAD:
+                // Utils.changeLanguage(context);
+                intent = new Intent(context, MerchantMenuActivity.class);
+                break;
 
             // Print TMS Option from Admin Menu
             case ConstantApp.TMS_RETAILER_DATA:
@@ -340,6 +393,9 @@ public class MapperFlow implements ConstantApp {
                 break;
             case ConstantApp.HSTNG_PRIORITY:
                 Utils.alertPriorityDialoge(context);
+                break;
+            case ConstantApp.HSTNG_GPRS_CONNECTED:
+                moveToApnSettings(context,tag.getMenu_name());
                 break;
             case ConstantApp.HSTNG_TLS:
                 new PopupDialoge(context).createEditText(MenuModel.getInstance().submenuHostSettings(context).get(1));

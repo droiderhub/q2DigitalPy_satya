@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tarang.dpq2">
 
+    <uses-permission android:name="com.wizarpos.permission.WRITE_APN_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -25,9 +26,7 @@
     <uses-permission
         android:name="android.permission.CHANGE_CONFIGURATION"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-
-<!--    Q2-->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> <!-- Q2 -->
     <uses-permission android:name="android.permission.CLOUDPOS_MSR" />
     <uses-permission android:name="android.permission.CLOUDPOS_PRINTER" />
     <uses-permission android:name="android.permission.CLOUDPOS_SMARTCARD" />
@@ -43,7 +42,7 @@
     <uses-permission android:name="android.permission.WIZARPOS_PIN_LOAD_KEY" />
 
     <application
-        android:name="com.tarang.dpq2.base.AppInit"
+        android:name=".base.AppInit"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/app_icon"
@@ -53,32 +52,32 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-<!--        <provider-->
-<!--            android:name="androidx.work.impl.WorkManagerInitializer"-->
-<!--            android:authorities="com.tarang.payswiff.workmanager-init"-->
-<!--            android:enabled="false"-->
-<!--            android:exported="false" />-->
-
-        <activity android:name="com.tarang.dpq2.view.activities.SwitchConnectionActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.ChangeLanguageActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.ValidateCardActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.TerminalInfoActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.GPSLocationActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.SuccessfulActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.ReconciliationViewActivity" />
+        <activity android:name=".view.activities.ApnSettingActivity"></activity>
+        <!-- <provider -->
+        <!-- android:name="androidx.work.impl.WorkManagerInitializer" -->
+        <!-- android:authorities="com.tarang.payswiff.workmanager-init" -->
+        <!-- android:enabled="false" -->
+        <!-- android:exported="false" /> -->
+        <activity android:name=".view.activities.SwitchConnectionActivity" />
+        <activity android:name=".view.activities.ChangeLanguageActivity" />
+        <activity android:name=".view.activities.ValidateCardActivity" />
+        <activity android:name=".view.activities.TerminalInfoActivity" />
+        <activity android:name=".view.activities.GPSLocationActivity" />
+        <activity android:name=".view.activities.SuccessfulActivity" />
+        <activity android:name=".view.activities.ReconciliationViewActivity" />
 
         <receiver
-            android:name="com.tarang.dpq2.view.broadcastreciever.AlarmReceiverForReconciliation"
+            android:name=".view.broadcastreciever.AlarmReceiverForReconciliation"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="com.tarang.dpq2.view.activities.EnterRrnDateAmountActivity" />
+        <activity android:name=".view.activities.EnterRrnDateAmountActivity" />
         <activity
-            android:name="com.tarang.dpq2.view.activities.DisplaySubMenuData"
+            android:name=".view.activities.DisplaySubMenuData"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.tarang.dpq2.view.activities.AdminMenuActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.MerchantMenuActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.TransactionHistoryActivity">
+        <activity android:name=".view.activities.AdminMenuActivity" />
+        <activity android:name=".view.activities.MerchantMenuActivity" />
+        <activity android:name=".view.activities.TransactionHistoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -87,32 +86,32 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name="com.tarang.dpq2.view.activities.EnterRrnActivity" />
-        <activity android:name="com.tarang.dpq2.view.activities.ManualCardActivity"
-            android:noHistory="true" />
-
+        <activity android:name=".view.activities.EnterRrnActivity" />
         <activity
-            android:name="com.tarang.dpq2.view.activities.PasswordActivity"
+            android:name=".view.activities.ManualCardActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".view.activities.PasswordActivity"
             android:noHistory="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.tarang.dpq2.view.activities.TransactionActivity"
+            android:name=".view.activities.TransactionActivity"
             android:noHistory="true" />
         <activity
-            android:name="com.tarang.dpq2.view.activities.PrintActivity"
+            android:name=".view.activities.PrintActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.tarang.dpq2.view.activities.EnterPinActivity"
+            android:name=".view.activities.EnterPinActivity"
             android:noHistory="true" />
         <activity
-            android:name="com.tarang.dpq2.view.activities.EnterAmountActivity"
+            android:name=".view.activities.EnterAmountActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.tarang.dpq2.view.activities.SubMenuActivity" />
+        <activity android:name=".view.activities.SubMenuActivity" />
         <activity
-            android:name="com.tarang.dpq2.view.activities.LandingPageActivity"
+            android:name=".view.activities.LandingPageActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="nosensor"/>
-        <activity android:name="com.tarang.dpq2.view.activities.SplashActivity">
+            android:screenOrientation="nosensor" />
+        <activity android:name=".view.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

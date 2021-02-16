@@ -37,6 +37,7 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
     boolean isChipEnabled, isMagneticEnabled, isRFEnabled;
     private SdkSupport support;
     TextView etd_number;
+    TextView etd_number_ar;
     TextView txt_header;
 
     @Override
@@ -46,12 +47,15 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
         Logger.v("app_version---"+ BuildConfig.VERSION_NAME);
         Logger.v("mada_version---"+ AppInit.VERSION_6_0_5);
         SAFWorker.safTimerInitaited = false;
+        AppConfig.isCardRemoved = false;
 
         setContentView(R.layout.activity_purchase);
         context = AppManager.getInstance().getApplicationContext();
         setTitle(getCurrentMenu().getMenu_name());
         etd_number = findViewById(R.id.etd_number);
+        etd_number_ar = findViewById(R.id.etd_number_ar);
         etd_number.setText(getAmount());
+        etd_number_ar.setText(getAmountAr());
         findViewById(R.id.manual_entry_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +105,15 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
         DecimalFormat formatter = new DecimalFormat("#,##0.00", symbols);
         Logger.v(formatter.format(amount));
         return Utils.formatLanguageNumber(this,formatter.format(amount));
+    }
+
+    private String getAmountAr() {
+        Double amount = AppConfig.EMV.amountValue;
+        Logger.v("AMT --" + amount);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat formatter = new DecimalFormat("#,##0.00", symbols);
+        Logger.v(formatter.format(amount));
+        return " ريال " + Utils.getArabicNumbersPlain(formatter.format(amount));
     }
 
     public void startListener() {

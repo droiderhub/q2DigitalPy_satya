@@ -400,23 +400,30 @@ public class PrinterReceipt {
 //                    "</div>");  // small 3 allignment
 //            printBillBuffer.append("<div style=\"text-align:center;font-size:15px; font-weight:500\">" + printerModel.getTvr() + "</div>"); //small center
 //        }
-        if (printerModel.getTransactionTypeEnglish().equalsIgnoreCase(ConstantApp.PURCHASE_REVERSAL) ||
-                printerModel.getTransactionTypeEnglish().equalsIgnoreCase(ConstantApp.REVERSAL)) {
-            printBillBuffer.append("<div style=\"display:flex;justify-content:space-between;width:100%\"> \n" +
-                    " <div style=\"font-size:13px; font-weight:500\">" + printerModel.getTsi() + "</div> \n" +
-                  //  "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getCvr() + "</div> \n" +
-                    "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogramInfo() + "</div> \n" +
-                    "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogram() + "</div> \n" +
-                    "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getKernalId() + "</div> \n" +
-                    "</div>");  // small 5 allignment
-        } else {
-            printBillBuffer.append("<div style=\"display:flex;justify-content:space-between;width:100%\"> \n" +
-                    " <div style=\"font-size:13px; font-weight:500\">" + printerModel.getTsi() + "</div> \n" +
-                    "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getCvr() + "</div> \n" +
-                    "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogramInfo() + "</div> \n" +
-                    "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogram() + "</div> \n" +
-                    "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getKernalId() + "</div> \n" +
-                    "</div>");  // small 5 allignment
+        try {
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        if (printerModel.getTransactionTypeEnglish() != null) {
+            if (printerModel.getTransactionTypeEnglish().equalsIgnoreCase(ConstantApp.PURCHASE_REVERSAL) ||
+                    printerModel.getTransactionTypeEnglish().equalsIgnoreCase(ConstantApp.REVERSAL)) {
+                printBillBuffer.append("<div style=\"display:flex;justify-content:space-between;width:100%\"> \n" +
+                        " <div style=\"font-size:13px; font-weight:500\">" + printerModel.getTsi() + "</div> \n" +
+                        //  "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getCvr() + "</div> \n" +
+                        "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogramInfo() + "</div> \n" +
+                        "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogram() + "</div> \n" +
+                        "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getKernalId() + "</div> \n" +
+                        "</div>");  // small 5 allignment
+            } else {
+                printBillBuffer.append("<div style=\"display:flex;justify-content:space-between;width:100%\"> \n" +
+                        " <div style=\"font-size:13px; font-weight:500\">" + printerModel.getTsi() + "</div> \n" +
+                        "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getCvr() + "</div> \n" +
+                        "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogramInfo() + "</div> \n" +
+                        "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getApplicationCryptogram() + "</div> \n" +
+                        "<div style=\"font-size:13px; font-weight:500\">" + printerModel.getKernalId() + "</div> \n" +
+                        "</div>");  // small 5 allignment
+            }
         }
 
         if (printerModel.getData44().trim().length() != 0) {

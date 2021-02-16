@@ -688,24 +688,31 @@ public class MenuViewModel extends BaseViewModel {
                 startCustomerPrintTimer();
                 Logger.v("status == 77");
                 Logger.v("continue_to_print_duplicate_recon");
-                Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_duplicate_copy), new View.OnClickListener() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
                     @Override
-                    public void onClick(View dialog) {
-                        Utils.dismissDialoge();
-                        cancelledTimer = true;
-                        cancelCustomerCopy();
-                        printReconsilation(3);
+                    public void run() {
+                        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_duplicate_copy), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View dialog) {
+                                Utils.dismissDialoge();
+                                cancelledTimer = true;
+                                cancelCustomerCopy();
+                                printReconsilation(3);
+                            }
+                        }, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View dialog) {
+                                Logger.v("Customer - 1");
+                                AppConfig.customerCopyPrinted = true;
+                                cancelCustomerCopy();
+                                Utils.dismissDialoge();
+                                reconContinueFlow();
+                            }
+                        });
                     }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View dialog) {
-                        Logger.v("Customer - 1");
-                        AppConfig.customerCopyPrinted = true;
-                        cancelCustomerCopy();
-                        Utils.dismissDialoge();
-                        reconContinueFlow();
-                    }
-                });
+                },800);
+
             } else if (status == 8) {
                 Utils.alertDialogShow(context, context.getString(R.string.snapshot_complete), false);
             } else if (status == 9) {

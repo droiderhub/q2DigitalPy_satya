@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -92,6 +93,7 @@ import javax.crypto.spec.SecretKeySpec;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
+import static com.cloudpos.jniinterface.EMVJNIInterface.query_contact_card_presence;
 import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.reqObj;
 
 public class Utils {
@@ -1273,6 +1275,105 @@ public class Utils {
         return String.format("%.2f", amt);
     }
 
+//    public static void checkAPN(final Context context) {
+//        if (checkSimStatus(context)) {
+//            Utils.alertDialogGPRSShow(context, new Utils.DialogeClickWithString() {
+//                @Override
+//                public void onClick(String data) {
+//                    AppManager.getInstance().setGPRSAPN(data);
+//                    AppManager.getInstance().setConnectonMode(true);
+//                    saveConnection(context);
+//                }
+//            });
+//        } else {
+//            Toast.makeText(context, context.getString(R.string.sim_not_present), Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+//    public static void alertDialogGPRSShow(final Context context, final DialogeClickWithString click) {
+//        dismissDialoge();
+//        if (((BaseActivity) context).isFinishing())
+//            return;
+//
+////        final ApnModule module = new ApnModule(context);
+////        final List<ApnEntity> nameList = module.getAllAPIList();
+////        Logger.v("module --" + nameList.size());
+////        if (nameList.size() == 0) {
+////            return;
+////        }
+//        final int[] type = new int[1];
+//        final Dialog alertDialog1 = new Dialog(context);
+//        alertDialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        if (alertDialog1.getWindow() != null)
+//            alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        alertDialog1.setContentView(R.layout.list_select);
+//
+//        final LinearLayout ll_holder = alertDialog1.findViewById(R.id.ll_holder);
+//        final LinearLayout save_btnnn = alertDialog1.findViewById(R.id.save_btnnn);
+//        Button btn_save = alertDialog1.findViewById(R.id.btn_save);
+//        final EditText edt_value = alertDialog1.findViewById(R.id.edt_value);
+//        final EditText edt_value1 = alertDialog1.findViewById(R.id.edt_value1);
+//        final EditText edt_value_mnc = alertDialog1.findViewById(R.id.edt_value_mnc);
+//        final EditText edt_value_mcc = alertDialog1.findViewById(R.id.edt_value_mcc);
+//
+//        TextView txt_selected = alertDialog1.findViewById(R.id.txt_selected);
+//        txt_selected.setText("Access Point Names \n نقاط الوصول");
+//        final String[] nameList = AppInit.apnName;
+//        for (int i = 0; i < nameList.length; i++) {
+//            Button button = new Button(context);
+//            button.setText(nameList[i]);
+//            final int ii = i;
+//            button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Logger.v("setOnClickListener-" + ii);
+//                    Logger.v("setOnClickListener-" + nameList[ii]);
+//                    ll_holder.setVisibility(View.GONE);
+//                    save_btnnn.setVisibility(View.VISIBLE);
+//                    type[0] = ii;
+//                    Logger.v("type -" + type[0]);
+//                    edt_value.setText(AppInit.apnName[type[0]]);
+//                    edt_value1.setText(AppInit.apnList[type[0]]);
+//                    edt_value_mnc.setText(AppInit.mnc[type[0]]);
+//                    edt_value_mcc.setText(AppInit.mcc[type[0]]);
+////                    showEditApn(ii, click, context);
+//                }
+//            });
+//            ll_holder.addView(button);
+//        }
+//        btn_save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Logger.v("click save");
+//                if (edt_value.getText().toString().trim().length() != 0 && edt_value1.getText().toString().trim().length() != 0
+//                        && edt_value_mnc.getText().toString().trim().length() != 0 && edt_value_mcc.getText().toString().trim().length() != 0) {
+//                    final ApnModule module = new ApnModule(context);
+//                    Logger.v("click save APN");
+//                    if (module.saveApnNode(edt_value.getText().toString().trim(), edt_value1.getText().toString().trim()
+//                            ,edt_value_mcc.getText().toString().trim(), edt_value_mnc.getText().toString().trim())) {
+//                        Logger.v("Created");
+//                        click.onClick(AppInit.apnName[type[0]]);
+//                    }else
+//                        Toast.makeText(context, context.getResources().getString(R.string.encountered_error), Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Toast.makeText(context, context.getResources().getString(R.string.please_enter), Toast.LENGTH_SHORT).show();
+//                    Logger.v("Created else");
+//                }
+//            }
+//        });
+//        alertDialog1.setCanceledOnTouchOutside(false);
+//
+//        Window window = alertDialog1.getWindow();
+//        WindowManager.LayoutParams wlp = window.getAttributes();
+//        //wlp.gravity = Gravity.BOTTOM;
+//        wlp.gravity = Gravity.CENTER | Gravity.CENTER_HORIZONTAL;
+//        wlp.y = 140;
+////        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+//        window.setAttributes(wlp);
+//
+//        alertDialog1.show();
+//    }
+
     public static HashMap<String, String> getParsedTag55(String tag) {
         String[] tag55 = AppConfig.EMV.TAG55;
         HashMap<String, String> tagValue = new HashMap<>();
@@ -1369,6 +1470,11 @@ public class Utils {
         } else {
             return (Utils.getArabicNumbersPlain(value));
         }
+    }
+
+    public static String formatAmountWithoutSAR(double amt) {
+        String value = String.format("%.2f", amt);
+        return (Utils.getArabicNumbersPlain(value));
     }
 
     public static String getCardName(String id) {
@@ -1624,6 +1730,12 @@ public class Utils {
 //                }
 //            }
 //        }
+        Logger.v("Card presence " + query_contact_card_presence());
+        if (query_contact_card_presence() == 0) {
+            AppConfig.isCardRemoved = false;
+        } else {
+            AppConfig.isCardRemoved = true;
+        }
         return AppConfig.isCardRemoved;
     }
 
@@ -2153,5 +2265,14 @@ public class Utils {
             return null;*/
             return stringToDecrypt;
         }
+    }
+
+    public static void saveConnection(Context context) {
+        enableWifi(context, false);
+        enableMobileData(context, true);
+//        if (!switchConnection)
+//            Toast.makeText(SwitchConnectionActivity.this, getString(R.string.connection_switched_to_wifi), Toast.LENGTH_SHORT).show();
+//        else
+//            Toast.makeText(SwitchConnectionActivity.this, getString(R.string.connection_switched_to_mobile_data), Toast.LENGTH_SHORT).show();
     }
 }

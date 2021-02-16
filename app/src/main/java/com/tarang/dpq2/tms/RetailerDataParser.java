@@ -37,9 +37,9 @@ public class RetailerDataParser {
         String time = retailerDataModel.getReconcillationTime();
         if(time.length() != 0) {
             String timer = String.format("%02d:%02d", time.substring(0, 2), time.substring(2));
-            AppManager.getInstance().setReconcileSetupModel(new ReconcileSetupModel(false, timer, true));
+            AppManager.getInstance().setReconcileSetupModel(new ReconcileSetupModel(false, timer, false));
         }else {
-            AppManager.getInstance().setReconcileSetupModel(new ReconcileSetupModel(false, "00:00", true));
+            AppManager.getInstance().setReconcileSetupModel(new ReconcileSetupModel(false, "00:00", false));
         }
         AppManager.getInstance().setRetailerDetailsModel(retailerDataModel);
         AppManager.getInstance().setString(ConstantApp.SPRM_PHONE_NUMBER,retailerDataModel.getRetailerNumberEnglish());

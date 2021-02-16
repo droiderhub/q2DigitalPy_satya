@@ -63,6 +63,8 @@ public class PrintActivity extends BaseActivity {
     TextView etd_number;
     TextView etd_number_;
     TextView txn_type_tv;
+    TextView etd_number_ar;
+    TextView etd_number_ar_;
     private TextView txt_expiry_date;
     private TextView txt_account_no;
     private TextView card_name_show;
@@ -199,11 +201,15 @@ public class PrintActivity extends BaseActivity {
     private void initViews() {
         etd_number = findViewById(R.id.etd_number);
         etd_number_ = findViewById(R.id.etd_number_);
+        etd_number_ar = findViewById(R.id.etd_number_ar);
+        etd_number_ar_ = findViewById(R.id.etd_number_ar_);
         etd_number.setText(Utils.formatAmountWithoutSAR(this, AppConfig.EMV.amountValue));
         etd_number_.setText(" " + Utils.formatAmountWithoutSAR(this, AppConfig.EMV.amountValue));
         txt_expiry_date = findViewById(R.id.txt_expiry_date);
         card_name_show = findViewById(R.id.card_name_show);
         txt_account_no = findViewById(R.id.txt_account_no);
+        etd_number_ar.setText(Utils.formatAmountWithoutSAR(AppConfig.EMV.amountValue)+" ريال ");
+        etd_number_ar_.setText(Utils.formatAmountWithoutSAR(AppConfig.EMV.amountValue)+" ريال ");
         if (getCurrentMenu().getMenu_tag().equalsIgnoreCase(ConstantApp.PURCHASE_NAQD))
             setUpCashBackView();
     }
@@ -416,6 +422,9 @@ public class PrintActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                String date = AppConfig.EMV.icExpiredDate;
+                if (date != null && date.length() == 4)
+                    txt_expiry_date.setText(date.substring(2) + "/" + date.substring(0, 2));
                 txt_account_no.setText(Utils.addAccountNumber(AppConfig.EMV.icCardNum));
                 showCard();
             }

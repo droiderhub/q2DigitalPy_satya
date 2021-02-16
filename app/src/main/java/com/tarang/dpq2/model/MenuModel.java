@@ -81,7 +81,47 @@ public class MenuModel implements Serializable {
         items.add(new MenuItem(context.getString(R.string.de_saf_all_file), ConstantApp.DE_SAF_ALL_FILE,R.drawable.admin_del,true));
         items.add(new MenuItem(context.getString(R.string.switch_connection), ConstantApp.SWITCH_CONNECTION,R.drawable.admin_server_set));
         items.add(new MenuItem(true,context.getString(R.string.set_gps_location), ConstantApp.SET_GPS_LOCATION,R.drawable.admin_param));
-        items.add(new MenuItem(context.getString(R.string.select_language), ConstantApp.SELECT_LANGUAGE,R.drawable.translation));
+    //    items.add(new MenuItem(context.getString(R.string.select_language), ConstantApp.SELECT_LANGUAGE,R.drawable.translation));
+        if (AppManager.getInstance().isMerchantPoratalEnable())
+            items.add(new MenuItem("MPortal Batch Upload \n MPortal تحميل دفعة", ConstantApp.MPORTAL_BATCH_UPLOAD, R.drawable.saf_view));
+
+        items.add(new MenuItem("User Guide \n  دليل المستخدم", ConstantApp.USER_GUIDE_, userGuide(context), R.drawable.saf_view));
+        return items;
+    }
+
+    private List<MenuItem> userGuide(Context context) {
+        List<MenuItem> items = new ArrayList<>();
+        items.add(new MenuItem("Operators Transactions \n معاملات المشغلين", ConstantApp.UG_OPERATOR_TRANSACTION,getSubMenutransactionHint(context)));
+        items.add(new MenuItem("Merchant \n عمليات التاجر", ConstantApp.UG_MERCHANT,true));
+        items.add(new MenuItem("RRN \n الرقم المرجعي للاسترداد RRN", ConstantApp.UG_RRN,true));
+        items.add(new MenuItem("Response Code \n رمز الإستجابة", ConstantApp.UG_RESPONCE_CODE,true));
+        items.add(new MenuItem("Common Error Messages \n رسائل الخطأ الشائعة", ConstantApp.UG_COMMON_ERROR_MSG,true));
+        items.add(new MenuItem("Paper Roll Installation \n تركيب الورق", ConstantApp.UG_PAPER_ROLL_INSTALL,true));
+        items.add(new MenuItem("Power ON/OFF \n التشغيل والإيقاف", ConstantApp.UG_POWER_ON_OFF,true));
+        items.add(new MenuItem("Card Reader Operation \n عمليات قارئ البطاقات", ConstantApp.UG_CARD_READER,true));
+        items.add(new MenuItem("Common Troubleshooting \n  الأخطاء الشائعة", ConstantApp.UG_COMMON_TROUBLE_SHOOT,true));
+        items.add(new MenuItem("Caution and Safety Insts \n  تعليمات الحذر والسلامة", ConstantApp.UG_CAUTION_SAFETY,true));
+        return items;
+    }
+
+    private List<MenuItem> getSubMenutransactionHint(Context context) {
+        List<MenuItem> items = new ArrayList<>();
+        items.add(new MenuItem(context.getString(R.string.purhase), ConstantApp.UGO_PURCHASE, getSubMenuModeHint(context)));
+        items.add(new MenuItem(context.getString(R.string.purchase_with_naqd), ConstantApp.UGO_PURCHASE_NAQD, true));
+        items.add(new MenuItem(context.getString(R.string.reversal), ConstantApp.UGO_PURCHASE_REVERSAL, true));
+        items.add(new MenuItem(context.getString(R.string.preauth_advice), ConstantApp.UGO_PURCHASE_ADVICE_PARTIAL, true));
+        items.add(new MenuItem(context.getString(R.string.cash_advice), ConstantApp.UGO_CASH_ADVANCE, true));
+        items.add(new MenuItem(context.getString(R.string.preauth), ConstantApp.UGO_PRE_AUTHORISATION, true));
+        items.add(new MenuItem(context.getString(R.string.refund), ConstantApp.UGO_REFUND, true));
+        return items;
+    }
+
+    private List<MenuItem> getSubMenuModeHint(Context context) {
+        List<MenuItem> items = new ArrayList<>();
+        items.add(new MenuItem("Chip Card \n  بطاقة الشريحة", ConstantApp.UGO_MODE_CHIP_CARD,true));
+        items.add(new MenuItem("Magnetic Stripe Card \n بطاقة ممغنطة", ConstantApp.UGO_MODE_MAGNETIC_STRIPE,true));
+        items.add(new MenuItem("Contactless \n عن بعد", ConstantApp.UGO_MODE_CONACTLESS,true));
+        items.add(new MenuItem("Manual Entry \n ادخال يدوي", ConstantApp.UGO_MODE_MANUAL_ENTRY,true));
         return items;
     }
 
@@ -154,13 +194,14 @@ public class MenuModel implements Serializable {
         items.add(new MenuItem(context.getString(R.string.tls), ConstantApp.HSTNG_TLS));
         items.add(new MenuItem(context.getString(R.string.ip_config), ConstantApp.SPRM_IP_CONFIG));
         items.add(new MenuItem(context.getString(R.string.port), ConstantApp.SPRM_PORT));
-        items.add(new MenuItem(context.getString(R.string.ip_config), ConstantApp.MERCHANT_IP_CONFIG));
-        items.add(new MenuItem(context.getString(R.string.port), ConstantApp.MERCHANT_PORT));
+        items.add(new MenuItem(context.getString(R.string.mip_config), ConstantApp.MERCHANT_IP_CONFIG));
+        items.add(new MenuItem(context.getString(R.string.mport), ConstantApp.MERCHANT_PORT));
         return (items);
     }
 
     public List<MenuItem> submenuHostSettings(Context context) {
         List<MenuItem> items = new ArrayList<>();
+        items.add(new MenuItem("APN"+AppManager.getInstance().getGPRSAPN1(), ConstantApp.HSTNG_GPRS_CONNECTED));
         items.add(new MenuItem(context.getString(R.string.priority), ConstantApp.HSTNG_PRIORITY));
         items.add(new MenuItem(context.getString(R.string.tls), ConstantApp.HSTNG_TLS));
 //        items.add(new MenuItem(context.getString(R.string.gprs_connected_disconnect), Constant.HSTNG_GPRS_CONNECTED));
@@ -218,6 +259,9 @@ public class MenuModel implements Serializable {
         return (items);
     }
 
+    public MenuItem getHostSetting(Context context){
+        return new MenuItem(context.getString(R.string.host_setting), ConstantApp.HOST_SETTING, submenuHostSettings(context), R.drawable.admin_server_set);
+    }
 
     public static class MenuItem implements Serializable {
         String menu_name;

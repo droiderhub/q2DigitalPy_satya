@@ -23,6 +23,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.tarang.dpq2.R;
 import com.tarang.dpq2.base.baseactivities.BaseActivity;
+import com.tarang.dpq2.base.jpos_class.ConstantApp;
 import com.tarang.dpq2.base.terminal_sdk.device.SDKDevice;
 import com.tarang.dpq2.model.PrinterModel;
 
@@ -321,7 +322,12 @@ public class EReceiptGenerator {
 
             document.add(addEnglishTextLeft(printerModel.getPosEntryMode() + " " + printerModel.getAlpharesponseCode() + " " + printerModel.getAid() + " " + printerModel.getTvr(), font_n9));
 
-            document.add(addEnglishTextLeft(printerModel.getTsi() + printerModel.getCvr() + printerModel.getApplicationCryptogramInfo() + printerModel.getApplicationCryptogram() + printerModel.getKernalId(), font_n9));
+            if (printerModel.getTransactionTypeEnglish().equalsIgnoreCase(ConstantApp.PURCHASE_REVERSAL) ||
+                    printerModel.getTransactionTypeEnglish().equalsIgnoreCase(ConstantApp.REVERSAL)) {
+                document.add(addEnglishTextLeft(printerModel.getTsi() + printerModel.getApplicationCryptogramInfo() + printerModel.getApplicationCryptogram() + printerModel.getKernalId(), font_n9));
+            } else {
+                document.add(addEnglishTextLeft(printerModel.getTsi() + printerModel.getCvr() + printerModel.getApplicationCryptogramInfo() + printerModel.getApplicationCryptogram() + printerModel.getKernalId(), font_n9));
+            }
 
             document.add(addEnglishTextLeft(printerModel.getData44(), font_n9));
 

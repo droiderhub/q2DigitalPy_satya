@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:text="@string/select_application"
             android:gravity="center"
+            android:id="@+id/txt_selected"
             android:textSize="18dp"
             android:textStyle="bold"
             android:padding="12sp"/>
@@ -27,5 +28,98 @@
         android:id="@+id/ll_holder">
 
     </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/save_btnnn"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="12dp"
+                android:paddingLeft="18dp"
+                android:lines="1"
+                android:text="Name" />
+            <EditText
+                android:id="@+id/edt_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:background="@android:drawable/editbox_background"
+                android:gravity="center"
+                android:padding="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="12dp"
+                android:paddingLeft="18dp"
+                android:lines="1"
+                android:text="Apn" />
+            <EditText
+                android:id="@+id/edt_value1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:background="@android:drawable/editbox_background"
+                android:gravity="center"
+                android:padding="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="12dp"
+                android:paddingLeft="18dp"
+                android:lines="1"
+                android:text="MCC" />
+            <EditText
+                android:id="@+id/edt_value_mcc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:background="@android:drawable/editbox_background"
+                android:gravity="center"
+                android:padding="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="12dp"
+                android:paddingLeft="18dp"
+                android:lines="1"
+                android:text="MNC" />
+            <EditText
+                android:id="@+id/edt_value_mnc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:background="@android:drawable/editbox_background"
+                android:gravity="center"
+                android:padding="12dp" />
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/btn_green_rounded_img"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:text="@string/save" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

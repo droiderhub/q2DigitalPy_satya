@@ -40,6 +40,7 @@ import com.tarang.dpq2.worker.SAFWorker;
 import java.util.List;
 
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_set_kernel_attr;
+import static com.cloudpos.jniinterface.EMVJNIInterface.query_contact_card_presence;
 
 public class LandingPageViewModel extends BaseViewModel {
 
@@ -120,10 +121,18 @@ public class LandingPageViewModel extends BaseViewModel {
                     AppConfig.isCardRemoved = false;
                 } else {
                 }
-                if (!AppConfig.isCardRemoved) {
+
+                Logger.v("Card presence landing" + query_contact_card_presence());
+
+                if (query_contact_card_presence() == 0 || !AppConfig.isCardRemoved) {
                     cancel();
                     spi.removeBeep();
-                    ((LandingPageActivity) context).restart();
+                    if (!((LandingPageActivity)context).isFinishing()) {
+                        ((LandingPageActivity) context).restart();
+                    } else {
+                        MapperFlow.getInstance().moveToLandingPage(context);
+                    }
+
                 } else {
                     spi.removeBeep();
                     startTimerRemoveCard();

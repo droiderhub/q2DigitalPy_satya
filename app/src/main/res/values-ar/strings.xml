@@ -1763,5 +1763,10 @@
     <string name="enter_card_details">ادخل معلومات البطاقة</string>
     <string name="merchant_portal_enable">Inject Keys \n حقن المفاتيح</string>
     <string name="merchant_portal_disable">Inject Keys \n حقن المفاتيح</string>
+    <string name="mip_config"> اعدادت عنوان الإنترنت بوابة التاجر</string>
+    <string name="mport"> رقم المنفذ بوابة التاجر</string>
+
+    <string name="activation">Activation Address \n عنوان التفعيل</string>
+    <string name="please_enter_8_digit_password">Please enter your 8 digit password \n أدخل كلمة السر</string>
 
 </resources>

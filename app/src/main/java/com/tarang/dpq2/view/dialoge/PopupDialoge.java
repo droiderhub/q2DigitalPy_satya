@@ -35,6 +35,19 @@ public class PopupDialoge {
         dialog.setTitle(type.getMenu_name());
         Logger.v("type.getMenu_tag()--" + type.getMenu_tag());
         String value = AppManager.getInstance().getString(type.getMenu_tag());
+
+        if (type.getMenu_tag().equalsIgnoreCase(ConstantApp.SPRM_TRSM_ID) && AppManager.getInstance().getInitializationStatus(context)) {
+//            edt_value.setEnabled(false);
+            edt_value.setFocusable(false);
+            edt_value.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+            edt_value.setClickable(false);
+        } else {
+ //           edt_value.setEnabled(true);
+            edt_value.setFocusable(true);
+            edt_value.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
+            edt_value.setClickable(true);
+        }
+
         if (value.trim().length() != 0)
             edt_value.setText(value);
         else
@@ -90,6 +103,7 @@ public class PopupDialoge {
         txt_title.setText(type.getMenu_name());
         txt_title.setVisibility(View.GONE);
         dialog.setTitle(type.getMenu_name());
+
         Logger.v("type.getMenu_tag()--" + type.getMenu_tag());
         String value = AppManager.getInstance().getString(type.getMenu_tag());
         if (value.trim().length() != 0)

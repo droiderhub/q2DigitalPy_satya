@@ -90,9 +90,10 @@ import static com.cloudpos.jniinterface.EMVJNIInterface.open_reader_ex;
 import static com.cloudpos.jniinterface.EMVJNIInterface.registerFunctionListener;
 import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.TAG55;
 import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.ic55Data;
+import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.reqObj;
 
 //TODO Q2
-public class SimpleTransferListener implements Constant, IFuntionListener , PinPadCallbackHandler {
+public class SimpleTransferListener implements Constant, IFuntionListener, PinPadCallbackHandler {
     public static String selectApplicationName = "";
     public static String tsi = "";
     public static String cvm9f34 = "";
@@ -100,7 +101,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
     public static String s0x9f6c = "";
     public static String s0x9F66 = "";
     public static MakeConnection connection;
-    private SoundPoolImpl spi ;
+    private SoundPoolImpl spi;
     public static Context context;
     public static int[] L_55TAGS = new int[32];
     private static int[] L_SCRIPTTAGS = new int[21];
@@ -115,7 +116,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
     private static WaitThreat waitSockettThreat_apple = new WaitThreat();
     public static byte[] pinBlock = null;
     private String encryptAlgorithm;
-    private String transType;
+    private String transType = "";
     private int pinAttempt;
     private int trackKeyIndex;
     private int mkIndex;
@@ -259,7 +260,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         return myInstance;
     }
 
-    public static void resetListner(){
+    public static void resetListner() {
         myInstance = null;
     }
 
@@ -285,9 +286,9 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         tmpEmvLibDir = tmpEmvLibDir.substring(0, tmpEmvLibDir.lastIndexOf('/')) + "/lib/libEMVKernal.so";
 
         if (loadEMVKernel(tmpEmvLibDir.getBytes(), tmpEmvLibDir.getBytes().length) == 0) {*/
-            registerFunctionListener(this);
+        registerFunctionListener(this);
 //            emv_kernel_initialize();
-            emv_set_kernel_attr(new byte[]{0x20}, 1);
+        emv_set_kernel_attr(new byte[]{0x20}, 1);
 //            emv_terminal_param_set_drl(new byte[]{0x00},1);
 //        } else
 //            Logger.v("EMV Kernal ElSE");
@@ -295,7 +296,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 
     public void initListener(Context context, String transType, MakeConnection connection) {
         Logger.v("Listner started -initListener");
-        Logger.v("transType "+ transType);
+        Logger.v("transType " + transType);
 //        intEMV();
         SimpleTransferListener.isPinRequires = 0;
         this.context = context;
@@ -335,7 +336,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         Logger.v("card_event_occured");
         Logger.v("card_event_occured" + i);
         if (i == SMART_CARD_EVENT_REMOVE_CARD) {
-            Logger.v("i == SMART_CARD_EVENT_REMOVE_CARD----"+i);
+            Logger.v("i == SMART_CARD_EVENT_REMOVE_CARD----" + i);
             AppConfig.isCardRemoved = false;
             ((BaseActivity) context).showToast("Card removed");
             return;
@@ -348,7 +349,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         if (i == 12) {
             waveAgain();
         } else if (i == SMART_CARD_EVENT_POWERON_ERROR) {
-            Logger.v("i == SMART_CARD_EVENT_POWERON_ERROR----"+i);
+            Logger.v("i == SMART_CARD_EVENT_POWERON_ERROR----" + i);
             if (context instanceof PrintActivity) {
                 cardActionHAppenned = true;
                 new SdkSupport(context).closeCardReader1();
@@ -359,26 +360,26 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 MapperFlow.getInstance().moveToPrintScreenFallback(context);
             }
         } else if (i == SMART_CARD_EVENT_CONTALESS_HAVE_MORE_CARD) {
-            Logger.v("i == SMART_CARD_EVENT_CONTALESS_HAVE_MORE_CARD----"+i);
+            Logger.v("i == SMART_CARD_EVENT_CONTALESS_HAVE_MORE_CARD----" + i);
             waveAgain();
         } else if (i == SMART_CARD_EVENT_CONTALESS_ANTI_SHAKE) {
-            Logger.v("i == SMART_CARD_EVENT_CONTALESS_ANTI_SHAKE----"+i);
-            if(!onlyOnce) {
+            Logger.v("i == SMART_CARD_EVENT_CONTALESS_ANTI_SHAKE----" + i);
+            if (!onlyOnce) {
                 cardActionHAppenned = false;
                 disableAntiShake();
             }
         } else if (i == SMART_CARD_EVENT_INSERT_CARD) {
-            Logger.v("i == SMART_CARD_EVENT_INSERT_CARD----"+i);
+            Logger.v("i == SMART_CARD_EVENT_INSERT_CARD----" + i);
             cardActionHAppenned = true;
             SdkSupport.readMSRCard = false;
             Logger.v("get_card_type()-" + get_card_type());
             if (get_card_type() == CARD_CONTACT) {
-                Logger.v("get_card_type == CARD_CONTACT----"+CARD_CONTACT);
+                Logger.v("get_card_type == CARD_CONTACT----" + CARD_CONTACT);
                 cancelContactlessCard();
                 AppConfig.EMV.consumeType = 1;
                 AppConfig.isCardRemoved = true;
             } else if (get_card_type() == CARD_CONTACTLESS) {
-                Logger.v("get_card_type == CARD_CONTACTLESS----"+CARD_CONTACTLESS);
+                Logger.v("get_card_type == CARD_CONTACTLESS----" + CARD_CONTACTLESS);
                 AppConfig.EMV.consumeType = 2;
             }
 
@@ -417,13 +418,13 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                     e.printStackTrace();
                 }
                 if (AppConfig.EMV.consumeType == -1) {
-                    Logger.v("ANTI SHAKE FINISH -"+cardActionHAppenned);
+                    Logger.v("ANTI SHAKE FINISH -" + cardActionHAppenned);
                     emv_anti_shake_finish(0);
-                    if(!cardActionHAppenned){
+                    if (!cardActionHAppenned) {
                         waveAgainSound();
                     }
                 } else {
-                   // waveAgain();
+                    // waveAgain();
                     Logger.v("ANTI SHAKE FINISH 1");
                 }
             }
@@ -437,8 +438,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(!cardActionHAppenned && !isSwipeHappened){
-            ((BaseActivity)context).runOnUiThread(new Runnable() {
+        if (!cardActionHAppenned && !isSwipeHappened) {
+            ((BaseActivity) context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     spi = SoundPoolImpl.getInstance();
@@ -469,7 +470,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         msg.what = OFFLINE_PIN_NOTIFIER;
         msg.arg1 = nCount;
         msg.arg2 = nExtra;
-       // mHandler.sendMessage(msg);
+        // mHandler.sendMessage(msg);
     }
 
     class EMVThread extends Thread {
@@ -483,7 +484,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             else if (AppConfig.EMV.consumeType == 2)
                 emv_set_kernel_type(CONTACTLESS_EMV_KERNAL);
 
-            Logger.v("set_amount_emv----"+CreatePacket.getAmount());
+            Logger.v("set_amount_emv----" + CreatePacket.getAmount());
             setEMVTransAmount(CreatePacket.getAmount());
             setEMVData();
             Logger.v("EMV DATA SET DONE");
@@ -549,17 +550,18 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         try {
             if (mEMVProcessNextThread != null) {
                 mEMVProcessNextThread.interrupt();
+                Logger.v("mEMVProcessNextThread stopped ");
 //            mEMVProcessNextThread.stop();
             }
-        }catch (Throwable t) {
+        } catch (Throwable t) {
             t.printStackTrace();
         }
     }
 
     public void stopEMVFlow() {
         int ret = emv_stop_process();
-        Logger.v("EMV_stop_process : "+ ret);
-     //   if(debug)Log.d(APP_TAG, "emv_stop_process " + ret);
+        Logger.v("EMV_stop_process : " + ret);
+        //   if(debug)Log.d(APP_TAG, "emv_stop_process " + ret);
 //        if(ret < 0)
 //        {
 //            new Thread(new Runnable()
@@ -581,7 +583,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void emvProceedFlow(int status, int result) throws InterruptedException, ISOException {
         Logger.v("EMV_PROCESS_NEXT_COMPLETED_NOTIFIER, emvStatus = " + status + ", emvRetCode = " + result);
-    //    LoadKeyWorker.setEMVTermInfo();
+        //    LoadKeyWorker.setEMVTermInfo();
         byte[] tagData = new byte[0];
         int tagDataLength = 0;
         switch (status) {
@@ -699,9 +701,9 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                         showPinOkay = true;
                         Logger.v("EMV_OFFLINE_PIN");
                         SimpleTransferListener.isPinRequires = 0;
-                      //  setEmvOfflinePinCallbackHandler(this);
-                     //   PinPadInterface.setupCallbackHandler(this);
-                     //   EMVJNIInterface.emv_process_next();
+                        //  setEmvOfflinePinCallbackHandler(this);
+                        //   PinPadInterface.setupCallbackHandler(this);
+                        //   EMVJNIInterface.emv_process_next();
                         SDKDevice.getInstance(context).incrementKSN(); //closing pinpad device
                         doBeepOnce();
                         moveNextFlow();
@@ -715,14 +717,13 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                         SimpleTransferListener.isPinRequires = 1;
                         emv_set_online_pin_entered(1);
                         Logger.v("emv_set_online_pin_entered");
-                        if(AppConfig.EMV.consumeType == 2){
-
+                        if (AppConfig.EMV.consumeType == 2) {
                             moveNextFlow();
                             return;
+                        } else {
+                            waitForPinBlock(0);
                         }
 //                        moveNextFlow();
-//
-                        waitForPinBlock(0);
 //                        onlinePinFlow(true);
 //                        if(appState.pinpadType == PINPAD_NONE)
 //                        {
@@ -743,26 +744,26 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                         Logger.v("EMV_PROCESS_ONLINE");
                         if (AppConfig.EMV.consumeType == 2) {
                             if (loadEmvTagsForcless()) {
-                                emvReadAppData(tagData, tagDataLength);
+                                emvReadAppDataForCless(tagData, tagDataLength);
                                 doBeepOnce();
                                 showPinOkay();
                                 fetchCardInfo("EMV_PROCESS_ONLINE");
-                                Logger.v("Card type : "+ AppConfig.EMV.consumeType);
-                                Logger.v("PIN required : "+ SimpleTransferListener.isPinRequires);
-                                if ((AppConfig.EMV.consumeType == 2) && (SimpleTransferListener.isPinRequires == 1)){
+                                Logger.v("Card type : " + AppConfig.EMV.consumeType);
+                                Logger.v("PIN required : " + SimpleTransferListener.isPinRequires);
+                                if ((AppConfig.EMV.consumeType == 2) && (SimpleTransferListener.isPinRequires == 1)) {
                                     Logger.v("pin_required_waitForPinBlock");
                                     waitForPinBlock(2);
-                                }else
+                                } else
                                     sendOnLineRequest();
                             }
                         } else {
                             doBeepOnce();
                             showPinOkay();
                             fetchCardInfo("EMV_PROCESS_ONLINE");
-                            if ((AppConfig.EMV.consumeType == 2) && (SimpleTransferListener.isPinRequires == 1)){
+                            if ((AppConfig.EMV.consumeType == 2) && (SimpleTransferListener.isPinRequires == 1)) {
                                 Logger.v("pin_required_waitForPinBlock");
                                 waitForPinBlock(2);
-                            }else
+                            } else
                                 sendOnLineRequest();
                         }
                         break;
@@ -774,7 +775,14 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 break;
             case STATUS_COMPLETION:
                 Logger.v("STATUS_COMPLETION");
-                flowEMVComplete(true, result);
+                if (transType.equalsIgnoreCase(ConstantApp.REFUND) && AppConfig.EMV.consumeType == 1 && result == DECLINE_OFFLINE) {
+                    doBeepOnce();
+                    showPinOkay();
+                    fetchCardInfo("EMV_PROCESS_ONLINE");
+                    waitForPinBlock(2);
+                } else {
+                    flowEMVComplete(true, result);
+                }
                 break;
             default:
                 boolean showError = true;
@@ -865,10 +873,10 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 //                    errorMsg = "Card Communication Error";
 //                }
                 fetchCardInfo("after_error");
-                if (showError){
-                    if(AppManager.getInstance().isDebugEnabled()){
+                if (showError) {
+                    if (AppManager.getInstance().isDebugEnabled()) {
                         insertAndPrint();
-                    }else {
+                    } else {
                         connection.onConnect(DO_ERROR_MESSAGE);
                     }
                 }
@@ -905,6 +913,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             ((PrintActivity) context).showAlert(3);
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private byte[] getHextByte(String data) {
         return ISOUtil.hex2byte(data);
@@ -1002,10 +1011,60 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         if (isAppSelect) {
             Logger.v("moveNextFlow---");
             moveNextFlow();
-        } else{
+        } else {
             Logger.v("loadEMVTags---");
             loadEMVTags();
         }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void emvReadAppDataForCless(byte[] tagData, int tagDataLength) throws ISOException, InterruptedException {
+        if (emv_is_tag_present(0x9F79) >= 0) {
+            tagData = new byte[6];
+            emv_get_tag_data(0x9F79, tagData, 6);
+//                            appState.trans.setECBalance(ByteUtil.bcdToInt(tagData));
+//                            Logger.v("0x9F79----byteutil----"+ByteUtil.bcdToInt(tagData));
+            Logger.v("setECBalance----" + (tagData));
+        }
+
+        tagData = new byte[100];
+        if (emv_is_tag_present(0x5A) >= 0) {
+            tagDataLength = emv_get_tag_data(0x5A, tagData, tagData.length);
+//                            appState.trans.setPAN(StringUtil.toString(AppUtil.removeTailF(ByteUtil.bcdToAscii(tagData, 0, tagDataLength))));
+            Logger.v("0x5A----" + (tagData));
+//                            Logger.v("setPAN----"+StringUtil.toString(AppUtil.removeTailF(ByteUtil.bcdToAscii(tagData, 0, tagDataLength))));
+        }
+        // Track2
+        if (emv_is_tag_present(0x57) >= 0) {
+            tagDataLength = emv_get_tag_data(0x57, tagData, tagData.length);
+//                            appState.trans.setTrack2Data(StringUtil.toString(AppUtil.removeTailF(ByteUtil.bcdToAscii(tagData, 0, tagDataLength))));
+            Logger.v("0x57----" + (tagData));
+//                            Logger.v("setTrack2Data------"+StringUtil.toString(AppUtil.removeTailF(ByteUtil.bcdToAscii(tagData, 0, tagDataLength))));
+        }
+        // CSN
+        if (emv_is_tag_present(0x5F34) >= 0) {
+            tagDataLength = emv_get_tag_data(0x5F34, tagData, tagData.length);
+//                            appState.trans.setCSN(tagData[0]);
+            Logger.v("0x5F34----" + (tagData));
+            Logger.v("setCSN----------" + tagData[0]);
+        }
+        // Expiry
+        if (emv_is_tag_present(0x5F24) >= 0) {
+            tagDataLength = emv_get_tag_data(0x5F24, tagData, tagData.length);
+//                            appState.trans.setExpiry(StringUtil.toHexString(tagData, 0, 3, false).substring(0, 4));
+            Logger.v("0x5F24----" + (tagData));
+//                            Logger.v("setExpiry---------"+StringUtil.toHexString(tagData, 0, 3, false).substring(0, 4));
+        }
+        //confirmCard();
+//        Logger.v("executing to EMVProcessNextThread");
+//        if (isAppSelect) {
+//            Logger.v("moveNextFlow---");
+//            moveNextFlow();
+//        } else {
+//            Logger.v("loadEMVTags---");
+//            loadEMVTags();
+//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -1020,18 +1079,18 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         madeOnlineConnection_new = false;
         Logger.ve("Listner State --onFinalAppSelect");
         AppConfig.EMV.icKernalId = String.format("%02x", emv_get_kernel_id());
-        Logger.v("kernal_id---"+AppConfig.EMV.icKernalId );
+        Logger.v("kernal_id---" + AppConfig.EMV.icKernalId);
 //        Logger.v("Listner State --getKernelId--" + String.format("%02x", context.getKernelId()));
 //        Logger.v("Listner State --getKernelId--" + String.format("%02x", context.getKernelId()));
         doBeepOnce = true;
         showCard = true;
-    //    isPinCancelled = false;
+        //    isPinCancelled = false;
         rf_thread = 0;
         isTransactionNotAllowed = false;
         isAmountExceed = false;
         responseData55 = "";
         responseData38 = "";
-     //   isPinRequires = 0;
+        //   isPinRequires = 0;
         SimpleTransferListener.isSAFDecilined = false;
 //        emvModule.setEmvData(0x9F02, getHextBytes("000000000800"));//You can set emv kernel data in this step
         setEmvData(0xDF24, ("F4C0F0E8AF8E62"));
@@ -1054,7 +1113,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             Logger.v("getTransactionAllowed --" + cardData.getTransactionAllowed());
             Logger.v("getManualEntryEnabled --" + cardData.getManualEntryEnabled());
             if (TextUtils.isEmpty(transType)) {
-                transType = ((BaseActivity)context).getCurrentMenu().getMenu_tag();
+                transType = ((BaseActivity) context).getCurrentMenu().getMenu_tag();
             }
             if (!(Utils.checkTMSValidation(cardData.getTransactionAllowed(), transType))) {
                 Logger.v("tms_validation_done");
@@ -1089,7 +1148,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         }
 //        String amtEnabled = AppManager.getInstance().getTransactionAmountEnabled(Utils.fetchIndicatorFromAID(aid));
         String amtEnabled = AppManager.getInstance().getTransactionAmountEnabled(ConstantAppValue.A0000002281010);
-        Logger.v("amtEnabled---"+amtEnabled);
+        Logger.v("amtEnabled---" + amtEnabled);
         if (Utils.checkTMSValidation(amtEnabled, transType)) {
             String amt = AppManager.getInstance().getMaxAmount(Utils.fetchIndicatorFromAID(aid));
             if (amt.trim().length() != 0) {
@@ -1133,7 +1192,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         } else
             isCardInvalid = false;
         String versionNum = AppManager.getInstance().getTerminalAIDVersionNumber(aid);
-        Logger.v("versionNum---"+versionNum);
+        Logger.v("versionNum---" + versionNum);
         RetailerDataModel retailerDataModel = AppManager.getInstance().getRetailerDataModel();
         Logger.v("retailerDataModel--" + retailerDataModel.toString());
         Logger.v("getMerchantCode(Utils.fetchIndicatorFromAID(aid)--" + AppManager.getInstance().getMerchantCode(Utils.fetchIndicatorFromAID(aid)));
@@ -1143,14 +1202,14 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 transType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_VOID) || transType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_EXTENSION)
                 || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE) || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_FULL)
                 || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_PARTIAL) || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_MANUAL)) {
-            Logger.v("refund_offline_enabled-----"+AppManager.getInstance().getRefundOfflineEnabled(Utils.fetchIndicatorFromAID(aid)));
+            Logger.v("refund_offline_enabled-----" + AppManager.getInstance().getRefundOfflineEnabled(Utils.fetchIndicatorFromAID(aid)));
             if (!AppManager.getInstance().getRefundOfflineEnabled(Utils.fetchIndicatorFromAID(aid))) {
                 Logger.v("set_0x9F1B_getRefundOfflineEnabled");
                 // setEmvData(0x9F1B, (String.format("%08d", 0))); //TODO 9f1b
             }
         }
-        String vfloorLimit =(AppManager.getInstance().getFloorLimit(Utils.fetchIndicatorFromAID(aid)));
-        String floorLimit1= (String.format("%08d", Integer.parseInt(vfloorLimit)));
+        String vfloorLimit = (AppManager.getInstance().getFloorLimit(Utils.fetchIndicatorFromAID(aid)));
+        String floorLimit1 = (String.format("%08d", Integer.parseInt(vfloorLimit)));
         // setEmvData(0x9F1B, StringUtil.intToByte4(Integer.parseInt(floorLimit1))); //TODO 9f1b
         //  setEmvData(0x9F1B, (floorLimit1));
         setEmvData(0x9A, (ByteConversionUtils.formatTranDate("yyMMdd")));
@@ -1176,8 +1235,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         Logger.v("ämount_cashback--" + cashBack);
         Logger.v("ämount_AppConfig.EMV.amtCashBack--" + AppConfig.EMV.amtCashBack);
 //        emvModule.setEmvData(0x9F02, getHextBytes((amount.length() %2 == 0)?amount:"0"+amount));
-        setEmvData(0x9F03, ((cashBack.length() %2 == 0)?cashBack:"0"+cashBack));
-        Logger.v("9f03----"+((cashBack.length() %2 == 0)?cashBack:"0"+cashBack));
+        setEmvData(0x9F03, ((cashBack.length() % 2 == 0) ? cashBack : "0" + cashBack));
+        Logger.v("9f03----" + ((cashBack.length() % 2 == 0) ? cashBack : "0" + cashBack));
 //        emvModule.setEmvData(0x9F02, getHextBytes(amount));
 //        emvModule.setEmvData(0x81, getHextBytes(amount1));
 //        emvModule.setEmvData(0x9F03, getHextBytes(cashBack));
@@ -1219,7 +1278,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                     byte[] tagData1 = new byte[100];
                     int tagLength = emv_get_tag_data(0x9F66, tagData1, tagData1.length);
                     Logger.v("0x9F66----" + StringUtil.toHexString(tagData1, 0, 3, false));
-                    data9f66= ByteConversionUtils.fetchTagValu(tagData1, 0, tagLength).getBytes();
+                    data9f66 = ByteConversionUtils.fetchTagValu(tagData1, 0, tagLength).getBytes();
                 }
                 Logger.v("data9f66 -" + data9f66[1]);
                 Logger.v(data9f66);
@@ -1265,7 +1324,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         Logger.v("Show card --" + Utils.fetchIndicatorFromAID(aid));
 
         Logger.v("getemvtagvaluedata");
-        String s9F37=ByteConversionUtils.fetchTagValu(new byte[100], 0, emv_get_tag_data(0x9F37, new byte[100], new byte[100].length));
+        String s9F37 = ByteConversionUtils.fetchTagValu(new byte[100], 0, emv_get_tag_data(0x9F37, new byte[100], new byte[100].length));
         Logger.v("Floor Limit -9F37-" + s9F37);
         Logger.v("9F33 TAG");
         if (aid.toLowerCase().contains("a0000000043060")) {
@@ -1282,14 +1341,14 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             int tagLength = emv_get_tag_data(0x9F12, tag, tag.length);
             Logger.v("0x9F12----" + (tag));
             cardName = new String(tag, 0, tag.length);
-            Logger.v("card_name----"+cardName);
+            Logger.v("card_name----" + cardName);
             Logger.v("0x9F12----" + ByteConversionUtils.fetchTagValu(tag, 0, tagLength));
             data9f12 = ByteConversionUtils.fetchTagValu(tag, 0, tagLength);
         }
         if (context instanceof PrintActivity) {
             Logger.v("Show Card");
 //            ((PrintActivity) context).showCard(Utils.fetchIndicatorFromAID(aid),data9f12);
-            ((PrintActivity) context).showCard(Utils.fetchIndicatorFromAID(aid),cardName);
+            ((PrintActivity) context).showCard(Utils.fetchIndicatorFromAID(aid), cardName);
         }
         return true;
     }
@@ -1306,7 +1365,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         madeOnlineConnection_new = false;
         Logger.ve("Listner State --onFinalAppSelect");
         AppConfig.EMV.icKernalId = String.format("%02x", emv_get_kernel_id());
-        Logger.v("kernal_id---"+AppConfig.EMV.icKernalId );
+        Logger.v("kernal_id---" + AppConfig.EMV.icKernalId);
 //        Logger.v("Listner State --getKernelId--" + String.format("%02x", context.getKernelId()));
 //        Logger.v("Listner State --getKernelId--" + String.format("%02x", context.getKernelId()));
         doBeepOnce = true;
@@ -1340,7 +1399,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             Logger.v("getTransactionAllowed --" + cardData.getTransactionAllowed());
             Logger.v("getManualEntryEnabled --" + cardData.getManualEntryEnabled());
             if (TextUtils.isEmpty(transType)) {
-                transType = ((BaseActivity)context).getCurrentMenu().getMenu_tag();
+                transType = ((BaseActivity) context).getCurrentMenu().getMenu_tag();
             }
             if (!(Utils.checkTMSValidation(cardData.getTransactionAllowed(), transType))) {
                 Logger.v("tms_validation_done");
@@ -1375,7 +1434,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         }
 //        String amtEnabled = AppManager.getInstance().getTransactionAmountEnabled(Utils.fetchIndicatorFromAID(aid));
         String amtEnabled = AppManager.getInstance().getTransactionAmountEnabled(ConstantAppValue.A0000002281010);
-        Logger.v("amtEnabled---"+amtEnabled);
+        Logger.v("amtEnabled---" + amtEnabled);
         if (Utils.checkTMSValidation(amtEnabled, transType)) {
             String amt = AppManager.getInstance().getMaxAmount(Utils.fetchIndicatorFromAID(aid));
             if (amt.trim().length() != 0) {
@@ -1389,8 +1448,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 if (ammt < amount) {
                     Logger.v("Amount exceed");
                     isAmountExceed = true;
-                //    flowEMVComplete(false, 0);
-                //    return;
+                    //    flowEMVComplete(false, 0);
+                    //    return;
                 } else
                     Logger.v("Amount else");
             } else
@@ -1408,18 +1467,18 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         Logger.v("IsMada --" + isMada);
         if (!(isMada) && ((transType.equalsIgnoreCase(ConstantApp.PURCHASE_NAQD) && AppConfig.EMV.consumeType == 2) || transType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_EXTENSION) || transType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_VOID))) {
             isCardInvalid = true;
-           // showTransactionNotAllowedDialoge();
+            // showTransactionNotAllowedDialoge();
             flowEMVComplete(false, 0);
             return;
         } else if (transType.equalsIgnoreCase(ConstantApp.CASH_ADVANCE) && isMada) {
             isCardInvalid = true;
-        //    showTransactionNotAllowedDialoge();
+            //    showTransactionNotAllowedDialoge();
             flowEMVComplete(false, 0);
             return;
         } else
             isCardInvalid = false;
         String versionNum = AppManager.getInstance().getTerminalAIDVersionNumber(aid);
-        Logger.v("versionNum---"+versionNum);
+        Logger.v("versionNum---" + versionNum);
         RetailerDataModel retailerDataModel = AppManager.getInstance().getRetailerDataModel();
         Logger.v("retailerDataModel--" + retailerDataModel.toString());
         Logger.v("getMerchantCode(Utils.fetchIndicatorFromAID(aid)--" + AppManager.getInstance().getMerchantCode(Utils.fetchIndicatorFromAID(aid)));
@@ -1429,16 +1488,16 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 transType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_VOID) || transType.equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_EXTENSION)
                 || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE) || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_FULL)
                 || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_PARTIAL) || transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_MANUAL)) {
-            Logger.v("refund_offline_enabled-----"+AppManager.getInstance().getRefundOfflineEnabled(Utils.fetchIndicatorFromAID(aid)));
+            Logger.v("refund_offline_enabled-----" + AppManager.getInstance().getRefundOfflineEnabled(Utils.fetchIndicatorFromAID(aid)));
             if (!AppManager.getInstance().getRefundOfflineEnabled(Utils.fetchIndicatorFromAID(aid))) {
                 Logger.v("set_0x9F1B_getRefundOfflineEnabled");
-               // setEmvData(0x9F1B, (String.format("%08d", 0))); //TODO 9f1b
+                // setEmvData(0x9F1B, (String.format("%08d", 0))); //TODO 9f1b
             }
         }
-        String vfloorLimit =(AppManager.getInstance().getFloorLimit(Utils.fetchIndicatorFromAID(aid)));
-        String floorLimit1= (String.format("%08d", Integer.parseInt(vfloorLimit)));
-       // setEmvData(0x9F1B, StringUtil.intToByte4(Integer.parseInt(floorLimit1))); //TODO 9f1b
-      //  setEmvData(0x9F1B, (floorLimit1));
+        String vfloorLimit = (AppManager.getInstance().getFloorLimit(Utils.fetchIndicatorFromAID(aid)));
+        String floorLimit1 = (String.format("%08d", Integer.parseInt(vfloorLimit)));
+        // setEmvData(0x9F1B, StringUtil.intToByte4(Integer.parseInt(floorLimit1))); //TODO 9f1b
+        //  setEmvData(0x9F1B, (floorLimit1));
         setEmvData(0x9A, (ByteConversionUtils.formatTranDate("yyMMdd")));
         setEmvData(0x9C, ((getCode(transType))));
         setEmvData(0xDF34, (("C400")));
@@ -1447,7 +1506,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         setEmvData(0x9F1A, ("0" + retailerDataModel.getTerminalCountryCode()));
 //        emvModule.setEmvData(0x9F2A, getHextBytes("0" + retailerDataModel.getTerminalCurrencyCode()));
         setEmvData(0x5F2A, ("0" + retailerDataModel.getTerminalCurrencyCode()));
-       // setEmvData(0x9F33, (retailerDataModel.getTerminalCapability()));
+        // setEmvData(0x9F33, (retailerDataModel.getTerminalCapability()));
         setEmvData(0x9F40, (retailerDataModel.getAdditionalTerminalCapabilities()));
         setEmvData(0x9F35, (retailerDataModel.geteMVTerminalType()));
         setEmvData(0x9F1C, (AppManager.getInstance().getCardAcceptorID41())); // Terminal ID
@@ -1462,8 +1521,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         Logger.v("ämount_cashback--" + cashBack);
         Logger.v("ämount_AppConfig.EMV.amtCashBack--" + AppConfig.EMV.amtCashBack);
 //        emvModule.setEmvData(0x9F02, getHextBytes((amount.length() %2 == 0)?amount:"0"+amount));
-        setEmvData(0x9F03, ((cashBack.length() %2 == 0)?cashBack:"0"+cashBack));
-        Logger.v("9f03----"+((cashBack.length() %2 == 0)?cashBack:"0"+cashBack));
+        setEmvData(0x9F03, ((cashBack.length() % 2 == 0) ? cashBack : "0" + cashBack));
+        Logger.v("9f03----" + ((cashBack.length() % 2 == 0) ? cashBack : "0" + cashBack));
 //        emvModule.setEmvData(0x9F02, getHextBytes(amount));
 //        emvModule.setEmvData(0x81, getHextBytes(amount1));
 //        emvModule.setEmvData(0x9F03, getHextBytes(cashBack));
@@ -1478,7 +1537,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 Logger.v("Offline Disabled");
                 Logger.v("set_0x9F1B_Offline Disabled");
                 forceOnline = true;
-              //  setEmvData(0x9F1B, (String.format("%08d", 0))); //TODO 9f1b
+                //  setEmvData(0x9F1B, (String.format("%08d", 0))); //TODO 9f1b
             } else
                 Logger.v("Offline Ele disabled");
         }
@@ -1505,7 +1564,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                     byte[] tagData1 = new byte[100];
                     int tagLength = emv_get_tag_data(0x9F66, tagData1, tagData1.length);
                     Logger.v("0x9F66----" + StringUtil.toHexString(tagData1, 0, 3, false));
-                     data9f66= ByteConversionUtils.fetchTagValu(tagData1, 0, tagLength).getBytes();
+                    data9f66 = ByteConversionUtils.fetchTagValu(tagData1, 0, tagLength).getBytes();
                 }
                 Logger.v("data9f66 -" + data9f66[1]);
                 Logger.v(data9f66);
@@ -1551,7 +1610,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         Logger.v("Show card --" + Utils.fetchIndicatorFromAID(aid));
 
         Logger.v("getemvtagvaluedata");
-        String s9F37=ByteConversionUtils.fetchTagValu(new byte[100], 0, emv_get_tag_data(0x9F37, new byte[100], new byte[100].length));
+        String s9F37 = ByteConversionUtils.fetchTagValu(new byte[100], 0, emv_get_tag_data(0x9F37, new byte[100], new byte[100].length));
         Logger.v("Floor Limit -9F37-" + s9F37);
         Logger.v("9F33 TAG");
         if (aid.toLowerCase().contains("a0000000043060")) {
@@ -1568,17 +1627,18 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             int tagLength = emv_get_tag_data(0x9F12, tag, tag.length);
             Logger.v("0x9F12----" + (tag));
             cardName = new String(tag, 0, tag.length);
-            Logger.v("card_name----"+cardName);
+            Logger.v("card_name----" + cardName);
             Logger.v("0x9F12----" + ByteConversionUtils.fetchTagValu(tag, 0, tagLength));
             data9f12 = ByteConversionUtils.fetchTagValu(tag, 0, tagLength);
         }
         if (context instanceof PrintActivity) {
             Logger.v("Show Card");
 //            ((PrintActivity) context).showCard(Utils.fetchIndicatorFromAID(aid),data9f12);
-            ((PrintActivity) context).showCard(Utils.fetchIndicatorFromAID(aid),cardName);
+            ((PrintActivity) context).showCard(Utils.fetchIndicatorFromAID(aid), cardName);
         }
         moveNextFlow();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private byte[] getHextBytes(String data) {
         return ISOUtil.hex2byte(data);
@@ -1586,7 +1646,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean applePayCondition(String kernalid) {
-      //  String kernal = String.format("%02x", kernalid);
+        //  String kernal = String.format("%02x", kernalid);
         String kernal = kernalid;
         if (transType.equalsIgnoreCase(ConstantApp.REFUND) && kernal.equalsIgnoreCase("2d")) {
             try {
@@ -1595,8 +1655,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                     int tagLength = emv_get_tag_data(0x95, TVR, TVR.length);
                     Logger.v("0x95----" + (TVR));
                     Logger.v("0x95----" + ByteConversionUtils.fetchTagValu(TVR, 0, tagLength));
-                  //  String data95 = ByteConversionUtils.fetchTagValu(TVR, 0, tagLength);
-                   // String data95 = ISOUtil.hexString(emvModule.getEmvData(0x95));
+                    //  String data95 = ByteConversionUtils.fetchTagValu(TVR, 0, tagLength);
+                    // String data95 = ISOUtil.hexString(emvModule.getEmvData(0x95));
                     String data95 = ISOUtil.hexString(TVR);
                     if (!checkRiskManagement(data95)) {
                         doApplePay = true;
@@ -1649,7 +1709,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             int tagLength = emv_get_tag_data(0x5A, tagData, tagData.length);
             Logger.v("0x5A----" + (tagData));
             Logger.v("setPAN----" + ByteConversionUtils.fetchTagValu(tagData, 0, tagLength));
-             cardNo = ByteConversionUtils.fetchTagValu(tagData, 0, tagLength);
+            cardNo = ByteConversionUtils.fetchTagValu(tagData, 0, tagLength);
         }
         if (emv_is_tag_present(0x5F34) >= 0) {
             byte[] tagData = new byte[100];
@@ -1668,7 +1728,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         }
         if (track2 == null || track2.trim().length() == 0) {
             try {
-                track2=ByteConversionUtils.fetchTagValu(new byte[100], 0, emv_get_tag_data(0x9fb8, new byte[100], new byte[100].length));
+                track2 = ByteConversionUtils.fetchTagValu(new byte[100], 0, emv_get_tag_data(0x9fb8, new byte[100], new byte[100].length));
 
 //                track2 = ISOUtils.hexString(emvModule.getEmvData(0x9fb8));
             } catch (Exception e) {
@@ -1736,7 +1796,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         String rawData = ByteConversionUtils.fetchTagValu(iccData, 0, iccDataLength);
         Logger.v("tag55data---" + rawData);
         String data55 = (rawData.trim().length() % 2 != 0) ? rawData + "0" : rawData;
-       // String data55 = emvModule.fetchEmvData(L_55TAGS);
+        // String data55 = emvModule.fetchEmvData(L_55TAGS);
         Logger.v("MyData55 --" + data55);
         AppConfig.EMV.ic55Data = data55;// Trans info
 
@@ -1745,7 +1805,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             HashMap<String, String> tag55 = Utils.getParsedTag55(ic55Data);
             String tagoffLine = tag55.get(TAG55[2]);
             Logger.v("tagoffLine -" + tagoffLine);
-            Logger.v("tagoffLine -" + madeOnlineConnection);
+            Logger.v("madeOnlineConnection -" + madeOnlineConnection);
             String tagOnline = tag55.get(TAG55[14]);
             Logger.v("TAG Online--" + tagOnline);
 
@@ -1761,7 +1821,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
            /* if (!(data55.contains("9f34") || data55.contains("9F34")))
                 AppConfig.EMV.ic55Data = data55 + "9F3403" + appendCVM(cvm.getBytes());// Trans info*/
             Logger.v("AppConfig.EMV.ic55Data --" + AppConfig.EMV.ic55Data);
-           // boolean promtPin = ((cvm == EmvConst.OP_ONLINE_PIN));
+            // boolean promtPin = ((cvm == EmvConst.OP_ONLINE_PIN));
             boolean promtPin = ((cvm.equalsIgnoreCase("02"))); //02 online pin for contactless
             Logger.v("TAG Online--" + promtPin);
             if (promtPin) {
@@ -1769,7 +1829,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 rf_thread = 1;
                 if ((isScreenAvailable == 1))
                     //MapperFlow.getInstance().startOnlinePinInput(context, cardSN);
-                waitForPinBlock(9999);
+                    waitForPinBlock(9999);
                 return;
               /*  waitPinInputThreat_apple_pin.waitForRslt();
               //  showMessage(context.getString(R.string.msg_pwd) + (pinBlock == null ? "null" : ISOUtil.hexString(pinBlock)), MessageTag.DATA, 29);
@@ -1797,7 +1857,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean getCurrencyCode(byte[] getAid) {
-  //  private boolean getCurrencyCode(String getAid) {
+        //  private boolean getCurrencyCode(String getAid) {
         String aid = ByteConversionUtils.byteArrayToHexString(getAid, getAid.length, false);
 //        String aid = getAid;
         Logger.v("aid--" + aid);
@@ -1810,7 +1870,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 
                     int tagLength = emv_get_tag_data(0x4F, countrycode, countrycode.length);
                     Logger.v("0x4F----" + (countrycode));
-                   String countrycodes = ByteConversionUtils.fetchTagValu(countrycode, 0, tagLength);
+                    String countrycodes = ByteConversionUtils.fetchTagValu(countrycode, 0, tagLength);
                 }
                 if (emv_is_tag_present(0x5F28) >= 0) {
 
@@ -1818,8 +1878,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                     Logger.v("0x4F----" + (countrycode1));
                     String countrycode1s = ByteConversionUtils.fetchTagValu(countrycode1, 0, tagLength);
                 }
-               // byte[] countrycode = sdkDevice.getEmvModuleType().getEmvData(0x5F28);
-               // byte[] countrycode1 = sdkDevice.getEmvModuleType().getEmvData(0x9F42);
+                // byte[] countrycode = sdkDevice.getEmvModuleType().getEmvData(0x5F28);
+                // byte[] countrycode1 = sdkDevice.getEmvModuleType().getEmvData(0x9F42);
                 if (countrycode != null && countrycode.length != 0) {
                     country = Integer.parseInt(ISOUtil.hexString(countrycode));
                     Logger.v(ISOUtil.hexString(countrycode));
@@ -2006,11 +2066,11 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void waitForPinBlock(int moveNext) {
-        Logger.v("pinpad---"+moveNext);
+        Logger.v("pinpad---" + moveNext);
         PINPadExtendDevice device = SDKDevice.getInstance(context).getDeviceConnectPin();
         try {
-            device.setGUIConfiguration(2,("Enter Your PIN").getBytes());
-         //   emv_set_pinpad_title(("Please Enter Your PIN1").getBytes(),2);
+            device.setGUIConfiguration(2, ("Enter Your PIN").getBytes());
+            //   emv_set_pinpad_title(("Please Enter Your PIN1").getBytes(),2);
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -2054,9 +2114,9 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 sendOnLineRequest();
             } else if (moveNext == 0) {
                 moveNextFlow();
-            }else if(moveNext == 3)
+            } else if (moveNext == 3)
                 hostPinRetry();
-            else if(moveNext==9999){
+            else if (moveNext == 9999) {
                 isEMVCompleted = false;
                 sendOnLineRequest();
 
@@ -2071,8 +2131,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void flowEMVComplete(boolean isFlowSuccess, int result) throws ISOException, InterruptedException {
-        Logger.v("flowEMVComplete----"+isFlowSuccess);
-        Logger.v("emv_result-----"+result);
+        Logger.v("flowEMVComplete----" + isFlowSuccess);
+        Logger.v("emv_result-----" + result);
         Logger.ve("Listner ended");
         Logger.v("selectAppCancelled --" + selectAppCancelled);
         Logger.v("isPinCancelled --" + isPinCancelled);
@@ -2090,7 +2150,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         Logger.v("kernal_id_origin-----" + emv_get_kernel_id());
         if (isCardInvalid) {
             showTransactionNotAllowedDialoge();
-          //  connection.onConnect(DO_CARD_INVALID);
+            //  connection.onConnect(DO_CARD_INVALID);
             Logger.v("isCardInvalid");
             return;
         }
@@ -2107,7 +2167,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         }
         fetchCardInfo("flowEMVComplete");
 
-        String cardNo= AppConfig.EMV.icCardSerialNum;
+        String cardNo = AppConfig.EMV.icCardSerialNum;
         if (cardNo == null) {
             if (AppConfig.EMV.consumeType == 2) {
                 try {
@@ -2138,10 +2198,10 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             return;
 
         }
-       int i = emv_get_kernel_id();
-        Logger.v("emv_get_kernel_id---"+String.format("%02x",i));
+        int i = emv_get_kernel_id();
+        Logger.v("emv_get_kernel_id---" + String.format("%02x", i));
         if ((result != APPROVE_OFFLINE)
-              // TODO  && applePayCondition(String.format("%02x", emvTransInfo.getKernelId()))
+                // TODO  && applePayCondition(String.format("%02x", emvTransInfo.getKernelId()))
                 && applePayCondition(AppConfig.EMV.icKernalId)
                 && AppConfig.EMV.consumeType == 2) {
             proccedApplePayFlow();
@@ -2171,9 +2231,9 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 //        if ((context instanceof PrintActivity && !isCancelled) || (isCancelled && !madeOnlineConnection && responseData38.trim().equalsIgnoreCase("5933"))) {
         if (context instanceof PrintActivity && (SimpleTransferListener.isScreenAvailable == 1)) {
             Logger.v("show_status_dialog_simpletransfer");
-            ((PrintActivity) context).showStatusDiaolge((result == APPROVE_OFFLINE)|| (result == APPROVE_ONLINE) , isFlowSuccess, madeOnlineConnection);
+            ((PrintActivity) context).showStatusDiaolge((result == APPROVE_OFFLINE) || (result == APPROVE_ONLINE), isFlowSuccess, madeOnlineConnection);
             Thread.sleep(1000);
-        }else
+        } else
             Logger.v("showStatusDiaolge else");
 //        if (emvTransInfo.getOpenCardType() == ModuleType.COMMON_RFCARDREADER) {
 //            Logger.v("Inside RF --");
@@ -2214,7 +2274,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             if (AppManager.getInstance().isDebugEnabled()) {
                 TransactionModelEntity debugTrans = AppManager.getInstance().getDebugTransactionModelEntity();
                 debugTrans.setStatusTransaction(1);
-                debugTrans.setIccCardSystemRelatedData55_final(/*Utils.encrypt*/( ic55Data));
+                debugTrans.setIccCardSystemRelatedData55_final(/*Utils.encrypt*/(ic55Data));
                 AppManager.getInstance().setDuplicateTransactionModelEntity(debugTrans);
                 AppManager.getInstance().setDenugTransactionModelEntity(debugTrans);
             } else {
@@ -2263,7 +2323,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             Logger.v("Error 1--" + madeOnlineConnection);
             Logger.v("Case 10");
 //                connection.onConnect(DO_ERROR);
-            if (madeOnlineConnection){
+            if (madeOnlineConnection) {
                 if (AppConfig.EMV.enableDatabaseUpdate) {
                     if (AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000)
                             || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001)
@@ -2278,8 +2338,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                     }
                 }
                 connection.onConnect(FINAL_ERROR);
-            }
-            else
+            } else
                 connection.onConnect(DO_SAF_DECLINED);
             return;
         } else
@@ -2295,7 +2354,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                 connection.onConnect(DO_SAF_APPROVED);
             else
                 connection.onConnect(DO_SAF_REJECTED);
-        } else if (tagoffLine != null && (tagoffLine.equalsIgnoreCase("00") || tagoffLine.equalsIgnoreCase("80")) && !madeOnlineConnection) {
+        } else if (tagoffLine != null && (tagoffLine.equalsIgnoreCase("00") || tagoffLine.equalsIgnoreCase("80") || result == DECLINE_OFFLINE) && !madeOnlineConnection) {
             Logger.v("Case 3");
             CountDownResponseTimer.cancelTimer(888);
             connection.onConnect(DO_SAF_DECLINED);
@@ -2323,16 +2382,28 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             Logger.v("Case 7");
             if ((isScreenAvailable == 2)) {
                 connection.onConnect(DO_REVERSAL_CANCEL);
-            } else if ((isScreenAvailable == 1))
+            } else if ((isScreenAvailable == 1)) {
                 MapperFlow.getInstance().moveToPrintScreen(context);
+//                if (!(transType.equalsIgnoreCase(ConstantApp.REFUND))) {
+//                    MapperFlow.getInstance().moveToPrintScreen(context);
+//                }
+//
+//                if (!(transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_PARTIAL))) {
+//                    MapperFlow.getInstance().moveToPrintScreen(context);
+//                }
+//
+//                if (!(transType.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_FULL))) {
+//                    MapperFlow.getInstance().moveToPrintScreen(context);
+//                }
+            }
         }
 
     }
 
     private boolean isRequestSuccess() {
         String de39 = AppManager.getInstance().getDe39();
-        if( de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
-                || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007)){
+        if (de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001) || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
+                || de39.equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007)) {
             return true;
         }
         return false;
@@ -2349,11 +2420,11 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void fetchCardInfo(String s) {
-        Logger.v("fetchCardInfo---"+s);
+        Logger.v("fetchCardInfo---" + s);
         byte[] iccData = new byte[1200];
         int iccDataLength = emv_get_tag_list_data(L_55TAGS, L_55TAGS.length, iccData, iccData.length);
         Logger.v("iccDataLength -" + iccDataLength);
-       // Logger.v("Ic Data --" + new String(iccData)); //not readable
+        // Logger.v("Ic Data --" + new String(iccData)); //not readable
         String rawData = ByteConversionUtils.fetchTagValu(iccData, 0, iccDataLength);
         Logger.v("tag55data---" + rawData);
         ic55Data = (rawData.trim().length() % 2 != 0) ? rawData + "0" : rawData;
@@ -2372,8 +2443,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             //  String data95 = ByteConversionUtils.fetchTagValu(TVR, 0, tagLength);
             // String data95 = ISOUtil.hexString(emvModule.getEmvData(0x95));
             String data95 = ISOUtil.hexString(TVR);
-            Logger.v("tvr_95------"+data95);
-            tvr =data95;
+            Logger.v("tvr_95------" + data95);
+            tvr = data95;
 
         }
         if (emv_is_tag_present(0x9F6C) >= 0) {
@@ -2382,8 +2453,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             Logger.v("0x9F6C----" + (t9f6c));
             Logger.v("0x9F6C----" + ByteConversionUtils.fetchTagValu(t9f6c, 0, tagLength));
             String s9f6c = ISOUtil.hexString(t9f6c);
-            Logger.v("0x9F6C------"+s9f6c);
-            s0x9f6c =s9f6c;
+            Logger.v("0x9F6C------" + s9f6c);
+            s0x9f6c = s9f6c;
         }
 
         if (emv_is_tag_present(0x9F66) >= 0) {
@@ -2392,8 +2463,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             Logger.v("0x9F66----" + (t9F66));
             Logger.v("0x9F66----" + ByteConversionUtils.fetchTagValu(t9F66, 0, tagLength));
             String s9F66 = ISOUtil.hexString(t9F66);
-            Logger.v("0x9F66------"+s9F66);
-            s0x9F66 =s9F66;
+            Logger.v("0x9F66------" + s9F66);
+            s0x9F66 = s9F66;
         }
 
         if (emv_is_tag_present(0x9F34) >= 0) {
@@ -2471,7 +2542,8 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             if (de39.equalsIgnoreCase("000")) {
                 Logger.v("CASE 2");
                 try {
-                    flowEMVComplete(true,2);
+                    flowEMVComplete(true, 2);
+                    return;
                 } catch (ISOException e) {
                     e.printStackTrace();
                 }
@@ -2480,14 +2552,45 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             else {
                 Logger.v("CASE 3");
 //                controller.doEmvFinish(false);
-              //  emv_set_online_result(ONLINE_DENIAL, new byte[]{'0', '0'}, new byte[]{'0','0'}, 0);
+                //  emv_set_online_result(ONLINE_DENIAL, new byte[]{'0', '0'}, new byte[]{'0','0'}, 0);
                 onlineFailFlow();
             }
 
             return;
         }
+        /*else if (AppManager.getInstance().getResponseMTI() != null && AppManager.getInstance().getResponseMTI().equalsIgnoreCase("1210") &&
+                transType.equalsIgnoreCase(ConstantApp.REFUND) && AppConfig.EMV.consumeType == 1) {
+            if (AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000)
+                    || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001)
+                    || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
+                    || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007)) {
+                Logger.v("CASE 4");
+                try {
+                    flowEMVComplete(true, 2);
+                } catch (ISOException e) {
+                    e.printStackTrace();
+                }
+            }
+//                controller.doEmvFinish(true);
+            else {
+                Logger.v("CASE 5");
+//                controller.doEmvFinish(false);
+                //  emv_set_online_result(ONLINE_DENIAL, new byte[]{'0', '0'}, new byte[]{'0','0'}, 0);
+                //     onlineFailFlow();
+                try {
+                    flowEMVComplete(true, 4);
+                } catch (ISOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return;
+        }*/
+        Logger.v("exel");
         disableReversal = true;
-        if (!(de39.equalsIgnoreCase("117")) || (4 <= pinAttempt)) {
+     //   if (!(de39.equalsIgnoreCase("117")) || (4 <= pinAttempt)) {
+        if (((!(de39.equalsIgnoreCase("117") || de39.equalsIgnoreCase("196")) || (4 <= pinAttempt)))
+                || (de39.equalsIgnoreCase("196") && reqObj.getPinData52() != null && reqObj.getPinData52().length != 0)) {
 
 //            SecondIssuanceRequest request = new SecondIssuanceRequest();
             if (!isCancelled && responseData38.trim().length() != 0)
@@ -2500,21 +2603,51 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                         || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001)
                         || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
                         || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007)
-                      //  ||AppManager.getInstance().getDe39().equalsIgnoreCase("107")
-                       // ||AppManager.getInstance().getDe39().equalsIgnoreCase("207")
+                    //  ||AppManager.getInstance().getDe39().equalsIgnoreCase("107")
+                    // ||AppManager.getInstance().getDe39().equalsIgnoreCase("207")
                 ) {
                     //IsoRequest.getStringFromHex(responseData55)
                     //emv_set_online_result(ONLINE_SUCCESS, responce, IsoRequest.getStringFromHex(responseData55), IsoRequest.getStringFromHex(responseData55).length);
                     byte[] issuerData = new byte[0];
                     issuerData = ISOUtil.hex2byte(responseData55);
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[0]));//8A
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[1]));//91
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[2]));//71
-                    Logger.v("issuerData---"+ByteConversionUtils.byteToHexString(issuerData[3]));//72
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[0]));//8A
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[1]));//91
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[2]));//71
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[3]));//72
                     if (issuerData != null && issuerData.length > 0) {
                         Logger.v("setting_issuer_data");
                         emv_set_online_result(ONLINE_SUCCESS, responce, issuerData, issuerData.length);
-                       // emv_set_online_result(ONLINE_SUCCESS, responce, new byte[]{' '}, 0);
+                        // emv_set_online_result(ONLINE_SUCCESS, responce, new byte[]{' '}, 0);
+                    } else {
+
+                        emv_set_online_result(ONLINE_SUCCESS, responce, new byte[]{' '}, 0);
+                    }
+                } else {
+                    Logger.v("Set AUth");
+                    onlineFailFlow();
+                }
+            } else if (responseData55 == null) {
+
+                if (AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_000)
+                        || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_001)
+                        || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_003)
+                        || AppManager.getInstance().getDe39().equalsIgnoreCase(ConstantApp.SUCCESS_RESPONSE_007)
+                    //  ||AppManager.getInstance().getDe39().equalsIgnoreCase("107")
+                    // ||AppManager.getInstance().getDe39().equalsIgnoreCase("207")
+                ) {
+                    //IsoRequest.getStringFromHex(responseData55)
+                    //emv_set_online_result(ONLINE_SUCCESS, responce, IsoRequest.getStringFromHex(responseData55), IsoRequest.getStringFromHex(responseData55).length);
+                    byte[] issuerData = new byte[0];
+                    responseData55 = "8a023030";
+                    issuerData = ISOUtil.hex2byte(responseData55);
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[0]));//8A
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[1]));//91
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[2]));//71
+                    Logger.v("issuerData---" + ByteConversionUtils.byteToHexString(issuerData[3]));//72
+                    if (issuerData != null && issuerData.length > 0) {
+                        Logger.v("setting_issuer_data");
+                        emv_set_online_result(ONLINE_SUCCESS, responce, issuerData, issuerData.length);
+                        // emv_set_online_result(ONLINE_SUCCESS, responce, new byte[]{' '}, 0);
                     } else {
 
                         emv_set_online_result(ONLINE_SUCCESS, responce, new byte[]{' '}, 0);
@@ -2542,15 +2675,15 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
             else if (isCancelled && responseData38.trim().length() != 0) {
                 Logger.v("second_issuer_value_else_if_block");
                 madeOnlineConnection = false;
-              //  emv_set_online_result(ONLINE_SUCCESS, responce, new byte[]{' '}, 0);
-                Logger.v("de39issuerset---"+de39);
-                if (de39==null){ //after offline decline 190. ...mti 220 if 000
+                //  emv_set_online_result(ONLINE_SUCCESS, responce, new byte[]{' '}, 0);
+                Logger.v("de39issuerset---" + de39);
+                if (de39 == null) { //after offline decline 190. ...mti 220 if 000
                     Logger.v("second_issuer_value_else_if_block_190"); //offline decline case.... net close txns...6.21 test case
-                    emv_set_online_result(ONLINE_DENIAL, new byte[]{'0', '0'}, new byte[]{'0','0'}, 0);
-                }else {
+                    emv_set_online_result(ONLINE_DENIAL, new byte[]{'0', '0'}, new byte[]{'0', '0'}, 0);
+                } else {
                     Logger.v("second_issuer_value_else_if_block_else");
-                    emv_set_online_result(ONLINE_FAIL, new byte[]{'0', '0'}, new byte[]{'0','0'}, 0); //5a33==8a value
-                   // emv_set_online_result(ONLINE_SUCCESS, new byte[]{'0', '0'}, new byte[]{'0','0'}, 0);
+                    emv_set_online_result(ONLINE_FAIL, new byte[]{'0', '0'}, new byte[]{'0', '0'}, 0); //5a33==8a value
+                    // emv_set_online_result(ONLINE_SUCCESS, new byte[]{'0', '0'}, new byte[]{'0','0'}, 0);
                 }
 
 //                request.setAuthorisationResponseCode(responseData38);//0x89 Authorization code
@@ -2567,7 +2700,19 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
 //            controller.doEmvFinish(false);
             //[Step2].Online transaction success or credit for load wait onemvfinished callback to end porcess after calling secondIssuance.
             Logger.v("Second Issuer Req");
-            moveNextFlow();
+            if (transType.equalsIgnoreCase(ConstantApp.REFUND) && AppConfig.EMV.consumeType == 1) {
+                try {
+                    if (isMada) {
+                        flowEMVComplete(true, 2);
+                    } else
+                        flowEMVComplete(true, 2);
+                } catch (ISOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                moveNextFlow();
+            }
+
 //            controller.secondIssuance(request);
         } else {
             Logger.v("pinattempt_fail_or_de39==117");
@@ -2616,7 +2761,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
         byte[] responce = new byte[]{'0', '0'};
         byte[] issuerData = new byte[0];
         issuerData = ISOUtil.hex2byte(responseData55);
-        Logger.v("responseData55_onlineFailFlow----"+(responseData55));
+        Logger.v("responseData55_onlineFailFlow----" + (responseData55));
         /*Logger.v("issuerData2---"+ByteConversionUtils.byteToHexString(issuerData[0]));
         Logger.v("issuerData2---"+ByteConversionUtils.byteToHexString(issuerData[1]));
         Logger.v("issuerData1---"+ByteConversionUtils.byteToHexString(issuerData[2]));
@@ -2650,8 +2795,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                             waitPinInputThreat_apple_pin.notifyThread();
                         else if (rf_thread == 2)
                             waitPinInputThreat_apple_pin_.notifyThread();
-                    }
-                    else if (rf_thread == 1)
+                    } else if (rf_thread == 1)
                         waitPinInputThreat_rf.notifyThread();
                     else if (rf_thread == 2)
                         waitPinInputThreat_pin.notifyThread();
@@ -2666,8 +2810,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                             waitPinInputThreat_apple_pin.notifyThread();
                         else if (rf_thread == 2)
                             waitPinInputThreat_apple_pin_.notifyThread();
-                    }
-                   else if (rf_thread == 1)
+                    } else if (rf_thread == 1)
                         waitPinInputThreat_rf.notifyThread();
                     else if (rf_thread == 2)
                         waitPinInputThreat_pin.notifyThread();
@@ -2715,7 +2858,7 @@ public class SimpleTransferListener implements Constant, IFuntionListener , PinP
                         responseData55 = "";
                         waitSockettThreat_apple.notifyThread();
                     } else
-                    waitSockettThreat.notifyThread();
+                        waitSockettThreat.notifyThread();
                     break;
                 case AppConfig.EMV.SELECT_APP:
                     Logger.v("SELECT_APP---");

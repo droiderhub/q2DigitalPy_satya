@@ -74,12 +74,12 @@ public class SubMenuActivity extends BaseActivity implements SubMenuRecyclerAdap
         super.onResume();
     }
 
-    public void printReceipt(int stat, Observer<WorkInfo> status) {
+    public void printReceipt(String  stat, Observer<WorkInfo> status) {
         WorkManager mWorkManager = WorkManager.getInstance(context);
         WorkRequest.Builder mRequest = new OneTimeWorkRequest.Builder(PrinterWorker.class);
         Data.Builder dataSet = new Data.Builder();
         dataSet.putBoolean(PrinterWorker.KEY_VALUE_PRINT, true);
-        dataSet.putInt(PrinterWorker.KEY_VALUE_DATA, stat);
+        dataSet.putString(PrinterWorker.KEY_VALUE_DATA, stat);
         mRequest.setInputData(dataSet.build());
         WorkRequest build = mRequest.build();
         mWorkManager.enqueue(build);
@@ -88,7 +88,7 @@ public class SubMenuActivity extends BaseActivity implements SubMenuRecyclerAdap
     }
 
     @Override
-    public void doPrint(final int i) {
+    public void doPrint(final String i) {
         Utils.alertDialogShow(this, getString(R.string.printing));
         printReceipt(i, new Observer<WorkInfo>() {
             @Override
@@ -210,7 +210,7 @@ public class SubMenuActivity extends BaseActivity implements SubMenuRecyclerAdap
     }
 
 
-    private boolean checkPaper(WorkInfo workInfo, final int print) {
+    private boolean checkPaper(WorkInfo workInfo, final String print) {
         boolean printStatus = workInfo.getOutputData().getBoolean(PrinterWorker.STATUS, true);
         if (printStatus)
             return true;
@@ -220,7 +220,7 @@ public class SubMenuActivity extends BaseActivity implements SubMenuRecyclerAdap
         return false;
     }
 
-    private boolean outOfPaper(final int print) {
+    private boolean outOfPaper(final String print) {
         return Utils.checkPrinterPaper(context, new Utils.DialogeClick() {
             @Override
             public void onClick() {

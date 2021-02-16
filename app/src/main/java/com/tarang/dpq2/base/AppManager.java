@@ -164,7 +164,7 @@ public class AppManager {
 
     public boolean getBoolean(String key) {
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("payswiff_data", Context.MODE_PRIVATE);
-        return preferences.getBoolean(key, false);
+        return preferences.getBoolean(key, getDefaultBool(key));
     }
 
     public long getLong(String key) {
@@ -207,7 +207,7 @@ public class AppManager {
                 case ConstantApp.SPRM_PORT:
                     return "1000";
                 case ConstantApp.MERCHANT_IP_CONFIG:
-                    return "121.244.157.147";
+                    return "35.154.44.222";
                 case ConstantApp.MERCHANT_PORT:
                     return "8443";
                 case ConstantApp.CHANGE_PASSWORD:
@@ -864,6 +864,34 @@ public class AppManager {
         setBoolean("CONNECTION_MODE", bool);
     }
 
+    public String getGPRSAPNName() {
+        String apn = getString("GPRS_APN");
+        Logger.v("APNN -" + apn);
+        return apn;
+    }
+
+    public String getGPRSAPN() {
+        String apn = getString("GPRS_APN");
+        Logger.v("APNN -" + apn);
+        if (apn.trim().length() == 0) {
+            return "GPRS";
+        } else
+            return "GPRS" + "\n" + apn;
+    }
+
+    public String getGPRSAPN1() {
+        String apn = getString("GPRS_APN");
+        Logger.v("APNN -" + apn);
+        if (apn.trim().length() == 0) {
+            return "";
+        } else
+            return "\n" + apn;
+    }
+
+    public void setGPRSAPN(String data) {
+        setString("GPRS_APN", data);
+    }
+
 
     //********************************************* last transaction details******************************************************
 
@@ -1153,12 +1181,24 @@ public class AppManager {
         setBoolean("MERCHANT_PORTAL_ENABLED", enable);
     }
 
+    private boolean getDefaultBool(String key) {
+        if (key.equalsIgnoreCase("MERCHANT_PORTAL_ENABLED"))
+            return true;
+        return false;
+    }
+
     public String getMerchantIP() {
         return getString(ConstantApp.MERCHANT_IP_CONFIG);
     }
 
     public String getMerchantPort() {
         return getString(ConstantApp.MERCHANT_PORT);
+    }
+
+    public boolean getAPNStatus() {
+        boolean stat = getBoolean("APN_LOADED");
+        Logger.v("STAT -" + stat);
+        return !stat;
     }
 
 }

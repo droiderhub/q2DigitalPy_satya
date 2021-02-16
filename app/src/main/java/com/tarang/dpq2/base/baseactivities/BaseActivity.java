@@ -441,22 +441,22 @@ public class BaseActivity extends AppCompatActivity implements OnLocaleChangedLi
 //    }
 
     public void hideAmountView() {
-        if(getCurrentMenu().getMenu_tag().equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_EXTENSION)) {
-            View view = findViewById(R.id.total_holder);
-            View view1 = findViewById(R.id.txt_total);
-            LinearLayout viewParent = findViewById(R.id.ll_amount_holder);
-            if (view != null) {
-                view.setVisibility(View.GONE);
-            }
-            if (view1 != null) {
-                view1.setVisibility(View.GONE);
-            }
-            if(viewParent != null){
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewParent.getLayoutParams();
-                params.weight = 0.7f;
-                viewParent.setLayoutParams(params);
-            }
-        }
+//        if(getCurrentMenu().getMenu_tag().equalsIgnoreCase(ConstantApp.PRE_AUTHORISATION_EXTENSION)) {
+//            View view = findViewById(R.id.total_holder);
+//            View view1 = findViewById(R.id.txt_total);
+//            LinearLayout viewParent = findViewById(R.id.ll_amount_holder);
+//            if (view != null) {
+//                view.setVisibility(View.GONE);
+//            }
+//            if (view1 != null) {
+//                view1.setVisibility(View.GONE);
+//            }
+//            if(viewParent != null){
+//                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewParent.getLayoutParams();
+//                params.weight = 0.7f;
+//                viewParent.setLayoutParams(params);
+//            }
+//        }
     }
 
 }
