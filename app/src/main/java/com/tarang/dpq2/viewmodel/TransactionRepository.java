@@ -220,6 +220,7 @@ public class TransactionRepository {
 //            transType = InnerProcessingCode.USING_STANDARD_PROCESSINGCODE;
         AppConfig.printerDataAvailable = false;
 //        AppConfig.isChipTransaction = true;
+        SimpleTransferListener.resetListner();
         SimpleTransferListener simpleTransferListener = SimpleTransferListener.getInstance(context);
         Logger.v("AppInit.loadKernal -"+AppInit.loadKernal);
 //        if(AppInit.loadKernal){

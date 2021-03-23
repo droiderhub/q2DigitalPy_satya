@@ -45,6 +45,8 @@
         android:layout_centerVertical="true"
         android:foregroundGravity="center"
         android:gravity="center"
+        android:maxLines="2"
+        android:maxWidth="@dimen/dp200"
         android:textColor="@color/black"
         android:text="@string/back">
     </TextView>

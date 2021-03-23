@@ -381,4 +381,6 @@ public interface ConstantApp {
     String MERCHANT_IP_CONFIG = "MERCHANT_IP_CONFIG";
     String MERCHANT_PORT = "MERCHANT_PORT";
 
+    String ACTIVATION_CODE = "ACTIVATION_CODE_";
+
 }

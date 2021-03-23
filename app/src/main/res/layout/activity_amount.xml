@@ -109,7 +109,7 @@
                 android:layout_gravity="bottom|center_horizontal"
                 android:textSize="18sp"
                 android:id="@+id/pay_button"
-                android:background="@drawable/all_cornor_button"
+                android:background="@drawable/btn_green_rounded_img"
                 android:textColor="@color/white"
                 android:text="@string/pay"/>
         </FrameLayout>

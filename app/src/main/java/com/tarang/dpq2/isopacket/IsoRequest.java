@@ -540,6 +540,7 @@ public class IsoRequest {
     }
 
     public byte[] getMAC(MadaRequest reqObj) {
+        Logger.v("ReqObj : "+ reqObj);
         PINPadExtendDevice device = SDKDevice.getInstance(context).getDeviceConnectPin();
 
         byte[] finalData = createISORequest(reqObj);
@@ -554,19 +555,23 @@ public class IsoRequest {
         StringBuilder stringBuilder = new StringBuilder();
         if (valueMTI.equalsIgnoreCase(ConstantAppValue.AUTH) || valueMTI.equalsIgnoreCase(ConstantAppValue.AUTH_ADVISE) || valueMTI.equalsIgnoreCase(ConstantAppValue.AUTH_ADVISE_REPEAT)
                 || valueMTI.equalsIgnoreCase(ConstantAppValue.FINANCIAL) || valueMTI.equalsIgnoreCase(ConstantAppValue.REVERSAL) || valueMTI.equalsIgnoreCase(ConstantAppValue.REVERSAL_REPEAT)) {
-            stringBuilder.append(getHexaString(valueMTI));
-            stringBuilder.append(valueBitmap);
-            stringBuilder.append(getHexaString(reqObj.getPrimaryAccNo2()));
-            stringBuilder.append(getHexaString(reqObj.getProcessingCode3()));
-            stringBuilder.append(getHexaString(addZeros(reqObj.getAmtTransaction4(), 12)));
-            stringBuilder.append(getHexaString(addZeros(reqObj.getSystemTraceAuditnumber11(), 6)));
-            stringBuilder.append(getHexaString(reqObj.getTimeLocalTransaction12()));
-            if(!AppInit.VERSION_6_0_5) {
-                stringBuilder.append(getHexaString(reqObj.getAdditionalDataNational47()));
-            }
-            stringBuilder.append(reqObj.getSecRelatedContInfo53());
-            if(!AppInit.VERSION_6_0_5) {
-                stringBuilder.append(reqObj.getIccCardSystemRelatedData55());
+            try {
+                stringBuilder.append(getHexaString(valueMTI));
+                stringBuilder.append(valueBitmap);
+                stringBuilder.append(getHexaString(reqObj.getPrimaryAccNo2()));
+                stringBuilder.append(getHexaString(reqObj.getProcessingCode3()));
+                stringBuilder.append(getHexaString(addZeros(reqObj.getAmtTransaction4(), 12)));
+                stringBuilder.append(getHexaString(addZeros(reqObj.getSystemTraceAuditnumber11(), 6)));
+                stringBuilder.append(getHexaString(reqObj.getTimeLocalTransaction12()));
+                if(!AppInit.VERSION_6_0_5) {
+                    stringBuilder.append(getHexaString(reqObj.getAdditionalDataNational47()));
+                }
+                stringBuilder.append(reqObj.getSecRelatedContInfo53());
+                if(!AppInit.VERSION_6_0_5) {
+                    stringBuilder.append(reqObj.getIccCardSystemRelatedData55());
+                }
+            }catch (Throwable t) {
+                t.printStackTrace();
             }
 
         } else if (valueMTI.equalsIgnoreCase(ConstantAppValue.FINANCIAL_ADVISE) || valueMTI.equalsIgnoreCase(ConstantAppValue.FINANCIAL_ADVISE_REPEAT)) {

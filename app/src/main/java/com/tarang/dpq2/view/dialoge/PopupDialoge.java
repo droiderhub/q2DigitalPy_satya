@@ -41,11 +41,15 @@ public class PopupDialoge {
             edt_value.setFocusable(false);
             edt_value.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
             edt_value.setClickable(false);
+            btn_save.setEnabled(false);
+            btn_save.getBackground().setAlpha(100);
         } else {
  //           edt_value.setEnabled(true);
             edt_value.setFocusable(true);
             edt_value.setFocusableInTouchMode(true); // user touches widget on phone with touch screen
             edt_value.setClickable(true);
+            btn_save.setEnabled(true);
+            btn_save.getBackground().setAlpha(255);
         }
 
         if (value.trim().length() != 0)

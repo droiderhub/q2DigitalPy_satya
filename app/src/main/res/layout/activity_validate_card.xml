@@ -46,7 +46,7 @@
             android:padding="10dp"
             android:id="@+id/validate_btn"
             android:textColor="@color/white"
-            android:background="@drawable/all_cornor_button"
+            android:background="@drawable/btn_green_rounded_img"
             android:text="@string/validate">
 
         </Button>

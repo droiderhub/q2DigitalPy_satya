@@ -18,6 +18,7 @@ import com.tarang.dpq2.base.room_database.db.AppDatabase;
 import com.tarang.dpq2.base.room_database.db.entity.TMSCardSchemeEntity;
 import com.tarang.dpq2.base.room_database.db.entity.TransactionModelEntity;
 import com.tarang.dpq2.base.utilities.Utils;
+import com.tarang.dpq2.isopacket.SupportPacket;
 import com.tarang.dpq2.model.KeyValueModel;
 import com.tarang.dpq2.model.PrinterModel;
 import com.tarang.dpq2.model.ReconcilationTopModel;
@@ -142,10 +143,8 @@ public class PrinterReceipt {
                     Logger.v("Val --" + list.get(i).getValue().trim() + "--");
                     if (Utils.isProbablyArabic(list.get(i).getKey().trim())) {
                         keyValueScriptBuffer.append("<br />" + "<div style=\"font-size:15px; font-weight:500\">" + list.get(i).getValue().trim() + "</div>"); // small left
-
                     } else {
                         keyValueScriptBuffer.append("<br />" + "<div style=\"font-size:15px; font-weight:500\">" + list.get(i).getValue().trim() + "</div>"); // small left
-
                     }
 
                 }
@@ -541,6 +540,15 @@ public class PrinterReceipt {
             //shared preference
 
             ReconciliationBottomModel reconciliationBottomModel = getBottomLayoutModel(false);
+
+            try {
+                String date[] = Utils.getCurrentDate().split(" ");
+                reconcilationTopModel.setEndDate(date[0]);
+                reconcilationTopModel.setEndTime(date[1]);
+                AppManager.getInstance().setReconciliationTopCard(reconcilationTopModel);
+            } catch (Exception ee) {
+                Logger.v("Exceptioneee");
+            }
 
 //            StringBuffer bottom = reconiclationBottomLayout(arial, arialBold, arabic, arabicBold, reconciliationBottomModel);
             StringBuffer bottom = reconiclationBottomLayout(reconciliationBottomModel);
@@ -1432,6 +1440,43 @@ public class PrinterReceipt {
         modelList.add(new KeyValueModel("Terminal Type  :" + AppManager.getInstance().getVendorTerminalType()));
         modelList.add(new KeyValueModel("Responce Code  :" + AppManager.getInstance().getDe39()));
         modelList.add(new KeyValueModel("Date & Time    :" + Utils.getCurrentDate()));
+        try {
+            PrinterReceipt.printKeyValue(modelList, mPrinter, context, complete);
+        } catch (DeviceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void printSetParameters(PrinterDevice mPrinter, Context context, String sn, BaseViewModel.PrintComplete complete) {
+//        String arial = mPrinter.getFontsPath(context, "arial.ttf", true);
+//        String arialBold = mPrinter.getFontsPath(context, "ARIALBD.TTF", true);
+//        String arabic = mPrinter.getFontsPath(context, "cour.ttf", true);
+        List<KeyValueModel> modelList = new ArrayList<>();
+        modelList.add(new KeyValueModel("*****TERMINAL CONFIG INFO*****"));
+        modelList.add(new KeyValueModel(". "));
+        modelList.add(new KeyValueModel("--------------------------------------------"));
+        modelList.add(new KeyValueModel("TRSM : " + AppManager.getInstance().getTRSM()));
+        modelList.add(new KeyValueModel("TID  : " + AppManager.getInstance().getCardAcceptorID41()));
+        modelList.add(new KeyValueModel("SERIAL NO  : " + sn));
+        modelList.add(new KeyValueModel("--------------------------------------------"));
+        modelList.add(new KeyValueModel("Phone No : " + AppManager.getInstance().getString(ConstantApp.SPRM_PHONE_NUMBER)));
+        modelList.add(new KeyValueModel("Vendor ID : " + AppManager.getInstance().getString(ConstantApp.SPRM_VENDER_ID)));
+        modelList.add(new KeyValueModel("Terminal Type : " + AppManager.getInstance().getString(ConstantApp.SPRM_TERMINAL_TYPE)));
+        modelList.add(new KeyValueModel("Vendor Key  : " + AppManager.getInstance().getString(ConstantApp.SPRM_VENDOR_KEY1)));
+        modelList.add(new KeyValueModel("SAMA Key : " + AppManager.getInstance().getString(ConstantApp.SPRM_SAMA_KEY1)));
+        modelList.add(new KeyValueModel("KEY Issue No  : " + AppManager.getInstance().getString(ConstantApp.SPRM_KEY_ISSUE_)));
+        modelList.add(new KeyValueModel("NII  : " + AppManager.getInstance().getString(ConstantApp.SPRM_NII_ID)));
+        modelList.add(new KeyValueModel("TLS  : " + AppManager.getInstance().getString(ConstantApp.HSTNG_TLS)));
+        modelList.add(new KeyValueModel(". "));
+        modelList.add(new KeyValueModel("*****HOST SETTINGS*****"));
+        modelList.add(new KeyValueModel(". "));
+        modelList.add(new KeyValueModel("IP  : " + AppManager.getInstance().getString(ConstantApp.SPRM_IP_CONFIG)));
+        modelList.add(new KeyValueModel("PORT  : " + AppManager.getInstance().getString(ConstantApp.SPRM_PORT)));
+        modelList.add(new KeyValueModel("MPORTAL IP  : " + AppManager.getInstance().getString(ConstantApp.MERCHANT_IP_CONFIG)));
+        modelList.add(new KeyValueModel("MPORTAL PORT  : " + AppManager.getInstance().getString(ConstantApp.MERCHANT_PORT)));
+        modelList.add(new KeyValueModel("CONNECTION TYPE  : " + SupportPacket.getNetworkTypeString(context)));
+        modelList.add(new KeyValueModel("OPERATOR  : " + SupportPacket.getNetworkServiceProviderString(context)));
+        modelList.add(new KeyValueModel("--------------------------------------------"));
         try {
             PrinterReceipt.printKeyValue(modelList, mPrinter, context, complete);
         } catch (DeviceException e) {

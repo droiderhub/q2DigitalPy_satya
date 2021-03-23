@@ -79,7 +79,7 @@
                         android:gravity="center"
                         android:id="@+id/txt_account_no"
                         android:padding="10dp"
-                        android:text="1234 **** **** 1111"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -157,7 +157,7 @@
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:id="@+id/txt_expiry_date"
-                        android:text="@string/expiry_date" />
+                        android:text="" />
 
                 </LinearLayout>
             </FrameLayout>
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:background="@drawable/btn_green_rounded_img"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="10dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp">
@@ -178,7 +178,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 122.23"
+                android:text=""
                 android:id="@+id/etd_number_"
                 android:textColor="@color/white"
                 android:textSize="25dp" />
@@ -186,7 +186,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 122.23"
+                android:text=""
                 android:id="@+id/etd_number_ar_"
                 android:textColor="@color/white"
                 android:textSize="25dp" />

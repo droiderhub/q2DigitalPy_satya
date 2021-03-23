@@ -11,8 +11,10 @@ import com.tarang.dpq2.base.jpos_class.ConstantApp;
 import com.tarang.dpq2.base.terminal_sdk.AppConfig;
 import com.tarang.dpq2.base.terminal_sdk.device.SDKDevice;
 import com.tarang.dpq2.base.terminal_sdk.event.SimpleTransferListener;
+import com.tarang.dpq2.base.utilities.CountDownResponseTimer;
 import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.model.MenuModel;
+import com.tarang.dpq2.view.activities.ActivationActivity;
 import com.tarang.dpq2.view.activities.ApnSettingActivity;
 import com.tarang.dpq2.view.activities.ChangeLanguageActivity;
 import com.tarang.dpq2.view.activities.DisplaySubMenuData;
@@ -37,6 +39,8 @@ import com.tarang.dpq2.view.activities.ValidateCardActivity;
 import com.tarang.dpq2.view.dialoge.PopupDialoge;
 import com.tarang.dpq2.worker.SocketConnectionWorker;
 
+import static com.tarang.dpq2.base.utilities.Utils.checkSimStatus;
+
 
 public class MapperFlow implements ConstantApp {
     private static MapperFlow instance = null;
@@ -55,7 +59,7 @@ public class MapperFlow implements ConstantApp {
         Logger.v("LandingPage --" + 1);
         Intent i = new Intent(context, LandingPageActivity.class);
         context.startActivity(i);
-        ((SplashActivity) context).finish();
+        ((BaseActivity) context).finish();
     }
 
     public void moveToLandingActivity(Context context) {
@@ -71,6 +75,22 @@ public class MapperFlow implements ConstantApp {
         Logger.v("LandingPage --" + ii);
         Intent intent = new Intent(context, LandingPageActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        ((BaseActivity) context).finish();
+    }
+
+    public void moveToActivationCode(Context context, String serialNumber) {
+        CountDownResponseTimer.cancelTimerLanding(222);
+        Intent intent = new Intent(context, ActivationActivity.class);
+        intent.putExtra("SNNUMBER",serialNumber);
+        context.startActivity(intent);
+    }
+
+    public void moveToRegistration(Context context) {
+        AppManager.getInstance().activationCodeStatus(true);
+        AppManager.getInstance().setMenuItem(new MenuModel.MenuItem(context.getString(R.string.registering), ConstantApp.REGISTRATION));
+        Intent intent = new Intent(context, AdminMenuActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         context.startActivity(intent);
         ((BaseActivity) context).finish();
     }
@@ -395,10 +415,14 @@ public class MapperFlow implements ConstantApp {
                 Utils.alertPriorityDialoge(context);
                 break;
             case ConstantApp.HSTNG_GPRS_CONNECTED:
-                moveToApnSettings(context,tag.getMenu_name());
+                if (checkSimStatus(context)) {
+                    moveToApnSettings(context,tag.getMenu_name());
+                } else {
+                    Toast.makeText(context, context.getString(R.string.sim_not_present), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case ConstantApp.HSTNG_TLS:
-                new PopupDialoge(context).createEditText(MenuModel.getInstance().submenuHostSettings(context).get(1));
+                new PopupDialoge(context).createEditText(MenuModel.getInstance().submenuHostSettings(context).get(2));
                 break;
             case ConstantApp.HSTNG_PING_SETUP:
                 Utils.checkInternetPing(context);
@@ -450,6 +474,7 @@ public class MapperFlow implements ConstantApp {
                         public void onClick(View v) {
                             AppManager.getInstance().setBoolean(ConstantApp.DELETE_HISTORY, true);
                             AppManager.getInstance().setAdminSafHistoryView("DELETE_TXN_HISTORY");
+                            AppManager.getInstance().setHistoryView(ConstantApp.DELETE_HISTORY);
                             context.startActivity(new Intent(context, TransactionHistoryActivity.class));
                             Utils.dismissDialoge();
                         }
@@ -571,7 +596,9 @@ public class MapperFlow implements ConstantApp {
     public void moveToReEnterAmount(Context context) {
         Intent i = new Intent(context, EnterAmountActivity.class);
         Logger.v("SimpleTransferListener.isCashBackAmountExceed --" + SimpleTransferListener.isCashBackAmountExceed);
-        if (SimpleTransferListener.isCashBackAmountExceed) {
+        if (SimpleTransferListener.isAmountExceed && SimpleTransferListener.isCashBackAmountExceed) {
+            i.putExtra(TAG, AppManager.getInstance().getMenuItem().getMenu_tag());
+        } else if (SimpleTransferListener.isCashBackAmountExceed) {
             AppConfig.EMV.amountValue = AppConfig.EMV.amountValue - AppConfig.EMV.amtCashBack;
             i.putExtra(TAG, Cashback_Amount);
             i.putExtra(Purchase_Amount, (AppConfig.EMV.amountValue));
@@ -580,6 +607,7 @@ public class MapperFlow implements ConstantApp {
             i.putExtra(TAG, AppManager.getInstance().getMenuItem().getMenu_tag());
         context.startActivity(i);
         ((BaseActivity) context).finish();
+
     }
 
     public void moveToEnterRrnDateAmountActivity(Context context, String accNo, String expDate, String tag) {

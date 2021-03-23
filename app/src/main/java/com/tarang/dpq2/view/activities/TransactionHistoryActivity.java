@@ -305,9 +305,14 @@ public class TransactionHistoryActivity extends BaseActivity implements Transact
                 }
                 Logger.v("Do work");
                 if (AppManager.getInstance().getHistoryView().equalsIgnoreCase(ConstantApp.TRANSACTION_VIEW)) {
-                    transactionHistoryTuples = transactionModelDao.loadAllTransactions();
+                    transactionHistoryTuples = transactionModelDao.loadAllTransactions("");
                 } else if (AppManager.getInstance().getHistoryView().equalsIgnoreCase(ConstantApp.SAF_HISTORY)) {
                     transactionHistoryTuples = safModelDao.loadAllSAFTransactions();
+                }
+                if (transactionHistoryTuples != null && transactionHistoryTuples.size() > 0) {
+                    for (TransactionHistoryTuple transactionHistoryTuple:transactionHistoryTuples) {
+                        Logger.v("TransactionHistoryTuple : "+ transactionHistoryTuple);
+                    }
                 }
                 return transactionHistoryTuples;
             }

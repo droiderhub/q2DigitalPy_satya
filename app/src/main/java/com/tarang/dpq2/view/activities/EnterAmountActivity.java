@@ -68,6 +68,7 @@ public class EnterAmountActivity extends BaseActivity implements TextView.OnEdit
         if (!amount.equalsIgnoreCase("") && amount.replaceAll(",", "").trim().length() != 0 && amount.replaceAll("\\.", "").trim().length() != 0) {
             Double amountValue = Double.valueOf(amount.replaceAll(",", ""));
             Logger.v("AMOUNT -VALL-"+amount);
+            Logger.v("AMOUNT -VALL-"+amountValue);
             if (amountValue > 0) {
                 AppConfig.EMV.amtCashBack =0;
                 AppConfig.EMV.amountValue = (amountValue);
@@ -130,8 +131,8 @@ public class EnterAmountActivity extends BaseActivity implements TextView.OnEdit
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Utils.hideDialoge1();
-        toast.cancel();
+      //  Utils.hideDialoge1();
+    //    toast.cancel();
     }
 
     private void setTextView() {

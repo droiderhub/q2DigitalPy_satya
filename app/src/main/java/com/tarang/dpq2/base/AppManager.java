@@ -39,6 +39,7 @@ public class AppManager {
     private static String LogString = "AppManager";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    String ACTIVATION_STATUS = "ACTIVATION_STATUS_NEWW";
 
     public AppManager(Context context) {
         mContext = context;
@@ -75,6 +76,12 @@ public class AppManager {
     //gets the unique android id...
     public static String getUniqueId(Context context) {
         return android.provider.Settings.Secure.getString(context.getContentResolver(), "android_id");
+    }
+
+    public String getRecon() {
+        int count = getInt("RECON_MPORTAL_COUNT");
+        setInt("RECON_MPORTAL_COUNT", (count + 1));
+        return "" + count;
     }
 
 
@@ -123,6 +130,23 @@ public class AppManager {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key, value);
         editor.apply();
+    }
+
+    public void activationCodeStatus(boolean b) {
+        Logger.v("setInitializationStatus --" + b);
+        setBoolean(ACTIVATION_STATUS, b);
+    }
+
+    public boolean getActivationStatus() {
+        boolean status = (getBoolean(ACTIVATION_STATUS));
+        Logger.v("getInitializationStatus--" + status);
+        return status;
+//        if (status == 2) {
+//            ((BaseActivity) context).showToast(context.getString(R.string.plz_do_TMS));
+//        } else if (status == 0) {
+//            ((BaseActivity) context).showToast(context.getString(R.string.plz_do_registration));
+//        }
+//        return status == 1;
     }
 
     public void setLong(String key, long value) {
@@ -179,43 +203,45 @@ public class AppManager {
 
     private String getDefaultStringValue(String key) {
         if (key.equalsIgnoreCase(ConstantApp.SET_GPS_LOCATION))
-            return "N000000W0000000";
+            return "N402646W0795856";
+        if (key.equalsIgnoreCase(ConstantApp.ACTIVATION_CODE))
+            return getActivationCodeIP();
         else if (key.equalsIgnoreCase(ConstantApp.SPRM_PHONE_NUMBER))
             return "1234567890";
         else if (key.equalsIgnoreCase("KSN_DATA"))
             return "0";
         else if (key.equalsIgnoreCase(MERCHANT_PASSWORD))
-            return "000000";
+            return "000000000";
         else if (key.equalsIgnoreCase(DUKPT_KEY_KSN_INDICATOR))
             return "A";
         else if (key.equalsIgnoreCase(ADMIN_PASSWORD))
-            return "000000";
+            return "920028806";
         else {
             switch (key) {
                 case ConstantApp.SPRM_VENDER_ID:
                     return "18";
                 case ConstantApp.SPRM_TERMINAL_TYPE:
-                    return "09";
+                    return ((AppInit.HITTING_LIVE_SERVER) ? "01" : "09");
                 case ConstantApp.SPRM_TRSM_ID:
-                    return "00362815";
+                    return (AppInit.HITTING_LIVE_SERVER) ?"87654321":"00362815";
 //                case ConstantApp.SPRM_TERMINAL_SERIAL_NUM:
 //                    return "362815";
                 case ConstantApp.SPRM_KEY_ISSUE_:
                     return "FFFF";
                 case ConstantApp.SPRM_IP_CONFIG:
-                    return "122.165.192.253";
+                    return getDefaultIp();
                 case ConstantApp.SPRM_PORT:
-                    return "1000";
+                    return getDefaultPort();
                 case ConstantApp.MERCHANT_IP_CONFIG:
-                    return "35.154.44.222";
+                    return ((AppInit.HITTING_LIVE_SERVER) ? "10.100.100.11" : "35.154.44.222");
                 case ConstantApp.MERCHANT_PORT:
-                    return "8443";
+                    return ((AppInit.HITTING_LIVE_SERVER) ? "8443" : "8443");
                 case ConstantApp.CHANGE_PASSWORD:
                     return "000000";
                 case ConstantApp.SPRM_VENDOR_KEY1:
                     return "01";
                 case ConstantApp.SPRM_NII_ID:
-                    return "037";
+                    return getDefaultNII();
                 case ConstantApp.SPRM_SAMA_KEY1:
                     return "00";
                 case ConstantApp.HSTNG_TLS:
@@ -223,6 +249,53 @@ public class AppManager {
             }
         }
         return "";
+    }
+
+    private String getActivationCodeIP() {
+        if (AppInit.HITTING_LIVE_SERVER) {
+            return "10.100.100.11:23210";
+        } else {
+            return "35.154.44.222:8081";
+        }
+    }
+
+    private String getDefaultIp() {
+        if (!AppInit.HITTING_LIVE_SERVER) {
+            return "122.165.192.253";
+        }
+        String apn = getGPRSAPNName().trim();
+        if (apn.equalsIgnoreCase("STC")) {
+            return "10.0.225.55";
+        } else if (apn.equalsIgnoreCase("MOBILY")) {
+            return "10.64.201.65";
+        } else
+            return "10.123.90.3";
+    }
+
+    private String getDefaultPort() {
+        if (!AppInit.HITTING_LIVE_SERVER) {
+            return "1000";
+        }
+        String apn = getGPRSAPNName().trim();
+        if (apn.equalsIgnoreCase("STC")) {
+            return "60";
+        } else if (apn.equalsIgnoreCase("MOBILY")) {
+            return "443";
+        } else
+            return "60";
+    }
+
+    private String getDefaultNII() {
+        if (!AppInit.HITTING_LIVE_SERVER) {
+            return "037";
+        }
+        String apn = getGPRSAPNName().trim();
+        if (apn.equalsIgnoreCase("STC")) {
+            return "009";
+        } else if (apn.equalsIgnoreCase("MOBILY")) {
+            return "100";
+        } else
+            return "160";
     }
 
 
@@ -393,11 +466,11 @@ public class AppManager {
     }
 
     public void resetAdminPassword() {
-        setString(ADMIN_PASSWORD, "000000");
+        setString(ADMIN_PASSWORD, "920028806");
     }
 
     public void resetMerchantPassword() {
-        setString(MERCHANT_PASSWORD, "000000");
+        setString(MERCHANT_PASSWORD, "000000000");
     }
 
     public int getReversalUid() {
@@ -415,13 +488,13 @@ public class AppManager {
     }
 
     public String getCardAcceptorID41() {
-        return "1234567812121234";
-//        return getString(CARDACCEPTORID);
+ //       return "1234567812121234";
+       return getString(CARDACCEPTORID);
     }
 
     public String getCardAcceptorCode42() {
-        return "800150400566";
-//        return getString(CARDACCEPTORCODE);
+ //       return "800150400566";
+        return getString(CARDACCEPTORCODE);
     }
 
     public String getTerminalAIDVersionNumber(String aid) {
@@ -956,6 +1029,10 @@ public class AppManager {
         editor.apply();
     }
 
+    public String getActivationURL() {
+        return getString(ConstantApp.ACTIVATION_CODE);
+    }
+
     //********************************************* last transaction details******************************************************
     boolean reversalManual;
     boolean adminNotification = false;
@@ -1126,6 +1203,10 @@ public class AppManager {
         setBoolean("DEBUG_ENABLED",enable);
     }
 
+    public boolean isDebugEnabled1() {
+        return getBoolean("DEBUG_ENABLED");
+    }
+
     public TransactionModelEntity getDebugTransactionModelEntity() {
         preferences = getApplicationContext().getSharedPreferences("debugTransaction", Context.MODE_PRIVATE);
         Gson gson = new Gson();
@@ -1199,6 +1280,10 @@ public class AppManager {
         boolean stat = getBoolean("APN_LOADED");
         Logger.v("STAT -" + stat);
         return !stat;
+    }
+
+    public String getTRSM() {
+        return getString(ConstantApp.SPRM_TRSM_ID);
     }
 
 }

@@ -51,7 +51,7 @@ public class SAFCountWorker extends Worker {
 
         if (loadEMVKernel(tmpEmvLibDir.getBytes(), tmpEmvLibDir.getBytes().length) == 0) {*/
            // emv_kernel_initialize();
-            emv_set_kernel_attr(new byte[]{0x20}, 1);
+        emv_set_kernel_attr(new byte[]{0x20, 0x08}, 2);
 //        } else
 //            Logger.v("EMV Kernal ElSE");
 

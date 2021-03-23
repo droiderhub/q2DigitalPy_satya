@@ -72,6 +72,7 @@ public class LightsDisplay {
         }
 
     }
+
     public void showOrangeLight(){
         hideSingleLight();
         hideTwoLight();

@@ -21,6 +21,7 @@ public class AppInit extends Application implements Constant {
     // TODO Q2
     public static int CONTACT_CHIP = 1;
     public static int CONTACTLESS_RF = 2;
+    public static boolean ACTIVATION_CODE = false; // TODO : Activation code true - prompt Activation screen , false - no ctivation screen
 
     public static String[] apnName = {"MOBILY","STC","SKY_BAND"};
     public static String[] apnList = {"POS-M2M","POS.M2M","IBS"};
@@ -59,7 +60,7 @@ public class AppInit extends Application implements Constant {
 
 
     // Old Code
-    public static boolean HITTING_LIVE_SERVER = false; //TODO : Change TRUE - live server False - Local Server
+    public static boolean HITTING_LIVE_SERVER = true; //TODO : Change TRUE - live server False - Local Server
     public static boolean VERSION_6_0_5 = false; // TODO : Change True - 6.0.5 version, False - 6.0.9 version
     public static boolean ENCRYPT_DISABLE = true; // TODO : change true if want to disbale encrypt data , false do encrpt before storing
 

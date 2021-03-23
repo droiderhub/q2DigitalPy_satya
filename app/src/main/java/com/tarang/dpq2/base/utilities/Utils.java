@@ -94,6 +94,7 @@ import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 import static com.cloudpos.jniinterface.EMVJNIInterface.query_contact_card_presence;
+import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.icExpiredDate;
 import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.reqObj;
 
 public class Utils {
@@ -278,8 +279,10 @@ public class Utils {
         text2.setVisibility(View.GONE);
         TextView text = (TextView) alertDialog.findViewById(R.id.text_dialog);
         text.setText(message);
+        ImageView loading = (ImageView) alertDialog.findViewById(R.id.loading);
+        loading.setVisibility(View.VISIBLE);
         alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.setCancelable(false);
+    //    alertDialog.setCancelable(false);
 
         Window window = alertDialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
@@ -365,7 +368,7 @@ public class Utils {
             Logger.v("Alert Shown");
         }
     }
-    public static void alertDialogShowStatus(final Context context, String message,String message1, boolean stat) {
+    public static void alertDialogShowStatus(final Context context, String message, String message1, String message_ar, boolean stat) {
         Logger.v("Message --" + message);
         dismissDialoge();
         if (((BaseActivity) context).isFinishing())
@@ -376,6 +379,8 @@ public class Utils {
             alertDialog_new.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         alertDialog_new.setContentView(R.layout.custom_dialog_transparent_1);
 
+        TextView text_ar = (TextView) alertDialog_new.findViewById(R.id.text_dialog_arr);
+        text_ar.setText(message_ar);
         TextView text = (TextView) alertDialog_new.findViewById(R.id.text_dialog);
         text.setText(message);
         TextView text2 = (TextView) alertDialog_new.findViewById(R.id.text_dialog2);
@@ -436,6 +441,7 @@ public class Utils {
 //            if (!((Activity) context).isFinishing())
             shoeDialoge();
     }
+
     public static void alertDialogOneShowBottom(final Context context, String message) {
         Logger.v("Message --" + message);
         dismissDialoge();
@@ -578,6 +584,8 @@ public class Utils {
         }
         TextView text = (TextView) alertDialog.findViewById(R.id.text_dialog);
         text.setText(message);
+        LinearLayout button_layout = alertDialog.findViewById(R.id.button_layout);
+        button_layout.setVisibility(View.VISIBLE);
         Button ok = alertDialog.findViewById(R.id.ok);
         Button cancel = alertDialog.findViewById(R.id.cancel);
         ImageView loading = alertDialog.findViewById(R.id.loading);
@@ -664,7 +672,7 @@ public class Utils {
         alertDialog.setCanceledOnTouchOutside(false);
         boolean isGPRS = AppManager.getInstance().getConnectionPriority();
         ((TextView) alertDialog.findViewById(R.id.txt_primary)).setText((isGPRS)?context.getString(R.string.gprs_primary) : context.getString(R.string.wifi_primary));
-        ((TextView) alertDialog.findViewById(R.id.txt_secondary)).setText((!isGPRS) ? context.getString(R.string.wifi_secondary) : context.getString(R.string.gprs_secondary));
+        ((TextView) alertDialog.findViewById(R.id.txt_secondary)).setText((isGPRS) ? context.getString(R.string.wifi_secondary) : context.getString(R.string.gprs_secondary));
         alertDialog.findViewById(R.id.connection_cancel1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -710,8 +718,11 @@ public class Utils {
 
     public static void alertDialogShow(final Context context, String message, View.OnClickListener oklistener, View.OnClickListener cancellistener) {
         dismissDialoge();
-        if (((BaseActivity) context).isFinishing())
+        if (((BaseActivity) context).isFinishing()) {
+            Logger.v("Returned");
             return;
+        }
+
         if (alertDialog == null) {
             alertDialog = new Dialog(context);
             alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1063,9 +1074,31 @@ public class Utils {
         return false;
     }
 
+    public static boolean isInternetAvailable1(Context context) {
+        final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetworkInfo = connMgr.getActiveNetworkInfo();
+
+        if (activeNetworkInfo != null) { // connected to the internet
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                // connected to wifi
+                Logger.v("TYPE_WIFI");
+                return true;
+            } else if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // connected to the mobile provider's data plan
+                Logger.v("TYPE_MOBILE");
+                return true;
+            }
+        }
+      //  ((BaseActivity) context).showToast(context.getString(R.string.please_check_internet_connection));
+        Logger.v("Internet False");
+        return false;
+    }
+
     public static String getCurrentDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
+        Logger.v("SAF date : "+ formatter.format(date));
         return formatter.format(date);
     }
 
@@ -1450,6 +1483,15 @@ public class Utils {
         }
     }
 
+    public static String formatAmount(Activity context, double amt, boolean arabic) {
+        String value = String.format("%.2f", amt);
+        if (!arabic) {
+            return " SAR " + value;
+        } else {
+            return (" ريال " + Utils.getArabicNumbersPlain(value));
+        }
+    }
+
     public static boolean checkArabicLanguage(Activity context) {
         LocalizationActivityDelegate localizationDelegate = new LocalizationActivityDelegate(context);
         Logger.v("localizationDelegate----" + localizationDelegate.getLanguage(context));
@@ -1466,6 +1508,15 @@ public class Utils {
         Logger.v("localizationDelegate----" + localizationDelegate.getLanguage(context));
         Logger.v("localizationDelegateus----" + new Locale("en", "US"));
         if (localizationDelegate.getLanguage(context).equals(new Locale("en", "US"))) {
+            return value;
+        } else {
+            return (Utils.getArabicNumbersPlain(value));
+        }
+    }
+
+    public static String formatAmountWithoutSAR(boolean isArabic, double amt) {
+        String value = String.format("%.2f", amt);
+        if (!isArabic) {
             return value;
         } else {
             return (Utils.getArabicNumbersPlain(value));
@@ -1740,15 +1791,29 @@ public class Utils {
     }
 
     public static boolean checkPrinterPaper(Context context, DialogeClick click) {
-//        Printer printer = SDKDevice.getInstance(context).getPrinter();
-//        if (printer != null) {
-//            PrinterStatus printerStatus = printer.getStatus();
-//            if (printerStatus.toString().equalsIgnoreCase(PrinterStatus.OUTOF_PAPER.toString())) {
-//                Utils.alertDialogShow(context, context.getString(R.string.out_of_paper), click);
-//                return true;
-//            }
-//        }
-        return false;
+        PrinterDevice printer = SDKDevice.getInstance(context).getPrinter();
+        boolean status = false;
+        try {
+            printer.open();
+            if ( printer.queryStatus()==1){
+                Logger.v("have paper");
+                printer.close();
+                status = false;
+                return status;
+            }
+            else {
+                Utils.alertDialogShow(context, context.getString(R.string.out_of_paper), click);
+                Logger.v("out of paper");
+                printer.close();
+                status = true;
+                return status;
+            }
+        } catch (DeviceException e) {
+            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return status;
     }
 
     public static String fetchIndicatorFromAID(String aid1) {

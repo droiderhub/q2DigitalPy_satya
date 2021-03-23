@@ -17,6 +17,7 @@ import com.tarang.dpq2.base.AppInit;
 import com.tarang.dpq2.base.Logger;
 import com.tarang.dpq2.base.MapperFlow;
 import com.tarang.dpq2.base.baseactivities.BaseActivity;
+import com.tarang.dpq2.base.jpos_class.ByteConversionUtils;
 import com.tarang.dpq2.base.jpos_class.ConstantApp;
 import com.tarang.dpq2.base.utilities.Utils;
 
@@ -68,27 +69,26 @@ public class ManualCardActivity extends BaseActivity implements View.OnClickList
                         yy = Integer.parseInt(date[1]);
                     }
                     int YYYY = Calendar.getInstance().get(Calendar.YEAR);
+                    int presentMonth = Integer.parseInt(ByteConversionUtils.formatTranDate("MM"));
+                    Logger.v("Present Mnth : "+ presentMonth);
                     String YY = Integer.toString(YYYY).substring(2);
                     int year = Integer.parseInt(YY);
-                    int month = Calendar.getInstance().get(Calendar.MONTH)+1;
-                    int dd = Calendar.getInstance().get(Calendar.DATE);
-
-                    Logger.v("manual_transaction_system_date----mm="+month+"----yy=="+year+"---date==="+dd);
-                    if (mm > 0 && month <= mm && year <= yy) {
-                        if (getCurrentMenu().getMenu_tag().equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_MANUAL))
-                            MapperFlow.getInstance().moveToEnterRrnDateAmountActivity(context, accNo, date[1] + date[0],getCurrentMenu().getMenu_tag());
-                        else
-                            MapperFlow.getInstance().moveToPrintScreen(context, accNo, date[1] + date[0]);
+                    if (mm > 0 && mm <= 12 && year <= yy) {
+                        if (mm >= presentMonth) {
+                            if (getCurrentMenu().getMenu_tag().equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_MANUAL))
+                                MapperFlow.getInstance().moveToEnterRrnDateAmountActivity(context, accNo, date[1] + date[0], getCurrentMenu().getMenu_tag());
+                            else
+                                MapperFlow.getInstance().moveToPrintScreen(context, accNo, date[1] + date[0]);
+                        } else
+                            Toast.makeText(context, getString(R.string.enter_valid_date), Toast.LENGTH_SHORT).show();
                     } else
                         Toast.makeText(context, getString(R.string.enter_valid_date), Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(context, getString(R.string.enter_valid_date), Toast.LENGTH_SHORT).show();
             } else
                 Toast.makeText(context, getString(R.string.enter_valid_date), Toast.LENGTH_SHORT).show();
-        } else {
+        } else
             Toast.makeText(context, getString(R.string.enter_valid_account_number), Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     String beforeText = "";

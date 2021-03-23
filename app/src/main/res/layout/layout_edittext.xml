@@ -52,7 +52,7 @@
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:textColor="@color/white"
-                android:background="@drawable/all_cornor_button"
+                android:background="@drawable/btn_blue_rounded_img"
                 android:text="@string/cancel" />
 
             <Button
@@ -60,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="6dp"
-                android:background="@drawable/all_cornor_button"
+                android:background="@drawable/btn_green_rounded_img"
                 android:textColor="@color/white"
                 android:layout_weight="1"
                 android:text="@string/save" />

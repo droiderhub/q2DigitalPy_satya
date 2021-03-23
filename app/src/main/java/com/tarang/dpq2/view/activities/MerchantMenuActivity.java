@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -150,6 +151,7 @@ public class MerchantMenuActivity extends BaseActivity implements ConstantApp, V
                 makeSnapShot(true);
                 break;
             case RECONCILE_SETUP:
+                findViewById(R.id.txt_uploadin).setVisibility(View.GONE);
                 setTitle(getCurrentMenu().getMenu_name());
                 reconciliation_setup_layout.setVisibility(View.VISIBLE);
                 initReconcileView();
@@ -250,6 +252,10 @@ public class MerchantMenuActivity extends BaseActivity implements ConstantApp, V
                     //Replace below IP with the IP of that device in which server socket open.
                     //If you change port then change the port number in the server side code also.
                     boolean safTable = false;
+//                    Logger.v("All txn : "+ database.getTransactionDao().getAll());
+//                    for (TransactionModelEntity transactionModelEntity: database.getTransactionDao().getAll()) {
+//                        Logger.v("Txn : "+ transactionModelEntity);
+//                    }
                     TransactionModelEntity oldRequest = database.getTransactionDao().getMPortalRequest("", false);
                     if (oldRequest == null) {
                         Logger.v("Fetched from SAF");
@@ -404,9 +410,9 @@ public class MerchantMenuActivity extends BaseActivity implements ConstantApp, V
             @Override
             public void onClick(View v) {
                 if(input_current_password.getText().toString().trim().length() != 0){
-                    if(input_current_password.getText().toString().trim().length() == 6){
+                    if(input_current_password.getText().toString().trim().length() == 9){
                         if(input_new_password.getText().toString().trim().length() != 0) {
-                            if (input_new_password.getText().toString().trim().length() == 6) {
+                            if (input_new_password.getText().toString().trim().length() == 9) {
                                 if (input_new_password.getText().toString().equalsIgnoreCase(input_confirm_password.getText().toString())) {
                                     if (getCurrentMenu().getMenu_tag().equalsIgnoreCase(ConstantApp.CHANGE_PASSWORD_ADMIN)) {
                                         if (input_current_password.getText().toString().equalsIgnoreCase(AppManager.getInstance().getAdminPassword())) {

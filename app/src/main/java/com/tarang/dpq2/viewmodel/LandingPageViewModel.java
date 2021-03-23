@@ -1,13 +1,23 @@
 package com.tarang.dpq2.viewmodel;
 
+import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +32,8 @@ import com.tarang.dpq2.base.AppManager;
 import com.tarang.dpq2.base.Logger;
 import com.tarang.dpq2.base.MapperFlow;
 import com.tarang.dpq2.base.baseactivities.BaseActivity;
+import com.tarang.dpq2.base.jpos_class.ByteConversionUtils;
+import com.tarang.dpq2.base.jpos_class.ConstantApp;
 import com.tarang.dpq2.base.room_database.db.AppDatabase;
 import com.tarang.dpq2.base.room_database.db.entity.TransactionModelEntity;
 import com.tarang.dpq2.base.terminal_sdk.AppConfig;
@@ -36,8 +48,19 @@ import com.tarang.dpq2.view.activities.LandingPageActivity;
 import com.tarang.dpq2.worker.LoadKeyWorker;
 import com.tarang.dpq2.worker.PrinterWorker;
 import com.tarang.dpq2.worker.SAFWorker;
+import com.tarang.dpq2.worker.SSLSocketFactoryExtended;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.List;
+
+import javax.net.ssl.SSLSocket;
 
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_set_kernel_attr;
 import static com.cloudpos.jniinterface.EMVJNIInterface.query_contact_card_presence;
@@ -176,7 +199,8 @@ public class LandingPageViewModel extends BaseViewModel {
 
                         int current_count = workInfo.getOutputData().getInt(SAFWorker.SAF_COUNT, -1);
                         Logger.v("current_count--" + current_count);
-                        if (!showTemprovary) {
+                        sendMessage(current_count);
+                        /*if (!showTemprovary) {
                             if (current_count == -22) {
                                 Utils.dismissDialoge();
                                 startIdealTimer();
@@ -192,13 +216,170 @@ public class LandingPageViewModel extends BaseViewModel {
                                 Utils.dismissDialoge();
                                 startSAFTimer();
                             }
-                        }
+                        }*/
                     }
                 } else {
                     Utils.dismissDialoge();
                 }
             }
         });
+    }
+
+    Thread thread;
+
+
+    private void sendMessage(final int current_count) {
+        Logger.v("Merchant portal ");
+        if (!AppManager.getInstance().isMerchantPoratalEnable()) {
+            safWorkFlow(current_count);
+            return;
+        }
+        final Handler handler = new Handler();
+        final CountDownTimer mPortalTimer = new CountDownTimer(15000, 1000) {
+
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                try {
+                    thread.stop();
+                } catch (Exception e) {
+
+                }
+                safWorkFlow(current_count);
+            }
+        };
+        final String IP = AppManager.getInstance().getMerchantIP();
+        final int port = Integer.parseInt(AppManager.getInstance().getMerchantPort());
+        final InputStream inputStream = context.getResources().openRawResource(R.raw.newcerten);
+        final String version = AppManager.getInstance().getString(ConstantApp.HSTNG_TLS);
+        final AppDatabase database = AppDatabase.getInstance(context.getApplicationContext());
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                SSLSocket requestSocket;
+                try {
+                    //Replace below IP with the IP of that device in which server socket open.
+                    //If you change port then change the port number in the server side code also.
+                    boolean safTable = false;
+                    TransactionModelEntity oldRequest = database.getTransactionDao().getMPortalRequest("", false);
+                    if (oldRequest == null) {
+                        Logger.v("Fetched from SAF");
+                        safTable = true;
+                        oldRequest = database.getSAFDao().getMPortalRequest("", false);
+                    }
+                    if (oldRequest != null) {
+                        Logger.v("OLD transaction not null");
+                        SSLSocketFactoryExtended sslsocketfactory = new SSLSocketFactoryExtended(inputStream, version, false);
+                        Logger.v("Socket 1");
+                        requestSocket = (SSLSocket) sslsocketfactory.createSocket(IP, port);
+                        BufferedInputStream bis = new BufferedInputStream(requestSocket.getInputStream());
+                        BufferedOutputStream bos = new BufferedOutputStream(requestSocket.getOutputStream());
+                        Logger.v(oldRequest.getRequest_mportal());
+                        bos.write(ByteConversionUtils.HexStringToByteArray(oldRequest.getRequest_mportal()));
+                        bos.flush();
+                        // 4: Receive the response data
+                        byte[] buffer1 = new byte[1024];
+                        int nBytes1 = -1;
+                        Logger.v("Socket connected Merchant-" + requestSocket.isConnected());
+                        Logger.v("TRY block Receive");
+                        while ((nBytes1 = bis.read(buffer1)) >= 0) {
+                            final String output1 = ByteConversionUtils.byteArrayToHexString(buffer1, buffer1.length, false);
+                            String result1 = ByteConversionUtils.convertHexToString(output1);
+                            Logger.v("Result -" + result1);
+                            String[] tags = result1.split("<GS>");
+                            Logger.v(tags);
+                            if (tags[1].equalsIgnoreCase("200")) {
+                                if (safTable)
+                                    database.getSAFDao().updateSAFMerchantPortal(oldRequest.getSystemTraceAuditnumber11(), true, "");
+                                else
+                                    database.getTransactionDao().updateSAFMerchantPortal(oldRequest.getSystemTraceAuditnumber11(), true, "");
+                            }
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPortalTimer.cancel();
+                                    mPortalTimer.onFinish();
+                                }
+                            });
+                            return;
+                        }
+                        closeRequest(requestSocket);
+                        Logger.v("Socket close");
+                    } else {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPortalTimer.cancel();
+                                mPortalTimer.onFinish();
+                            }
+                        });
+                    }
+                } catch (
+                        IOException e) {
+                    e.printStackTrace();
+                    Logger.v("Exception");
+                } catch (
+                        CertificateException e) {
+                    Logger.v("Exception 1");
+                    e.printStackTrace();
+                } catch (
+                        NoSuchAlgorithmException e) {
+                    Logger.v("Exception 2");
+                    e.printStackTrace();
+                } catch (
+                        KeyStoreException e) {
+                    Logger.v("Exception 3");
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    Logger.v("Exception 4");
+                    e.printStackTrace();
+                } catch (NullPointerException e) {
+                    Logger.v("Exception 44");
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    Logger.v("Exception 44");
+                    e.printStackTrace();
+                }
+            }
+        };
+        mPortalTimer.start();
+        thread = new Thread(run);
+        thread.start();
+    }
+
+    private void closeRequest(SSLSocket requestSocket) {
+        try {
+            if (requestSocket.isClosed()) {
+                requestSocket.close();
+            }
+        } catch (Exception e) {
+            Logger.v("Exceptin ssl");
+        }
+    }
+
+    private void safWorkFlow(int current_count) {
+        Logger.v("Current countt -" + current_count);
+        if (!showTemprovary) {
+            if (current_count == -22) {
+                Utils.dismissDialoge();
+                startIdealTimer();
+            } else if (current_count == -2) {
+                AppManager.getInstance().setTemprovaryOutService(false);
+                Utils.dismissDialoge();
+                startIdealTimer();
+            } else if (current_count == -3) {
+                outOfServiceDialoe(false);
+            } else if (current_count != -1)
+                checkSAF(false);
+            else {
+                Utils.dismissDialoge();
+                startSAFTimer();
+            }
+        }
     }
 
     public void resetIdealTimer() {
@@ -404,7 +585,7 @@ public class LandingPageViewModel extends BaseViewModel {
     }
     public void checkSAFCount(String amt) {
         amount = amt;
-        if (Utils.isInternetAvailable(context, false)) {
+        if (Utils.isInternetAvailable1(context)) {
             new AsyncTaskExample().execute();
         }
     }
@@ -492,5 +673,55 @@ public class LandingPageViewModel extends BaseViewModel {
         Logger.v("closeCardReader()");
         if (AppManager.getInstance().getInitializationStatus(context)) //TODO check condition for registTRTION
             support.closeLandindCardReader();
+    }
+
+    Dialog alertDialog = null;
+
+    public void alertDialogShow(String msg ,final Utils.DialogeClick click) {
+        Logger.v("Message --Internet");
+        if (((BaseActivity) context).isFinishing())
+            return;
+        if (alertDialog == null) {
+            alertDialog = new Dialog(context);
+            alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            if (alertDialog.getWindow() != null)
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            alertDialog.setContentView(R.layout.custom_dialog_transparent);
+        }
+        TextView text = (TextView) alertDialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Button ok = alertDialog.findViewById(R.id.ok);
+        Button cancel = alertDialog.findViewById(R.id.cancel);
+        ImageView loading = alertDialog.findViewById(R.id.loading);
+        loading.setVisibility(View.GONE);
+        TextView text2 = (TextView) alertDialog.findViewById(R.id.text_dialog2);
+        text2.setVisibility(View.GONE);
+        cancel.setVisibility(View.GONE);
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                click.onClick();
+            }
+        });
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+
+        Window window = alertDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER | Gravity.CENTER_HORIZONTAL;
+        wlp.y = 140;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+
+        if (alertDialog != null) {
+            if (!((Activity) context).isFinishing()) {
+                alertDialog.show();
+                CountDownResponseTimer.cancelTimerLanding(2);
+            }else
+                Logger.v("Show Dialoge else");
+        } else
+            Logger.v("Dialoge null");
     }
 }

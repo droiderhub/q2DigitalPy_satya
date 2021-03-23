@@ -23,7 +23,7 @@
         android:orientation="vertical">
         <ImageView
             android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:id="@+id/img_status_"
             android:src="@drawable/status_wrong"/>
@@ -36,6 +36,16 @@
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="Your Custom Dialog"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:id="@+id/text_dialog_arr"
+            android:background="@drawable/all_button_border_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:textColor="@color/black"
             />
         <TextView

@@ -35,7 +35,7 @@ public class LandingPageRepository {
     }
 
     public void checkSAF(boolean repeat, Observer<WorkInfo> saf_worked) {
-        if(Utils.isInternetAvailable(context,false)) {
+        if(Utils.isInternetAvailable1(context)) {
             mWorkManager.cancelWorkById(uuID);
             mWorkManager.cancelUniqueWork("SAFWORKER");
             SAFWorker.setEventHandler(LandingPageViewModel.getEventHandler());

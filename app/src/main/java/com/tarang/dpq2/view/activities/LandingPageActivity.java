@@ -3,8 +3,10 @@ package com.tarang.dpq2.view.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -50,7 +52,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class LandingPageActivity extends BaseActivity implements View.OnClickListener , TextView.OnEditorActionListener, ActionMode.Callback,View.OnFocusChangeListener {
+public class LandingPageActivity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener, ActionMode.Callback, View.OnFocusChangeListener {
 
     private LandingPageViewModel viewModel;
     private AutoReconsilation reconsilation;
@@ -65,6 +67,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
     private boolean resetFlag;
     private boolean shownOnce = false;
     private SdkSupport support;
+    public static boolean isTxnCancelled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +76,8 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.activity_landing_page);
 
         Logger.v("initNew- " + 101);
-        Logger.v("app_version---"+ BuildConfig.VERSION_NAME);
-        Logger.v("mada_version---"+ AppInit.VERSION_6_0_5);
+        Logger.v("app_version---" + BuildConfig.VERSION_NAME);
+        Logger.v("mada_version---" + AppInit.VERSION_6_0_5);
         support = new SdkSupport(LandingPageActivity.this);
         Logger.v("support.closeLister --" + support.closeLister);
         /*new LightsDisplay(context).hideSingleLight();
@@ -132,6 +135,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         reconsilation = new AutoReconsilation(context);
         getMemory();
     }
+
     private void loadImage() {
         List<String> aidList = AppManager.getInstance().getAidListSplash();
         Logger.v("aidList -" + aidList.toString());
@@ -161,6 +165,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
             Glide.with(this).load(R.drawable.screen1).into(image);
         }
     }
+
     public void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -171,6 +176,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
     private void resetViews() {
 //        findViewById(R.id.parent_root_view).setVisibility(View.VISIBLE);
         connDevice(false);
@@ -212,10 +218,10 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void processwithFlow() {
-        if(!shownOnce) {
+        if (!shownOnce) {
             if (!clickEnter) {
                 viewModel.startSAFTimer();
-            }else {
+            } else {
                 viewModel.cancelIdealTimer();
                 CountDownResponseTimer.cancelTimerLanding(221);
             }
@@ -225,7 +231,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void resetShown() {
-        new CountDownTimer(2000,1000){
+        new CountDownTimer(2000, 1000) {
 
             @Override
             public void onTick(long l) {
@@ -248,9 +254,9 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
 //        SDKDevice sdkDevice1 = SDKDevice.getInstance(context);
 //        sdkDevice1.disconnect();
         Logger.v("Connection ");
-      //  sdkDevice = SDKDevice.getInstance(context);
-       // sdkDevice.connectDevice();
-       // Logger.v("Connection Exception -" + sdkDevice.connectException);
+        //  sdkDevice = SDKDevice.getInstance(context);
+        // sdkDevice.connectDevice();
+        // Logger.v("Connection Exception -" + sdkDevice.connectException);
 //        if (sdkDevice.connectException) {
 //            connDevice(isreset);
 //        }
@@ -260,12 +266,16 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         Logger.v("Landing page on resume");
+        initViews();
         showTimer = false;
         super.onResume();
-        connDevice(false);
+        if (AppManager.getInstance().getInitializationStatus(this)) {
+            connDevice(false);
+        }
+        LoadKeyWorker.emvKernelInitForLanding();
+        isTxnCancelled = false;
         Utils.setNullDialoge();
         clickEnter = false;
-        edtAmt.setText("0.00");
         findViewById(R.id.ideal_screen).setVisibility(View.GONE);
         getMemory();
         SAFWorker.failureCount = -1;
@@ -274,6 +284,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         viewModel.initReaderLandingPage();
         AppConfig.EMV.consumeType = -1;
 //        countDownTimer.start();
+        edtAmt.setText("0.00");
     }
 
     @Override
@@ -332,8 +343,8 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
                 dataSet = dataSet + "TID:" + tid.substring(0, 8);
             }
             String name = manager.getRetailerDataModel().getRetailerNameEnglish();
-            if(name.trim().length() != 0){
-                dataSet = dataSet +"  " + "Merchant Name:" + name;
+            if (name.trim().length() != 0) {
+                dataSet = dataSet + "  " + "Merchant Name:" + name;
             }
         } catch (Exception e) {
             Logger.v("Exception e");
@@ -383,12 +394,33 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         Logger.v("OnClick");
         switch (v.getId()) {
             case R.id.txt_transaction_menu:
+                if (!Utils.isInternetAvailable(context, false)) {
+                    viewModel.startSAFTimer();
+                    clickEnter = false;
+                    return;
+                }
                 clickEnter = true;
-                MapperFlow.getInstance().moveToTransactionMenu(context);
+                if (AppManager.getInstance().getActivationStatus() || !AppInit.ACTIVATION_CODE) {
+                    MapperFlow.getInstance().moveToTransactionMenu(context);
+                } else {
+                    doActivation();
+                }
                 break;
             case R.id.txt_merchant_menu:
                 clickEnter = true;
-                MapperFlow.getInstance().moveToPasswrod(context, false);
+                if (AppManager.getInstance().getActivationStatus() || !AppInit.ACTIVATION_CODE) {
+                    MapperFlow.getInstance().moveToPasswrod(context, false);
+                } else if (Utils.isInternetAvailable(context, false)) {
+                    doActivation();
+                } else {
+                    viewModel.alertDialogShow(context.getString(R.string.please_check_internet_connection), new Utils.DialogeClick() {
+                        @Override
+                        public void onClick() {
+                            viewModel.startSAFTimer();
+                            clickEnter = false;
+                        }
+                    });
+                }
                 break;
             case R.id.setting_img:
                 clickEnter = true;
@@ -396,7 +428,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ideal_screen:
                 resetViews();
-               // emv_log_file_clear(); //TODO clear emv logs from terminal
+                // emv_log_file_clear(); //TODO clear emv logs from terminal
                 break;
             case R.id.etd_amnt:
 //                viewModel.startSAFTimer();
@@ -440,12 +472,11 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         }
     }*/
 
-    private static boolean isHexNumber (String cadena) {
+    private static boolean isHexNumber(String cadena) {
         try {
             Long.parseLong(cadena, 16);
             return true;
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             // Error handling code...
             return false;
         }
@@ -478,6 +509,12 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         });
     }
 
+    public void doActivation() {
+        String serialNumber = Build.SERIAL;
+        Logger.v("SNNUMBER -" + serialNumber);
+        MapperFlow.getInstance().moveToActivationCode(context, serialNumber);
+    }
+
 
     public void removeCard() {
         Logger.v("removeCard()");
@@ -494,16 +531,21 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         });
     }
 
-    public void restart(){
+    public void restart() {
         Utils.dismissDialoge();
         onResume();
     }
+
     public void moveToPurchase() {
         if (AppManager.getInstance().getTemprovaryOutService()) {
             viewModel.outOfServiceDialoe(true);
         } else if (Utils.isInternetAvailable(context, false)) {
             if (!Utils.checkPrinterPaper(this)) {
-                viewModel.checkSAFCount(edtAmt.getText().toString());
+                if (AppManager.getInstance().getActivationStatus() || !AppInit.ACTIVATION_CODE) {
+                    viewModel.checkSAFCount(edtAmt.getText().toString());
+                } else {
+                    doActivation();
+                }
             }
         }
     }
@@ -514,7 +556,7 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
         if (i == EditorInfo.IME_ACTION_DONE) {
             clickEnter = true;
             //    connDevice(true);
-                moveToPurchase();
+            moveToPurchase();
         }
         return false;
 
@@ -539,11 +581,13 @@ public class LandingPageActivity extends BaseActivity implements View.OnClickLis
     public void onDestroyActionMode(ActionMode actionMode) {
 
     }
+
     @Override
     public void onFocusChange(View view, boolean b) {
         Logger.v("Boolean Focus-" + b);
         edtAmt.setSelection(edtAmt.getText().toString().trim().length());
     }
+
     public void reconnectDevice() {
         Logger.v("reconnectDevice");
         if (clickEnter)

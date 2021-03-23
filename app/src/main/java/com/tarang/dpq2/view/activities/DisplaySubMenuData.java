@@ -9,18 +9,28 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
+import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 
+import com.cloudpos.Device;
+import com.cloudpos.printer.PrinterDevice;
 import com.tarang.dpq2.BuildConfig;
 import com.tarang.dpq2.R;
 import com.tarang.dpq2.base.AppManager;
 import com.tarang.dpq2.base.Logger;
+import com.tarang.dpq2.base.MapperFlow;
 import com.tarang.dpq2.base.baseactivities.BaseActivity;
 import com.tarang.dpq2.base.jpos_class.ConstantApp;
+import com.tarang.dpq2.base.terminal_sdk.device.SDKDevice;
+import com.tarang.dpq2.base.terminal_sdk.utils.PrinterReceipt;
 import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.model.MenuModel;
 import com.tarang.dpq2.model.RetailerDataModel;
 import com.tarang.dpq2.view.adapter.DisplayMenuDataRecyclerAdapter;
+import com.tarang.dpq2.viewmodel.BaseViewModel;
 import com.tarang.dpq2.worker.PacketDBInfoWorker;
 
 import java.nio.charset.Charset;
@@ -34,6 +44,7 @@ import static com.tarang.dpq2.base.jpos_class.ConstantApp.MenuList;
 public class DisplaySubMenuData extends BaseActivity {
 
     private RecyclerView rcv_list_menu;
+    private PrinterDevice devicePrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +53,7 @@ public class DisplaySubMenuData extends BaseActivity {
         Logger.v("getCurrentMenu().getMenu_tag() -"+getCurrentMenu().getMenu_tag());
         rcv_list_menu = findViewById(R.id.rcv_list_menu);
         rcv_list_menu.setLayoutManager(new LinearLayoutManager(this));
-
+        devicePrinter = SDKDevice.getInstance(context).getPrinter();
         setTitle();
         setUpData();
     }
@@ -137,6 +148,58 @@ public class DisplaySubMenuData extends BaseActivity {
         WorkRequest build = mRequest.build();
         mWorkManager.enqueue(build);
         mWorkManager.getWorkInfoByIdLiveData(build.getId()).observe(this, status);
+    }
+
+    private Dialog alertDialoge;
+    @Override
+    public void onBackPressed() {
+        if (getCurrentMenu().getMenu_tag().equalsIgnoreCase(ConstantApp.SET_PARAMATERS)) {
+            alertDialoge = Utils.alertYesDialogShow1(this, getString(R.string.save_set_parameters), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Logger.v("onBACKK");
+                    if (alertDialoge != null) {
+                        alertDialoge.dismiss();
+                        alertDialoge.cancel();
+                    }
+                    moveToPrint();
+                }
+            }, new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    alertDialoge.dismiss();
+                    alertDialoge.cancel();
+                    ((BaseActivity)context).finish();
+                }
+            });
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void moveToPrint() {
+        if(devicePrinter != null)
+            PrinterReceipt.printSetParameters(devicePrinter, context, Build.SERIAL, new BaseViewModel.PrintComplete() {
+                @Override
+                public void onFinish() {
+            //        MapperFlow.getInstance().moveToLandingPage(DisplaySubMenuData.this,true,123);
+                    MapperFlow.getInstance().moveToLandingActivity(DisplaySubMenuData.this);
+                }
+            });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        MapperFlow.getInstance().moveToLandingPage(DisplaySubMenuData.this,true,123);
+//                    }
+//                },3000);
+//            }
+//        });
+
+
     }
 
 }

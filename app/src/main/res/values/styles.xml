@@ -79,4 +79,23 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="txt_pin">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/editTextColor</item>
+        <item name="android:background">?attr/editTextBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+    </style>
+    <style name="txt_pin_blue">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/new_bg_blue</item>
+        <item name="android:background">?attr/editTextBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+    </style>
+
 </resources>

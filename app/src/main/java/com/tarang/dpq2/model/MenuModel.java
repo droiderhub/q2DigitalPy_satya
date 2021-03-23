@@ -83,7 +83,7 @@ public class MenuModel implements Serializable {
         items.add(new MenuItem(true,context.getString(R.string.set_gps_location), ConstantApp.SET_GPS_LOCATION,R.drawable.admin_param));
     //    items.add(new MenuItem(context.getString(R.string.select_language), ConstantApp.SELECT_LANGUAGE,R.drawable.translation));
         if (AppManager.getInstance().isMerchantPoratalEnable())
-            items.add(new MenuItem("MPortal Batch Upload \n MPortal تحميل دفعة", ConstantApp.MPORTAL_BATCH_UPLOAD, R.drawable.saf_view));
+            items.add(new MenuItem(context.getString(R.string.mprotral_batch_upload), ConstantApp.MPORTAL_BATCH_UPLOAD, R.drawable.saf_view));
 
         items.add(new MenuItem("User Guide \n  دليل المستخدم", ConstantApp.USER_GUIDE_, userGuide(context), R.drawable.saf_view));
         return items;

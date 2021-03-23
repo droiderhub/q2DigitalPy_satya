@@ -183,6 +183,18 @@ public class TransactionModelEntity {
     @ColumnInfo(name = "request_mportal")
     private String request_mportal = "";
 
+    //Request  Fields
+    @ColumnInfo(name = "isTrasnactionCancelled")
+    private boolean isTrasnactionCancelled = false;
+
+    public boolean isTrasnactionCancelled() {
+        return isTrasnactionCancelled;
+    }
+
+    public void setTrasnactionCancelled(boolean trasnactionCancelled) {
+        isTrasnactionCancelled = trasnactionCancelled;
+    }
+
     public boolean isStatus_mportal() {
         return status_mportal;
     }
@@ -662,6 +674,9 @@ public class TransactionModelEntity {
                 ", startTimeConnection='" + startTimeConnection + '\'' +
                 ", endTimeConnection='" + endTimeConnection + '\'' +
                 ", modeTransaction='" + modeTransaction + '\'' +
+                ", status_mportal=" + status_mportal +
+                ", request_mportal='" + request_mportal + '\'' +
+                ", isTrasnactionCancelled=" + isTrasnactionCancelled +
                 '}';
     }
 }

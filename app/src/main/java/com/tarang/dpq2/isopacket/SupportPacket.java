@@ -423,4 +423,45 @@ public class SupportPacket {
         }
         return builder.toString();
     }
+
+    public static String getNetworkTypeString(Context context) {
+        String networkTypeString = "";
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        try {
+            activeNetwork.getExtraInfo();
+            if (isConnected) {
+                int networkType = activeNetwork.getType();
+                if (networkType == ConnectivityManager.TYPE_WIFI) {
+                    networkTypeString = "WIFI";
+                } else if (networkType == ConnectivityManager.TYPE_MOBILE) {
+                    networkTypeString = "GPRS";
+                } else {
+                    networkTypeString = "Unknown";
+                }
+            }
+        } catch (Exception e) {
+            networkTypeString = "Unknown";
+            Logger.v("Exception");
+        }
+        return networkTypeString;
+    }
+
+    public static String getNetworkServiceProviderString(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (tm.getNetworkOperatorName().equalsIgnoreCase("STC")) {
+            return "STC";
+        } else if (tm.getNetworkOperatorName().equalsIgnoreCase("Mobily")) {
+            return "Mobily";
+        } else if (tm.getNetworkOperatorName().equalsIgnoreCase("Zain")) {
+            return "Zain";
+        } else if (tm.getNetworkOperatorName().equalsIgnoreCase("Sky Band")) {
+            return "Sky Band";
+        } else if (tm.getNetworkOperatorName().equalsIgnoreCase("Geidea")) {
+            return "Geidea";
+        } else {
+            return tm.getNetworkOperatorName();
+        }
+    }
 }

@@ -27,6 +27,8 @@ import com.tarang.dpq2.base.baseactivities.BaseActivity;
 import com.tarang.dpq2.base.jpos_class.ByteConversionUtils;
 import com.tarang.dpq2.base.jpos_class.ConstantApp;
 import com.tarang.dpq2.base.jpos_class.ConstantAppValue;
+import com.tarang.dpq2.base.room_database.db.AppDatabase;
+import com.tarang.dpq2.base.room_database.db.entity.TransactionModelEntity;
 import com.tarang.dpq2.base.terminal_sdk.AppConfig;
 import com.tarang.dpq2.base.terminal_sdk.device.SDKDevice;
 import com.tarang.dpq2.base.terminal_sdk.utils.PrinterReceipt;
@@ -34,14 +36,27 @@ import com.tarang.dpq2.base.utilities.CountDownResponseTimer;
 import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.isopacket.CreatePacket;
 import com.tarang.dpq2.isopacket.IsoRequest;
+import com.tarang.dpq2.model.MPortalReconModel;
 import com.tarang.dpq2.model.ReconcileSetupModel;
 import com.tarang.dpq2.worker.PacketDBInfoWorker;
 import com.tarang.dpq2.worker.PrinterWorker;
 import com.tarang.dpq2.worker.SAFWorker;
+import com.tarang.dpq2.worker.SSLSocketFactoryExtended;
 import com.tarang.dpq2.worker.SocketConnectionWorker;
 
 import org.jpos.iso.ISOMsg;
 import org.jpos.util.Log;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.SSLSocket;
 
 import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.reqObj;
 
@@ -61,6 +76,8 @@ public class MenuViewModel extends BaseViewModel {
     public int isDownload = 0;
     private int duplicate = -100;
     private PrinterDevice devicePrinter;
+    private int attempt;
+    String currentStan = "";
 //    private Printer mPrinter;
 
     public MenuViewModel(@NonNull Application application) {
@@ -685,33 +702,36 @@ public class MenuViewModel extends BaseViewModel {
                     }
                 });
             } else if (status == 77) {
-                startCustomerPrintTimer();
-                Logger.v("status == 77");
-                Logger.v("continue_to_print_duplicate_recon");
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_duplicate_copy), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View dialog) {
-                                Utils.dismissDialoge();
-                                cancelledTimer = true;
-                                cancelCustomerCopy();
-                                printReconsilation(3);
-                            }
-                        }, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View dialog) {
-                                Logger.v("Customer - 1");
-                                AppConfig.customerCopyPrinted = true;
-                                cancelCustomerCopy();
-                                Utils.dismissDialoge();
-                                reconContinueFlow();
-                            }
-                        });
-                    }
-                },800);
+                makeConnection.setValue(false); ;
+                attempt = 0;
+                sendMessageTrans();
+//                startCustomerPrintTimer();
+//                Logger.v("status == 77");
+//                Logger.v("continue_to_print_duplicate_recon");
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_duplicate_copy), new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View dialog) {
+//                                Utils.dismissDialoge();
+//                                cancelledTimer = true;
+//                                cancelCustomerCopy();
+//                                printReconsilation(3);
+//                            }
+//                        }, new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View dialog) {
+//                                Logger.v("Customer - 1");
+//                                AppConfig.customerCopyPrinted = true;
+//                                cancelCustomerCopy();
+//                                Utils.dismissDialoge();
+//                                reconContinueFlow();
+//                            }
+//                        });
+//                    }
+//                },800);
 
             } else if (status == 8) {
                 Utils.alertDialogShow(context, context.getString(R.string.snapshot_complete), false);
@@ -844,5 +864,327 @@ public class MenuViewModel extends BaseViewModel {
 
     public void pleaseWaitDialoge() {
         showAlert.setValue(11);
+    }
+
+    Thread thread;
+    private boolean retryRequest = false;
+
+    private void sendMessage(final int position) {
+        Logger.v("positionnss -"+position);
+        Utils.alertDialogOneShow(context, context.getString(R.string.processing));
+        Logger.v("Merchant portal ");
+        MPortalReconModel modell = new MPortalReconModel();
+        final String requestPack = modell.sendReconData(position);
+        if(requestPack.equalsIgnoreCase("1")){
+            sendMessage(position+1);
+            return;
+        }
+        final CountDownTimer mPortalTimer = new CountDownTimer(15000, 1000) {
+
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                try {
+                    thread.stop();
+                } catch (Exception e) {
+
+                }
+                if (!retryRequest) {
+                    sendMessage(position + 1);
+                }
+            }
+        };
+        final byte[] pending = modell.getPendingData();
+        if (requestPack.trim().length() == 0 || (!AppManager.getInstance().isMerchantPoratalEnable())) {
+            retryRequest = true;
+            mPortalTimer.cancel();
+            mPortalTimer.onFinish();
+            reconFlow();
+            return;
+        }
+        final byte[] requestData = modell.toHexadecimal(requestPack);
+        if (requestData == null) {
+            retryRequest = true;
+            mPortalTimer.cancel();
+            mPortalTimer.onFinish();
+            reconFlow();
+            return;
+        }
+        final String IP = AppManager.getInstance().getMerchantIP();
+        final int port = Integer.parseInt(AppManager.getInstance().getMerchantPort());
+        final InputStream inputStream = context.getResources().openRawResource(R.raw.newcerten);
+        final String version = AppManager.getInstance().getString(ConstantApp.HSTNG_TLS);
+
+        final AppDatabase database = AppDatabase.getInstance(context.getApplicationContext());
+        final Handler handler = new Handler();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //Replace below IP with the IP of that device in which server socket open.
+                    //If you change port then change the port number in the server side code also.
+                    TransactionModelEntity model = loadOnlyMportal(ByteConversionUtils.byteArrayToHexString(pending, pending.length, false));
+                    database.getTransactionDao().insertTransaction(model);
+                    Logger.v("DBBS -"+database.getTransactionDao().getAll().size());
+                    retryRequest = false;
+                    SSLSocketFactoryExtended sslsocketfactory = new SSLSocketFactoryExtended(inputStream, version, false);
+                    Logger.v("Socket 1");
+                    Logger.v("IP-PORT --" + IP + "--" + port);
+                    SSLSocket requestSocket = (SSLSocket) sslsocketfactory.createSocket(IP, port);
+                    Logger.v("Socket connected Merchant-" + requestSocket.isConnected());
+                    BufferedInputStream bis = new BufferedInputStream(requestSocket.getInputStream());
+                    BufferedOutputStream bos = new BufferedOutputStream(requestSocket.getOutputStream());
+                    // 2: Communicating with the server
+                    Logger.v("TRY block send");
+                    // 3: Post the request data
+                    byte[] request = requestData;
+                    Logger.v(request);
+                    bos.write(request);
+                    bos.flush();
+
+                    // 4: Receive the response data
+                    byte[] buffer = new byte[1024];
+                    int nBytes = -1;
+                    Logger.v("TRY block Receive");
+                    while ((nBytes = bis.read(buffer)) >= 0) {
+                        Logger.v("buffer --" + buffer.length);
+                        Logger.v(buffer);
+                        final String  result1= ByteConversionUtils.byteArrayToHexString(buffer, buffer.length, false);
+                        String output = ByteConversionUtils.convertHexToString(result1);
+                        bos.flush();
+                        Logger.v("Result -" + output);
+                        try {
+                            String[] tags = output.split("<GS>");
+                            Logger.v(tags);
+                            if (tags[1].equalsIgnoreCase("200")) {
+                                database.getTransactionDao().updateSAFMerchantPortal(model.getSystemTraceAuditnumber11(), true, "");
+                            }
+                        } catch (Exception e) {
+                            Logger.v("Exception eee");
+                        }
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                retryRequest = true;
+                                mPortalTimer.cancel();
+                                mPortalTimer.onFinish();
+                                sendMessage(position + 1);
+                            }
+                        });
+                        return;
+                    }
+                    closeRequest(requestSocket);
+                    Logger.v("Socket close");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Logger.v("Exception");
+                } catch (CertificateException e) {
+                    Logger.v("Exception 1");
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    Logger.v("Exception 2");
+                    e.printStackTrace();
+                } catch (KeyStoreException e) {
+                    Logger.v("Exception 3");
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    Logger.v("Exception 4");
+                    e.printStackTrace();
+                }
+            }
+        });
+        mPortalTimer.start();
+        thread.start();
+    }
+
+    private TransactionModelEntity loadOnlyMportal(String request) {
+        TransactionModelEntity modelEntity = new TransactionModelEntity();
+        modelEntity.setRequest_mportal(request);
+        modelEntity.setStatus_mportal(false);
+        modelEntity.setSystemTraceAuditnumber11("RECON_" + AppManager.getInstance().getRecon());
+        Logger.v("RECON_REQ--"+modelEntity.getRequest_mportal());
+        return modelEntity;
+    }
+
+    private void sendMessageTrans() {
+        Logger.v("Merchant portal "+attempt);
+        if (!AppManager.getInstance().isMerchantPoratalEnable()) {
+//            Utils.alertDialogShow(context, context.getString(R.string.empty_batch), true);
+            sendMessage(-1);
+            return;
+        }
+        final Handler handler = new Handler();
+        final CountDownTimer mPortalTimer = new CountDownTimer(15000, 1000) {
+
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                try {
+                    thread.stop();
+                } catch (Exception e) {
+
+                }
+                if (!retryRequest) {
+                    sendMessageTrans();
+                }
+            }
+        };
+        if(4 < attempt){
+            retryRequest = true;
+            mPortalTimer.cancel();
+            mPortalTimer.onFinish();
+            sendMessage(-1);
+            return;
+        }
+        final String IP = AppManager.getInstance().getMerchantIP();
+        final int port = Integer.parseInt(AppManager.getInstance().getMerchantPort());
+        final InputStream inputStream = context.getResources().openRawResource(R.raw.newcerten);
+        final String version = AppManager.getInstance().getString(ConstantApp.HSTNG_TLS);
+        final AppDatabase database = AppDatabase.getInstance(context.getApplicationContext());
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                SSLSocket requestSocket;
+                try {
+                    //Replace below IP with the IP of that device in which server socket open.
+                    //If you change port then change the port number in the server side code also.
+                    boolean safTable = false;
+                    TransactionModelEntity oldRequest = database.getTransactionDao().getMPortalRequest("", false);
+                    if (oldRequest == null) {
+                        Logger.v("Fetched from SAF");
+                        safTable = true;
+                        oldRequest = database.getSAFDao().getMPortalRequest("", false);
+                    }
+                    if (oldRequest != null) {
+                        Logger.v("oldRequest.getSystemTraceAuditnumber11() -"+oldRequest.getSystemTraceAuditnumber11());
+                        if(oldRequest.getSystemTraceAuditnumber11().equalsIgnoreCase(currentStan)){
+                            attempt = attempt +1;
+                        }else {
+                            attempt = 1;
+                            currentStan = oldRequest.getSystemTraceAuditnumber11();
+                        }
+                        Logger.v("OLD transaction not null");
+                        retryRequest = false;
+                        SSLSocketFactoryExtended sslsocketfactory = new SSLSocketFactoryExtended(inputStream, version, false);
+                        Logger.v("Socket 1");
+                        requestSocket = (SSLSocket) sslsocketfactory.createSocket(IP, port);
+                        BufferedInputStream bis = new BufferedInputStream(requestSocket.getInputStream());
+                        BufferedOutputStream bos = new BufferedOutputStream(requestSocket.getOutputStream());
+                        Logger.v(oldRequest.getRequest_mportal());
+                        bos.write(ByteConversionUtils.HexStringToByteArray(oldRequest.getRequest_mportal()));
+                        bos.flush();
+                        // 4: Receive the response data
+                        byte[] buffer1 = new byte[1024];
+                        int nBytes1 = -1;
+                        Logger.v("Socket connected Merchant-" + requestSocket.isConnected());
+                        Logger.v("TRY block Receive");
+                        while ((nBytes1 = bis.read(buffer1)) >= 0) {
+                            final String output1 = ByteConversionUtils.byteArrayToHexString(buffer1, buffer1.length, false);
+                            String result1 = ByteConversionUtils.convertHexToString(output1);
+                            Logger.v("Result -" + result1);
+                            try {
+                                String[] tags = result1.split("<GS>");
+                                Logger.v(tags);
+                                if (tags[1].equalsIgnoreCase("200")) {
+                                    if (safTable)
+                                        database.getSAFDao().updateSAFMerchantPortal(oldRequest.getSystemTraceAuditnumber11(), true, "");
+                                    else
+                                        database.getTransactionDao().updateSAFMerchantPortal(oldRequest.getSystemTraceAuditnumber11(), true, "");
+                                }
+                            } catch (Exception e) {
+                                Logger.v("Excepton ee");
+                            }
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPortalTimer.cancel();
+                                    mPortalTimer.onFinish();
+                                }
+                            });
+                            return;
+                        }
+                        closeRequest(requestSocket);
+                        Logger.v("Socket close");
+                    } else {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                retryRequest = true;
+                                sendMessage(-1);
+                                mPortalTimer.cancel();
+                                mPortalTimer.onFinish();
+                            }
+                        });
+                    }
+                } catch (
+                        IOException e) {
+                    e.printStackTrace();
+                    Logger.v("Exception");
+                } catch (
+                        CertificateException e) {
+                    Logger.v("Exception 1");
+                    e.printStackTrace();
+                } catch (
+                        NoSuchAlgorithmException e) {
+                    Logger.v("Exception 2");
+                    e.printStackTrace();
+                } catch (
+                        KeyStoreException e) {
+                    Logger.v("Exception 3");
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    Logger.v("Exception 4");
+                    e.printStackTrace();
+                } catch (NullPointerException e) {
+                    Logger.v("Exception 44");
+                    e.printStackTrace();
+                }
+            }
+        };
+        mPortalTimer.start();
+        Utils.alertDialogOneShow(context, context.getString(R.string.processing));
+        thread = new Thread(run);
+        thread.start();
+    }
+
+    private void closeRequest(SSLSocket requestSocket) {
+        try {
+            if (requestSocket.isClosed()) {
+                requestSocket.close();
+            }
+        } catch (Exception e) {
+            Logger.v("Exceptin ssl");
+        }
+    }
+
+    private void reconFlow() {
+        startCustomerPrintTimer();
+        Utils.alertDialogShow(context, context.getString(R.string.continue_to_print_duplicate_copy), new View.OnClickListener() {
+            @Override
+            public void onClick(View dialog) {
+                Utils.dismissDialoge();
+                cancelCustomerCopy();
+                printReconsilation(3);
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View dialog) {
+                Logger.v("Customer - 1");
+                AppConfig.customerCopyPrinted = true;
+                cancelCustomerCopy();
+                Utils.dismissDialoge();
+                reconContinueFlow();
+            }
+        });
     }
 }

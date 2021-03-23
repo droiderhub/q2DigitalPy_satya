@@ -19,7 +19,7 @@ import com.tarang.dpq2.base.room_database.db.entity.TMSPublicKeyModelEntity;
 import com.tarang.dpq2.base.room_database.db.entity.TransactionModelEntity;
 
 @Database(entities = {TransactionModelEntity.class, TMSMessageTextModelEntity.class, SAFModelEntity.class,
-        TMSPublicKeyModelEntity.class, TMSCardSchemeEntity.class, TMSAIDdataModelEntity.class}, version = 2)
+        TMSPublicKeyModelEntity.class, TMSCardSchemeEntity.class, TMSAIDdataModelEntity.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase appDatabase = null;
 

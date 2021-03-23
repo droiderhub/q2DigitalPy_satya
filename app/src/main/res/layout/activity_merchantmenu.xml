@@ -144,7 +144,7 @@
             android:layout_marginTop="@dimen/dp10"
             android:layout_margin="10dp"
             android:padding="10dp"
-            android:background="@drawable/all_cornor_button"
+            android:background="@drawable/btn_green_rounded_img"
             android:text="@string/submit"
             android:textColor="@color/white" />
 
@@ -169,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:maxLength="6"
+                android:maxLength="9"
                 android:inputType="number"
                 android:singleLine="true"
                 android:hint="@string/hint_current_password"
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:maxLength="6"
+                android:maxLength="9"
                 android:inputType="number"
                 android:hint="@string/hint_new_password"
                 android:textColor="@color/black" />
@@ -206,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:maxLength="6"
+                android:maxLength="9"
                 android:inputType="number"
                 android:hint="@string/hint_confirm_password"
                 android:textColor="@color/black" />
@@ -219,7 +219,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp10"
             android:text="@string/submit"
-            android:background="@drawable/all_cornor_button"
+            android:background="@drawable/btn_green_rounded_img"
             android:textColor="@color/white" />
 
     </LinearLayout>
@@ -274,6 +274,20 @@
             android:layout_height="wrap_content"
             android:text="@string/submit"
             android:id="@+id/connection_submit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_uploadin"
+            android:gravity="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:text="Uploading.. Please wait \n جاري التحميل .. الرجاء الانتظار"/>
     </LinearLayout>
 
 </LinearLayout>

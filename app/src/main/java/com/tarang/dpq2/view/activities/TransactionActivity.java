@@ -3,6 +3,7 @@ package com.tarang.dpq2.view.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.tarang.dpq2.base.baseactivities.BaseActivity;
 import com.tarang.dpq2.base.jpos_class.ConstantApp;
 import com.tarang.dpq2.base.terminal_sdk.AppConfig;
 import com.tarang.dpq2.base.terminal_sdk.SdkSupport;
+import com.tarang.dpq2.base.terminal_sdk.event.SimpleTransferListener;
 import com.tarang.dpq2.base.terminal_sdk.utils.LightsDisplay;
 import com.tarang.dpq2.base.terminal_sdk.utils.SoundPoolImpl;
 import com.tarang.dpq2.base.utilities.Utils;
@@ -29,6 +31,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import static com.cloudpos.jniinterface.EMVJNIInterface.get_card_type;
+import static com.wizarpos.emvsample.constant.Constant.CARD_CONTACT;
+import static com.wizarpos.emvsample.constant.Constant.CARD_CONTACTLESS;
 
 
 public class TransactionActivity extends BaseActivity implements ConstantApp {
@@ -39,15 +44,18 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
     TextView etd_number;
     TextView etd_number_ar;
     TextView txt_header;
+    public static boolean card_already_present = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.v("TransactionActivity");
-        Logger.v("app_version---"+ BuildConfig.VERSION_NAME);
-        Logger.v("mada_version---"+ AppInit.VERSION_6_0_5);
+        Logger.v("app_version---" + BuildConfig.VERSION_NAME);
+        Logger.v("mada_version---" + AppInit.VERSION_6_0_5);
         SAFWorker.safTimerInitaited = false;
         AppConfig.isCardRemoved = false;
+        SimpleTransferListener.isAmountExceed = false;
+        SimpleTransferListener.isCashBackAmountExceed = false;
 
         setContentView(R.layout.activity_purchase);
         context = AppManager.getInstance().getApplicationContext();
@@ -104,7 +112,7 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat formatter = new DecimalFormat("#,##0.00", symbols);
         Logger.v(formatter.format(amount));
-        return Utils.formatLanguageNumber(this,formatter.format(amount));
+        return Utils.formatLanguageNumber(this, formatter.format(amount));
     }
 
     private String getAmountAr() {
@@ -125,10 +133,10 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
     @Override
     protected void onPause() {
         super.onPause();
-        if (support != null){
-        //    support.closeCardReader();
+        if (support != null) {
+            //    support.closeCardReader();
         }
-       // support.closeCardReader();
+        // support.closeCardReader();
     }
 
     @Override
@@ -136,11 +144,31 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
         transContext = this;
         showTimer = true;
         super.onResume();
+        card_already_present = false;
         startListener();
+        if (card_already_present) {
+            Logger.v("card_already_present");
+         //   Utils.alertDialogShow(context, context.getString(R.string.please_wait));
+            //    SimpleTransferListener.cardActionHAppenned = true;
+            //    SdkSupport.readMSRCard = false;
+            Logger.v("get_card_type()-" + get_card_type());
+            if (get_card_type() == CARD_CONTACT) {
+                Logger.v("get_card_type == CARD_CONTACT----" + CARD_CONTACT);
+                SimpleTransferListener.getInstance(context).cancelContactlessCard();
+                AppConfig.EMV.consumeType = 1;
+                AppConfig.isCardRemoved = true;
+            }
+
+            if (checkCondition()) {
+                MapperFlow.getInstance().moveToPrintScreen(context);
+                finish();
+            }
+        }
+
     }
 
     private void checkTransactionTpe() {
-        Logger.v("transaction_type--txn_act---"+transactionType);
+        Logger.v("transaction_type--txn_act---" + transactionType);
         txt_header = (TextView) findViewById(R.id.txt_header);
 
         isChipEnabled = true;
@@ -168,7 +196,7 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
                 new LightsDisplay(context).hideSingleLight();
                 new LightsDisplay(context).hideTwoLight();
                 new LightsDisplay(context).hideFourLights();
-            }else if(transactionType.equalsIgnoreCase(ConstantApp.CASH_ADVANCE)){
+            } else if (transactionType.equalsIgnoreCase(ConstantApp.CASH_ADVANCE)) {
                 isRFEnabled = false;
                 new LightsDisplay(context).hideSingleLight();
                 new LightsDisplay(context).hideTwoLight();
@@ -183,7 +211,7 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
                 new LightsDisplay(context).hideSingleLight();
                 new LightsDisplay(context).hideTwoLight();
                 new LightsDisplay(context).hideFourLights();
-            }else if(transactionType.equalsIgnoreCase(ConstantApp.CASH_ADVANCE)){
+            } else if (transactionType.equalsIgnoreCase(ConstantApp.CASH_ADVANCE)) {
                 isRFEnabled = false;
                 new LightsDisplay(context).hideSingleLight();
                 new LightsDisplay(context).hideTwoLight();
@@ -212,6 +240,8 @@ public class TransactionActivity extends BaseActivity implements ConstantApp {
             spi.initLoad(context);
             spi.playTwice();*/
             new LightsDisplay(context).showTwoLights();
+            //   new LightsDisplay(context).showAllLights();
+
         }
     }
 

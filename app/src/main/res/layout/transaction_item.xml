@@ -13,6 +13,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:weightSum="2"
             android:orientation="horizontal">
 
@@ -35,7 +40,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1234567890"
+                        android:text=""
                         android:id="@+id/transaction_aid"/>
                 </LinearLayout>
                 <LinearLayout
@@ -46,11 +51,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="@string/rrn"/>
+                        android:text="RRN:"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1234567890"
+                        android:text=""
                         android:id="@+id/transaction_rrn"/>
                 </LinearLayout>
                 <LinearLayout
@@ -60,13 +65,44 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="@string/response"/>
+                        android:text=""
+                        android:id="@+id/transaction_rrn_ar"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1234567890"
+                        android:textStyle="bold"
+                        android:text="رقم مرجع العملية : "/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Responce:"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
                         android:id="@+id/transaction_response"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/transaction_response_ar"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="الإستجابة : "/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,7 +133,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10/02/2019"
+                    android:text=""
                     android:id="@+id/transaction_date"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -106,37 +142,53 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text = "@string/amount"
+                        android:text = "Amount"
                         />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="300"
+                        android:text=""
                         android:gravity="left"
                         android:textSize="@dimen/dp20"
                         android:textStyle="bold"
                         android:id="@+id/transaction_amount"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text = "المبلغ"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:textSize="@dimen/dp20"
+                        android:textStyle="bold"
+                        android:id="@+id/transaction_amount_ar"/>
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/delete_saf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_marginBottom="10dp"
+                android:baselineAligned="false"
+                android:padding="6dp"
+                android:src="@drawable/delete_ic"
+                android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/delete_saf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:baselineAligned="false"
-                    android:padding="6dp"
-                    android:src="@drawable/delete_ic"
-                    android:visibility="gone">
-
-                </ImageView>
-            </LinearLayout>
+            </ImageView>
+        </LinearLayout>
 
         </LinearLayout>
 

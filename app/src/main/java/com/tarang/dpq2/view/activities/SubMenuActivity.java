@@ -204,7 +204,7 @@ public class SubMenuActivity extends BaseActivity implements SubMenuRecyclerAdap
         Utils.alertDialogShow(context, context.getString(R.string.temprovery_out_service), new Utils.DialogeClick() {
             @Override
             public void onClick() {
-                MapperFlow.getInstance().moveToLandingPage(context, true, 10);
+                MapperFlow.getInstance().moveToLandingPage(context);
             }
         });
     }

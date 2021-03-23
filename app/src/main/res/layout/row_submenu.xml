@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:lines="2"
             android:padding="6dp"
             android:textAllCaps="true"
             android:textColor="@color/txt_color"

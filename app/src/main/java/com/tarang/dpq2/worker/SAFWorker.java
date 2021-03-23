@@ -96,7 +96,11 @@ public class SAFWorker extends Worker {
     public Result doWork() {
         List<TransactionModelEntity> safModelEntities = database.getSAFDao().getAll();
         RetailerDataModel retailerDataModel = AppManager.getInstance().getRetailerDataModel();
-        int retryCount = Integer.parseInt(retailerDataModel.getsAFRetryLimit());
+        int retryCount = 0;
+        if (retailerDataModel != null) {
+            retryCount = Integer.parseInt(retailerDataModel.getsAFRetryLimit());
+        }
+
         //if fails change the mti to ==== incresed by 1
         Logger.v("safModelEntitieslength-----" + safModelEntities.size());
         Logger.v("retailerDataModel-----" + retailerDataModel.toString());

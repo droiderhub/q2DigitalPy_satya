@@ -67,7 +67,7 @@ public interface SAFModelDao {
     @Query("SELECT responseCode39 FROM SAFModelEntity WHERE retriRefNo37 == :rrn")
     String getResponseCode39(String rrn);
 
-    @Query("SELECT uid,iccCardSystemRelatedData55,retriRefNo37,responseCode39,transmissionDateTime7,amtTransaction4,authIdResCode38 FROM SAFModelEntity")
+    @Query("SELECT uid,iccCardSystemRelatedData55,retriRefNo37,responseCode39,transmissionDateTime7,amtTransaction4,authIdResCode38,startTimeTransaction FROM SAFModelEntity")
     List<TransactionHistoryTuple> loadAllSAFTransactions();
 
     // Update the existing Transaction
@@ -98,7 +98,7 @@ public interface SAFModelDao {
     @Query("UPDATE SAFModelEntity SET status_mportal = :status, request_mportal = :req WHERE systemTraceAuditnumber11 = :rrn37")
     void updateSAFMerchantPortal(String rrn37,boolean status,String req);
 
-    @Query("SELECT * FROM TransactionModelEntity WHERE status_mportal == :status AND request_mportal != :rrn37")
+    @Query("SELECT * FROM SAFModelEntity WHERE status_mportal == :status AND request_mportal != :rrn37")
     TransactionModelEntity getMPortalRequest(String rrn37,boolean status);
 
 }

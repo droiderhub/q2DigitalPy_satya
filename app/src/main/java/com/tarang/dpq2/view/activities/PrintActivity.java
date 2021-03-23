@@ -49,6 +49,7 @@ import com.tarang.dpq2.worker.SocketConnectionWorker;
 import java.util.List;
 
 
+import static com.cloudpos.jniinterface.EMVJNIInterface.exitEMVKernel;
 import static com.tarang.dpq2.base.Logger.showMessage;
 import static com.tarang.dpq2.base.Logger.v;
 import static com.tarang.dpq2.base.jpos_class.ConstantApp.TAG_CARD_MANUAL;
@@ -203,8 +204,8 @@ public class PrintActivity extends BaseActivity {
         etd_number_ = findViewById(R.id.etd_number_);
         etd_number_ar = findViewById(R.id.etd_number_ar);
         etd_number_ar_ = findViewById(R.id.etd_number_ar_);
-        etd_number.setText(Utils.formatAmountWithoutSAR(this, AppConfig.EMV.amountValue));
-        etd_number_.setText(" " + Utils.formatAmountWithoutSAR(this, AppConfig.EMV.amountValue));
+        etd_number.setText(Utils.formatAmountWithoutSAR(false, AppConfig.EMV.amountValue));
+        etd_number_.setText("SAR " + Utils.formatAmountWithoutSAR(false, AppConfig.EMV.amountValue));
         txt_expiry_date = findViewById(R.id.txt_expiry_date);
         card_name_show = findViewById(R.id.card_name_show);
         txt_account_no = findViewById(R.id.txt_account_no);
@@ -218,8 +219,13 @@ public class PrintActivity extends BaseActivity {
     private void setUpCashBackView() {
         TextView txt_purchasr_cash = findViewById(R.id.txt_purchasr_cash);
         TextView txt_cashback = findViewById(R.id.txt_cashback);
-        txt_purchasr_cash.setText(context.getString(R.string.purchase_amount) + "  " + Utils.formatAmount(this, (AppConfig.EMV.amountValue - AppConfig.EMV.amtCashBack)));
-        txt_cashback.setText(context.getString(R.string.naqd_amount_) + "       " + Utils.formatAmount(this, AppConfig.EMV.amtCashBack));
+        TextView txt_purchasr_cash_ar = findViewById(R.id.txt_purchasr_cash_ar);
+        TextView txt_cashback_ar = findViewById(R.id.txt_cashback_ar);
+        txt_purchasr_cash.setText("Purchase Amount" + "  " + Utils.formatAmount(this, (AppConfig.EMV.amountValue - AppConfig.EMV.amtCashBack),false));
+        txt_purchasr_cash_ar.setText("مبلغ الشراء" + "  " + Utils.formatAmount(this, (AppConfig.EMV.amountValue - AppConfig.EMV.amtCashBack),true));
+        txt_cashback.setText("NAQD Amount" + "       " + Utils.formatAmount(this, AppConfig.EMV.amtCashBack,false));
+        txt_cashback_ar.setText("المبلغ النقدي المطلوب" + "       " + Utils.formatAmount(this, AppConfig.EMV.amtCashBack,true));
+
     }
 
 
@@ -593,6 +599,7 @@ public class PrintActivity extends BaseActivity {
                     SimpleTransferListener.getInstance(context).stopEMVProcessThread();
                     SimpleTransferListener.isScreenAvailable = 2;
                     Utils.alertDialogOneShow(context, getString(R.string.cancel_wait));
+                    LandingPageActivity.isTxnCancelled = true;
                     return;
                 }
             }
@@ -633,6 +640,7 @@ public class PrintActivity extends BaseActivity {
                     showAlert();
                 else
                     new LightsDisplay(context).showTwoLights();
+                //    new LightsDisplay(context).showAllLights();
                 return isRFEnabled;
             case 0:
                 if (!isMagneticEnabled)

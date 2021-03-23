@@ -10,6 +10,8 @@ public class ReconcilationTopModel {
     private String retailerTelephone;
     private String startDate;
     private String startTime;
+    private String endDate;
+    private String endTime;
     private String bId;
     private String mId;
     private String tId;
@@ -181,6 +183,22 @@ public class ReconcilationTopModel {
 
     public void setStan(String stan) {
         this.stan = stan;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getPosSoftwareVersionNumber() {

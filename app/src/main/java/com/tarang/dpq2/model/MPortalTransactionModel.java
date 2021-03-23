@@ -145,7 +145,12 @@ public class MPortalTransactionModel {
             pendingReq = NAQDtoStringPending();
             return NAQDtoString();
         } else {
-            amount = printerModel.getAmountEnglish();
+            if (printerModel.getAmountEnglish() != null) {
+                amount = printerModel.getAmountEnglish();
+            } else {
+                amount = "SAR 0.00";
+            }
+
             pendingReq = transactiontoStringPending();
             return transactiontoString();
         }

@@ -26,6 +26,7 @@ import com.tarang.dpq2.base.terminal_sdk.event.SimpleTransferListener;
 import com.tarang.dpq2.base.terminal_sdk.q2.result.SwipeResult;
 import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.view.activities.LandingPageActivity;
+import com.tarang.dpq2.view.activities.TransactionActivity;
 import com.tarang.dpq2.worker.LoadKeyWorker;
 import com.wizarpos.emvsample.constant.Constant;
 import com.wizarpos.jni.MsrInterface;
@@ -36,6 +37,7 @@ import static com.cloudpos.jniinterface.EMVJNIInterface.close_reader;
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_anti_shake_finish;
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_set_anti_shake;
 import static com.cloudpos.jniinterface.EMVJNIInterface.open_reader;
+import static com.cloudpos.jniinterface.EMVJNIInterface.open_reader_ex;
 
 public class SdkSupport implements Constant {
 
@@ -400,7 +402,14 @@ public class SdkSupport implements Constant {
         LoadKeyWorker.initKernal();
         startMSReader("startAllListner");
         Logger.v("OPen Reader 1");
-        open_reader(AppInit.CONTACT_CHIP);
+        int i = open_reader_ex(AppInit.CONTACT_CHIP,1);
+        Logger.v("Card status : "+ i);
+        if (i < 0) {
+            Logger.v("no card inserted");
+            open_reader(AppInit.CONTACT_CHIP);
+        } else {
+            TransactionActivity.card_already_present = true;
+        }
         emv_set_anti_shake(AppInit.CONTACT_CHIP);
         open_reader(AppInit.CONTACTLESS_RF);
     }

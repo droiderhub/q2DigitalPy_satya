@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -204,11 +205,15 @@ public class PrinterWorker extends Worker {
                 modelList.add(new KeyValueModel(ConstantAppValue.doted_line));
                 modelList.add(new KeyValueModel(context.getString(R.string.terminal_id), AppManager.getInstance().getCardAcceptorID41()));
                 for (int i = 0; i < dataList.size(); i++) {
-                    modelList.add(new KeyValueModel(context.getString(R.string.no_) + i));
-                    modelList.add(new KeyValueModel(context.getString(R.string.display_code), dataList.get(i).getDisplayCode()));
-                    modelList.add(new KeyValueModel(context.getString(R.string.message_code), dataList.get(i).getMessageCode()));
-                    modelList.add(new KeyValueModel(context.getString(R.string.english_text), dataList.get(i).getEnglishMessageText()));
-                    modelList.add(new KeyValueModel(context.getString(R.string.arabic_text), Utils.changeArabic(dataList.get(i).getArabicMessageText())));
+                    modelList.add(new KeyValueModel(context.getString(R.string.no_) + i
+                    +"\n" + context.getString(R.string.display_code) + "    " + dataList.get(i).getDisplayCode()
+                            + "\n" + context.getString(R.string.message_code)+ "    " + dataList.get(i).getMessageCode()
+                            + "\n" + context.getString(R.string.english_text)+ "    " + dataList.get(i).getEnglishMessageText()
+                            + "\n" + context.getString(R.string.arabic_text) + "    "+ Utils.changeArabic(dataList.get(i).getArabicMessageText())));
+//                    modelList.add(new KeyValueModel(context.getString(R.string.display_code), dataList.get(i).getDisplayCode()));
+//                    modelList.add(new KeyValueModel(context.getString(R.string.message_code), dataList.get(i).getMessageCode()));
+//                    modelList.add(new KeyValueModel(context.getString(R.string.english_text), dataList.get(i).getEnglishMessageText()));
+//                    modelList.add(new KeyValueModel(context.getString(R.string.arabic_text), Utils.changeArabic(dataList.get(i).getArabicMessageText())));
                 }
             } else if (dataset.equalsIgnoreCase(ConstantApp.TMS_PUB_FEY_DATA)) {
                 List<TMSPublicKeyModelEntity> dataList = database.getTMSPublicKeyModelDao().getCapKeys();
@@ -1031,7 +1036,15 @@ public class PrinterWorker extends Worker {
             data.putBoolean(STATUS, printstatus);
 //            if (printstatus) {
             PrinterWorker.RECON_PRINTED = true;
+       //     database.getTransactionDao().nukeTable();
+            List<TransactionModelEntity> pendingReq = database.getTransactionDao().getPendingMPortalRequest("", false);
+            Logger.v("Pending request size -" + pendingReq.size());
             database.getTransactionDao().nukeTable();
+            for (int i = 0; i < pendingReq.size(); i++) {
+                if (!TextUtils.isEmpty(pendingReq.get(i).getMti0()) && !TextUtils.isEmpty(pendingReq.get(i).getAmtTransaction4()))
+                database.getTransactionDao().insertTransaction(loadOnlyMportal(pendingReq.get(i)));
+            }
+            Logger.v("SIZEE --" + database.getTransactionDao().getAll().size());
 //            }
             return Result.success(data.build());
         }
@@ -1090,6 +1103,10 @@ public class PrinterWorker extends Worker {
                     lastTrans.setResponseCode39("190");
                 }
             }
+        }
+
+        if (isCancelled) {
+            lastTrans.setTrasnactionCancelled(true);
         }
 
         AppManager.getInstance().setDuplicateTransactionModelEntity(lastTrans);
@@ -1364,12 +1381,13 @@ public class PrinterWorker extends Worker {
             }
 
 
-        } else if (isCancelled) {
+        } else if (isCancelled || lastTrans.isTrasnactionCancelled()) {
             printerModel.setTransactionOutcomeArabic("مرفوضة"); // response -
             printerModel.setTransactionOutcomeEnglish("DECLINED"); // response
             printerModel.setCardHolderVerificationOrReasonForDeclineArabic("إلغاء"); // response -
             printerModel.setCardHolderVerificationOrReasonForDeclineEnglish("CANCELLATION"); // response
             printerModel.setAlpharesponseCode("UC");
+//            AppDatabase.getInstance(context).getTransactionDao().updateTransactionCancelledStatus(lastTrans.getUid(),true);
         } else {
             if (isSAF || (lastTrans.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_REJECTED) || lastTrans.getResponseCode39().equalsIgnoreCase(ConstantAppValue.SAF_DECLINED)) || AppManager.getInstance().isAdminNotificationReversal()) {
                 printerModel.setTransactionOutcomeArabic("مرفوضة(ب)"); // response -
@@ -1502,6 +1520,7 @@ public class PrinterWorker extends Worker {
 //        boolean printstatus = PrinterReceipt.printBill(printerModel, logoBitmap,devicePrinter,context);
 ////        boolean printstatus = PrinterReceipt.printBill(printerModel, mPrinter, arial, arialBold, arabic, arabicBold, simsun, bitmap1);
 //        data.putBoolean(STATUS, printstatus);
+
         return Result.success(data.build());
     }
 
@@ -1590,6 +1609,14 @@ public class PrinterWorker extends Worker {
         long amount = (Long.parseLong(finalAmt));
         Logger.v("getAmount --" + String.format("%12d", amount));*/
         return String.format("%012d", (amt));
+    }
+
+    private TransactionModelEntity loadOnlyMportal(TransactionModelEntity transactionModelEntity) {
+        TransactionModelEntity modelEntity = new TransactionModelEntity();
+        modelEntity.setRequest_mportal(transactionModelEntity.getRequest_mportal());
+        modelEntity.setStatus_mportal(transactionModelEntity.isStatus_mportal());
+        modelEntity.setSystemTraceAuditnumber11(transactionModelEntity.getSystemTraceAuditnumber11());
+        return modelEntity;
     }
 
 }

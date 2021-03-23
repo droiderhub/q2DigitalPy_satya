@@ -563,7 +563,7 @@
     <string name="msg_start_print_bill">Start printing bills by script</string>
     <string name="msg_print_script_success">Print script successfully!</string>
     <string name="msg_end_date">End time:</string>
-    <string name="date">Date</string>
+    <string name="date">Date \n تاريخ</string>
     <string name="being_reversed">BEING REVERSED</string>
     <string name="msg_print_script_error">Print script failed!</string>
     <string name="msg_print_barcode_on_left_begin">Start printing barcode .....</string>
@@ -1383,6 +1383,7 @@
     <string name="de_saf_all_file">DE-SAF all file \n تفريغ ملفات SAF</string>
     <string name="switch_connection">Switch connection \n تغيير شبكة الاتصال</string>
     <string name="set_gps_location">GPS location \n تحديد الموقع الجغرافي (GPS)</string>
+    <string name="mprotral_batch_upload">MPortal Batch Upload \n MPortal تحميل دفعة</string>
     <string name="select_language">Select language \n اختيار اللغة</string>
 
 

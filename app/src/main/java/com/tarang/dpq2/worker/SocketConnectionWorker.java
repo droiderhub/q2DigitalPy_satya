@@ -3,6 +3,7 @@ package com.tarang.dpq2.worker;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -35,6 +36,7 @@ import com.tarang.dpq2.tms.TmsResponseParser;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOUtil;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -413,6 +415,8 @@ public class SocketConnectionWorker extends Worker {
             String nameTransactionTag = lastransaction.getNameTransactionTag();
             Logger.v("name -" + nameTransactionTag);
             Logger.v("mti -" + mti);
+            if (TextUtils.isEmpty(nameTransactionTag))
+                return false;
             Logger.v("bool -" + (nameTransactionTag.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE)
                     || nameTransactionTag.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_FULL)
                     || nameTransactionTag.equalsIgnoreCase(ConstantApp.PURCHASE_ADVICE_PARTIAL)

@@ -52,8 +52,8 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.activities.ApnSettingActivity"></activity>
-        <!-- <provider -->
+        <activity android:name=".view.activities.ActivationActivity"></activity>
+        <activity android:name=".view.activities.ApnSettingActivity" /> <!-- <provider -->
         <!-- android:name="androidx.work.impl.WorkManagerInitializer" -->
         <!-- android:authorities="com.tarang.payswiff.workmanager-init" -->
         <!-- android:enabled="false" -->

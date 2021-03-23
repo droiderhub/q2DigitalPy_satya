@@ -1768,5 +1768,6 @@
 
     <string name="activation">Activation Address \n عنوان التفعيل</string>
     <string name="please_enter_8_digit_password">Please enter your 8 digit password \n أدخل كلمة السر</string>
+    <string name="mprotral_batch_upload">MPortal Batch Upload \n MPortal تحميل دفعة</string>
 
 </resources>

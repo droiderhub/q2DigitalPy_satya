@@ -187,7 +187,7 @@ public class EReceiptGenerator {
             String startTime = printerModel.getStartTime() + "\n";
 
             String endDate = printerModel.getEndDate();
-            String endTime = printerModel.getEndDate() + "\n";
+            String endTime = printerModel.getEndTime() + "\n";
 
             PdfPTable table2 = new PdfPTable(2);
             table2.setWidthPercentage(100);
@@ -210,14 +210,18 @@ public class EReceiptGenerator {
             table4.setSpacingAfter(3);
             document.add(table4);
 
-            PdfPTable cardAR = new PdfPTable(1);
-            cardAR.setWidthPercentage(100);
-            cardAR.addCell(getCellArabic(printerModel.getApplicationLabelArabic() + "\n", PdfPCell.ALIGN_LEFT, font_a10_b));
-            document.add(cardAR);
 
-            Paragraph cardschemaa = new Paragraph(printerModel.getApplicationLabelEnglish() + "\n\n", font_n10_b);
-            cardschemaa.setAlignment(Element.ALIGN_LEFT);
-            document.add(cardschemaa);
+            if (printerModel.getApplicationLabelArabic() != null &&
+                    !printerModel.getApplicationLabelArabic().equalsIgnoreCase("null")) {
+                PdfPTable cardAR = new PdfPTable(1);
+                cardAR.setWidthPercentage(100);
+                cardAR.addCell(getCellArabic(printerModel.getApplicationLabelArabic() + "\n", PdfPCell.ALIGN_LEFT, font_a10_b));
+                document.add(cardAR);
+
+                Paragraph cardschemaa = new Paragraph(printerModel.getApplicationLabelEnglish() + "\n\n", font_n10_b);
+                cardschemaa.setAlignment(Element.ALIGN_LEFT);
+                document.add(cardschemaa);
+            }
 
             PdfPTable txnAR = new PdfPTable(1);
             txnAR.setWidthPercentage(100);
@@ -248,7 +252,7 @@ public class EReceiptGenerator {
             if (printerModel.getPurchaseWithCashBackAmountStringArabic() != null)
                 document.add(addArabicTextLeft(printerModel.getPurchaseWithCashBackAmountStringArabic(), font_a10));
             if (printerModel.getPurchaseWithCashBackAmountArabic() != null)
-                document.add(addArabicTextLeft(printerModel.getPurchaseWithCashBackAmountArabic(), font_a10));
+                document.add(addArabicTextRight(printerModel.getPurchaseWithCashBackAmountArabic(), font_a10));
             if (printerModel.getTotalAmountArabic() != null)
                 document.add(addArabicTextLeft(printerModel.getTotalAmountArabic(), font_a10_b));
             if (printerModel.getAmountArabic() != null)
@@ -270,7 +274,9 @@ public class EReceiptGenerator {
             document.add(addArabicTextCenter(printerModel.getTransactionOutcomeArabic(), font_a10_b));
             document.add(addEnglishTextCenter(printerModel.getTransactionOutcomeEnglish(), font_n10_b));
 
+            if (printerModel.getCardHolderVerificationOrReasonForDeclineArabic() != null && !printerModel.getCardHolderVerificationOrReasonForDeclineArabic().equalsIgnoreCase("null"))
             document.add(addArabicTextCenter(printerModel.getCardHolderVerificationOrReasonForDeclineArabic(), font_a10));
+
             if (printerModel.getCardHolderVerificationOrReasonForDeclineEnglish() != null)
                 if (printerModel.getCardHolderVerificationOrReasonForDeclineEnglish().contains("---")) {
                     String[] splitVal = printerModel.getCardHolderVerificationOrReasonForDeclineEnglish().split("---");

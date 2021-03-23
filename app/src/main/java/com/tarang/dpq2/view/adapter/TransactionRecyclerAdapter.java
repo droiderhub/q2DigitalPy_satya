@@ -1,11 +1,13 @@
 package com.tarang.dpq2.view.adapter;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +30,16 @@ import static com.tarang.dpq2.base.terminal_sdk.AppConfig.EMV.TAG55;
 public class TransactionRecyclerAdapter extends RecyclerView.Adapter<TransactionRecyclerAdapter.ViewHolder> implements Filterable {
 
     Context context;
-    List<TransactionHistoryTuple> transactionHistoryTupleList;
-    List<TransactionHistoryTuple> transactionHistoryTupleFilterList;
+    List<TransactionHistoryTuple> transactionHistoryTupleList = new ArrayList<TransactionHistoryTuple>();
+    List<TransactionHistoryTuple> transactionHistoryTupleFilterList = new ArrayList<TransactionHistoryTuple>();;
     boolean isAdminSafHistory;
     DeleteSafItemOnClick deleteSafItemOnClick;
 
-    public TransactionRecyclerAdapter(Context context, List<TransactionHistoryTuple> list,boolean isAdminSafHistory, DeleteSafItemOnClick deleteSafItemOnClick) {
+    public TransactionRecyclerAdapter(Context context, List<TransactionHistoryTuple> list, boolean isAdminSafHistory, DeleteSafItemOnClick deleteSafItemOnClick) {
         this.context = context;
         this.transactionHistoryTupleList = list;
         this.transactionHistoryTupleFilterList = list;
-        this.isAdminSafHistory=isAdminSafHistory;
+        this.isAdminSafHistory = isAdminSafHistory;
         this.deleteSafItemOnClick = deleteSafItemOnClick;
     }
 
@@ -58,15 +60,39 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
         tag55.get(TAG55[21]); // Tag 9B
         tag55.get(TAG55[14]); // Tag 9F34
         String[] startTime = transactionHistoryTupleFilterList.get(position).getStartTimeTransaction().split(" ");
-        Logger.v("saf_time----"+transactionHistoryTupleFilterList.get(position).getStartTimeTransaction());
-        Logger.v("saf_time_split----"+startTime[0]);
+        Logger.v("saf_time----" + transactionHistoryTupleFilterList.get(position).getStartTimeTransaction());
+        Logger.v("saf_time_split----" + startTime[0]);
         holder.transaction_aid.setText(tag55.get(TAG55[17]));
+//        holder.transaction_aid_ar.setText(Utils.getArabicNumbers(tag55.get(TAG55[17])));
         holder.transaction_rrn.setText(transactionHistoryTupleFilterList.get(position).getRetriRefNo37());
+        if (!TextUtils.isEmpty(transactionHistoryTupleFilterList.get(position).getRetriRefNo37())) {
+            holder.transaction_rrn_ar.setText(Utils.getArabicNumbers(transactionHistoryTupleFilterList.get(position).getRetriRefNo37()));
+        } else {
+            holder.transaction_rrn_ar.setText("");
+        }
+//        if (TextUtils.isEmpty(transactionHistoryTupleFilterList.get(position).getResponseCode39())) {
+//            transactionHistoryTupleFilterList.get(position).setResponseCode39("190");
+//        }
         holder.transaction_response.setText(transactionHistoryTupleFilterList.get(position).getResponseCode39());
+        if (!TextUtils.isEmpty(transactionHistoryTupleFilterList.get(position).getResponseCode39())) {
+            holder.transaction_response_ar.setText(Utils.getArabicNumbers(transactionHistoryTupleFilterList.get(position).getResponseCode39()));
+        } else {
+            holder.transaction_response_ar.setText("");
+        }
+
         holder.transaction_date.setText(startTime[0]);
-        holder.transaction_amount.setText( Utils.changeAmountFormatWithDecimal(transactionHistoryTupleFilterList.get(position).getAmtTransaction4()));
+        if (!TextUtils.isEmpty(transactionHistoryTupleFilterList.get(position).getAmtTransaction4())) {
+            holder.transaction_amount.setText(Utils.changeAmountFormatWithDecimal(transactionHistoryTupleFilterList.get(position).getAmtTransaction4()));
+        } else {
+            holder.transaction_amount.setText("");
+        }
+        if (!TextUtils.isEmpty(transactionHistoryTupleFilterList.get(position).getAmtTransaction4())) {
+            holder.transaction_amount_ar.setText(Utils.getArabicNumbersPlain(Utils.changeAmountFormatWithDecimal(transactionHistoryTupleFilterList.get(position).getAmtTransaction4())));
+        } else {
+            holder.transaction_amount_ar.setText("");
+        }
         holder.delete_saf.setVisibility(View.GONE);
-        if (isAdminSafHistory){
+        if (isAdminSafHistory) {
             holder.delete_saf.setVisibility(View.VISIBLE);
             holder.delete_saf.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,7 +148,7 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
                         if ( /*tag55.get(TAG55[17]).toLowerCase().contains(charString.toLowerCase())
                                 ||*/ row.getRetriRefNo37().contains(charString.toLowerCase())
                                 || startTime[0].contains(charString.toLowerCase())
-                                ||  Utils.changeAmountFormatWithDecimal(row.getAmtTransaction4()).contains(charString.toLowerCase())) {
+                                || Utils.changeAmountFormatWithDecimal(row.getAmtTransaction4()).contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
@@ -145,23 +171,27 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView transaction_aid,transaction_rrn,transaction_response,transaction_status,transaction_date,transaction_amount;
+        TextView transaction_aid, transaction_rrn, transaction_response, transaction_status, transaction_date, transaction_amount;
         ImageView delete_saf;
+        TextView transaction_rrn_ar, transaction_response_ar, transaction_amount_ar;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            transaction_aid = (TextView)itemView.findViewById(R.id.transaction_aid);
-            transaction_rrn = (TextView)itemView.findViewById(R.id.transaction_rrn);
-            transaction_response = (TextView)itemView.findViewById(R.id.transaction_response);
-            transaction_status = (TextView)itemView.findViewById(R.id.transaction_status);
-            transaction_date = (TextView)itemView.findViewById(R.id.transaction_date);
-            transaction_amount = (TextView)itemView.findViewById(R.id.transaction_amount);
+            transaction_aid = (TextView) itemView.findViewById(R.id.transaction_aid);
+            transaction_rrn = (TextView) itemView.findViewById(R.id.transaction_rrn);
+            transaction_rrn_ar = (TextView) itemView.findViewById(R.id.transaction_rrn_ar);
+            transaction_response = (TextView) itemView.findViewById(R.id.transaction_response);
+            transaction_response_ar = (TextView) itemView.findViewById(R.id.transaction_response_ar);
+            transaction_status = (TextView) itemView.findViewById(R.id.transaction_status);
+            transaction_date = (TextView) itemView.findViewById(R.id.transaction_date);
+            transaction_amount = (TextView) itemView.findViewById(R.id.transaction_amount);
+            transaction_amount_ar = (TextView) itemView.findViewById(R.id.transaction_amount_ar);
             delete_saf = (ImageView) itemView.findViewById(R.id.delete_saf);
 
         }
     }
 
-    public interface DeleteSafItemOnClick{
+    public interface DeleteSafItemOnClick {
         public void deleteSafItem(int id);
     }
 }

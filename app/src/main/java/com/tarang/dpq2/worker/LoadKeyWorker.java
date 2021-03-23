@@ -24,6 +24,7 @@ import com.tarang.dpq2.base.terminal_sdk.utils.LoadAID;
 import com.tarang.dpq2.base.utilities.Utils;
 import com.tarang.dpq2.model.DeviceSpecificModel;
 import com.tarang.dpq2.model.RetailerDataModel;
+import com.tarang.dpq2.view.activities.LandingPageActivity;
 
 import org.jpos.iso.ISOUtil;
 
@@ -41,6 +42,7 @@ import static com.cloudpos.jniinterface.EMVJNIInterface.emv_kernel_initialize;
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_set_kernel_attr;
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_terminal_param_set_drl;
 import static com.cloudpos.jniinterface.EMVJNIInterface.emv_terminal_param_set_tlv;
+import static com.cloudpos.jniinterface.EMVJNIInterface.exitEMVKernel;
 import static com.cloudpos.jniinterface.EMVJNIInterface.loadEMVKernel;
 import static com.cloudpos.jniinterface.EMVJNIInterface.registerFunctionListener;
 
@@ -69,7 +71,7 @@ public class LoadKeyWorker extends Worker {
         int clearAllAID = emv_aidparam_clear();
         Logger.v("clearAllAID --" + clearAllAID);
         int clearAllCAPublicKey = emv_capkparam_clear();
-        Logger.v("clearAllAID --" + clearAllCAPublicKey);
+        Logger.v("clearAllACAP --" + clearAllCAPublicKey);
 
         TMSCardSchemeDao cardSchemeDao = database.getTMSCardSchemeDao();
         List<TMSCardSchemeEntity> cardSchemeData = cardSchemeDao.getCardSchemeData();
@@ -177,21 +179,45 @@ public class LoadKeyWorker extends Worker {
 
         if (loadEMVKernel(tmpEmvLibDir.getBytes(), tmpEmvLibDir.getBytes().length) == 0) {*/
            // emv_kernel_initialize();
-            emv_set_kernel_attr(new byte[]{0x20}, 1);
+        emv_set_kernel_attr(new byte[]{0x20, 0x08}, 2);
 //            emv_terminal_param_set_drl(new byte[]{0x00},1);
 //        } else
 //            Logger.v("EMV Kernal ElSE");
 
     }
-    public static void emvKernelInit(){
+
+    public static void emvKernelInit() {
         Logger.v("emvKernelInit()");
+        if (LandingPageActivity.isTxnCancelled) {
+            Logger.v("Iscancelled : "+ LandingPageActivity.isTxnCancelled);
+            exitEMVKernel();
+        }
+
         String tmpEmvLibDir = "";
         tmpEmvLibDir = AppInit.getInstance().getDir("", 0).getAbsolutePath();
         tmpEmvLibDir = tmpEmvLibDir.substring(0, tmpEmvLibDir.lastIndexOf('/')) + "/lib/libEMVKernal.so";
         if (loadEMVKernel(tmpEmvLibDir.getBytes(), tmpEmvLibDir.getBytes().length) == 0) {
             emv_kernel_initialize();
+            Logger.v("emvKernelInit_success");
         }else {
             Logger.v("emvKernelInit_failed");
+        }
+    }
+
+    public static void emvKernelInitForLanding() {
+        Logger.v("emvKernelInit()");
+        if (LandingPageActivity.isTxnCancelled) {
+            Logger.v("Iscancelled : "+ LandingPageActivity.isTxnCancelled);
+            exitEMVKernel();
+            String tmpEmvLibDir = "";
+            tmpEmvLibDir = AppInit.getInstance().getDir("", 0).getAbsolutePath();
+            tmpEmvLibDir = tmpEmvLibDir.substring(0, tmpEmvLibDir.lastIndexOf('/')) + "/lib/libEMVKernal.so";
+            if (loadEMVKernel(tmpEmvLibDir.getBytes(), tmpEmvLibDir.getBytes().length) == 0) {
+                emv_kernel_initialize();
+                Logger.v("emvKernelInit_success");
+            }else {
+                Logger.v("emvKernelInit_failed");
+            }
         }
     }
 

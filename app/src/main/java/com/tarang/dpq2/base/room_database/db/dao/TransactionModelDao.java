@@ -141,8 +141,8 @@ public interface TransactionModelDao {
     @Query("UPDATE TransactionModelEntity SET responseCode39 = :status WHERE uid == :id")
     void updateResponse39(int id, String status);
 
-    @Query("SELECT uid,iccCardSystemRelatedData55,retriRefNo37,responseCode39,transmissionDateTime7,amtTransaction4,authIdResCode38,startTimeTransaction FROM TransactionModelEntity")
-    List<TransactionHistoryTuple> loadAllTransactions();
+    @Query("SELECT uid,iccCardSystemRelatedData55,retriRefNo37,responseCode39,transmissionDateTime7,amtTransaction4,authIdResCode38,startTimeTransaction FROM TransactionModelEntity WHERE nameTransactionTag != :data")
+    List<TransactionHistoryTuple> loadAllTransactions(String data);
 
     @Query("DELETE FROM TransactionModelEntity")
     public void nukeTable();
@@ -166,7 +166,10 @@ public interface TransactionModelDao {
     @Query("UPDATE TransactionModelEntity SET request_mportal = :status WHERE systemTraceAuditnumber11 == :rrn37")
     void updateSAFMerchantPortalRequest(String rrn37,String status);
 
-    @Query("SELECT * FROM SAFModelEntity WHERE status_mportal == :status AND request_mportal != :rrn37")
+    @Query("SELECT * FROM TransactionModelEntity WHERE status_mportal == :status AND request_mportal != :rrn37")
     TransactionModelEntity getMPortalRequest(String rrn37,boolean status);
+
+    @Query("SELECT * FROM TransactionModelEntity WHERE status_mportal == :status AND request_mportal != :rrn37")
+    List<TransactionModelEntity> getPendingMPortalRequest(String rrn37,boolean status);
 
 }

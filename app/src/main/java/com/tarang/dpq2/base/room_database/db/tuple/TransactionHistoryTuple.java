@@ -84,4 +84,18 @@ public class TransactionHistoryTuple {
     public void setAuthIdResCode38(String authIdResCode38) {
         this.authIdResCode38 = authIdResCode38;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionHistoryTuple{" +
+                "uid=" + uid +
+                ", iccCardSystemRelatedData55='" + iccCardSystemRelatedData55 + '\'' +
+                ", retriRefNo37='" + retriRefNo37 + '\'' +
+                ", responseCode39='" + responseCode39 + '\'' +
+                ", transmissionDateTime7='" + transmissionDateTime7 + '\'' +
+                ", amtTransaction4='" + amtTransaction4 + '\'' +
+                ", authIdResCode38='" + authIdResCode38 + '\'' +
+                ", startTimeTransaction='" + startTimeTransaction + '\'' +
+                '}';
+    }
 }
